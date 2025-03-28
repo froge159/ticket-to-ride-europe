@@ -12,4 +12,4 @@
 4.  when ready, make pull request to merge with main
         
         do this inside github
-5.  periodically pull changes as needed
+5.  periodically fetch changes as needed
