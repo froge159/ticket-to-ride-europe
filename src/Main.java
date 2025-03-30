@@ -1,3 +1,5 @@
+import javax.swing.SwingUtilities;
+
 public class Main {
     // entry point
     /*
@@ -11,4 +13,10 @@ public class Main {
      *  use graphics2d for map
      *  never use paint - always use paintComponent()
      */
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            TTRFrame frame = new TTRFrame();
+            frame.setVisible(true);
+        });
+    }
 }
