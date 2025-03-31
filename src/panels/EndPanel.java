@@ -1,5 +1,7 @@
 package panels;
 
-public class EndPanel {
+import javax.swing.JPanel;
+
+public class EndPanel extends JPanel {
     // panel for end screen
 }

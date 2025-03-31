@@ -1,5 +1,18 @@
 package panels;
 
-public class StartPanel {
-    // panel for start screen
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+public class StartPanel extends JPanel {
+    private JButton startButton;
+
+    public StartPanel() {
+        startButton = new JButton();
+
+        add(startButton);
+    }
+
+    public JButton getStartButton() {
+        return startButton;
+    }
 }
