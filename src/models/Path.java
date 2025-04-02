@@ -34,4 +34,5 @@ public class Path {
     public City[] getCities(){return new City[]{city1, city2};}
     public boolean isBought(){return bought;}
     public Player getBuyer(){return buyer;}
+    public int getLength(){return length;}
 }
