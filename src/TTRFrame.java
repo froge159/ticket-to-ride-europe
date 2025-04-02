@@ -25,7 +25,7 @@ public class TTRFrame extends JFrame {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setResizable(false);
+        setResizable(true);
 
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
@@ -34,12 +34,10 @@ public class TTRFrame extends JFrame {
         gamePanel = new GamePanel();
         endPanel = new EndPanel();
 
-        SwingUtilities.invokeLater(() -> {
-            add(startPanel);
-        });
+        add(startPanel);
 
         StartEngine startEngine = new StartEngine(startPanel, rulesPanel, gamePanel, endPanel, this);
         StartController startController = new StartController(startPanel, rulesPanel, gamePanel, endPanel, startEngine);
-    }
 
+    }
 }

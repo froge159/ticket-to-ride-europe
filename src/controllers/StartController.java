@@ -1,5 +1,6 @@
 package controllers;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
@@ -24,11 +25,15 @@ public class StartController {
         gamePanel = g;
         rulesPanel = r;
         startEngine = se;
+        initListeners();
     }
 
     public void initListeners() {
         startPanel.getStartButton().addActionListener(new ActionListener() {
-            startEngine.transitionToGamePanel();
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                startEngine.transitionToGamePanel();
+            }
         });
     }
 }
