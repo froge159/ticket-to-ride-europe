@@ -1,6 +1,7 @@
 package engine;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 import panels.EndPanel;
 import panels.GamePanel;
@@ -20,9 +21,14 @@ public class StartEngine {
         endPanel = e;
         gamePanel = g;
         rulesPanel = r;
+        ttrFrame = tf;
     }
 
     public void transitionToGamePanel() {
-        
+        SwingUtilities.invokeLater(() -> {
+            ttrFrame.getContentPane().remove(startPanel);
+            ttrFrame.add(gamePanel);
+            ttrFrame.revalidate();
+        });
     }
 }
