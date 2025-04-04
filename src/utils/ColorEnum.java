@@ -17,5 +17,4 @@ public enum ColorEnum {
     public Color getColor(){
         return c;
     }
-
 }
