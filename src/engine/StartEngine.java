@@ -31,4 +31,12 @@ public class StartEngine {
             ttrFrame.revalidate();
         });
     }
+
+    public void transitionToRulesPanel() {
+        SwingUtilities.invokeLater(() -> {
+            ttrFrame.getContentPane().remove(startPanel);
+            ttrFrame.add(rulesPanel);
+            ttrFrame.revalidate();
+        });
+    }
 }

@@ -1,5 +1,6 @@
 package panels;
 
+import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -8,22 +9,23 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import utils.ImageEnum;
 import utils.PNGEnum;
+import utils.PositionEnum;
 
 public class StartPanel extends JPanel {
 
-    private JButton startButton;
+    private JButton startButton, infoButton;
     private BufferedImage startBG;
-    private JLabel startText, infoIcon;
+    private JLabel titleText;
 
     public StartPanel() {
-        startButton = new JButton();
-        startBG = ImageEnum.TITLEBG.getImage();
-        startText = new JLabel(PNGEnum.TITLETEXT.getImage());
-        infoIcon = new JLabel(PNGEnum.INFOICON.getImage());
+        setLayout(null);
+        initComponents();
+
+        
 
         add(startButton);
-        add(startText);
-        add(infoIcon);
+        add(titleText);
+        add(infoButton);
     }
 
 
@@ -31,7 +33,29 @@ public class StartPanel extends JPanel {
         return startButton;
     }
 
+    public JButton getInfoButton() {
+        return infoButton;
+    }
 
+    public void initComponents() {
+        startButton = new JButton("Start Game"); 
+        startButton.setBounds(PositionEnum.STARTBUTTON.getX(), PositionEnum.STARTBUTTON.getY(), 200, 40);
+        
+        startBG = ImageEnum.TITLEBG.getImage();
+
+        titleText = PNGEnum.TITLETEXT.getImage();
+        titleText.setBounds(PositionEnum.TITLETEXT.getX(), PositionEnum.TITLETEXT.getY(), PNGEnum.TITLETEXT.getWidth(), PNGEnum.TITLETEXT.getHeight());
+        
+        infoButton = new JButton();
+        infoButton.add(PNGEnum.INFOICON.getImage());
+        
+
+        infoButton.setBounds(PositionEnum.INFOICON.getX(), PositionEnum.INFOICON.getY(), PNGEnum.INFOICON.getWidth(), PNGEnum.INFOICON.getHeight() + 10);
+        infoButton.setOpaque(false);
+        infoButton.setContentAreaFilled(false);
+        infoButton.setBorderPainted(false);
+        infoButton.setFocusPainted(false);
+    }
 
     @Override
     public void paintComponent(Graphics g) {
