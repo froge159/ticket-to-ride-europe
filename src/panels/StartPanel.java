@@ -13,9 +13,9 @@ import utils.PositionEnum;
 
 public class StartPanel extends JPanel {
 
-    private JButton startButton;
+    private JButton startButton, infoButton;
     private BufferedImage startBG;
-    private JLabel startText, infoIcon;
+    private JLabel titleText;
 
     public StartPanel() {
         setLayout(null);
@@ -24,13 +24,17 @@ public class StartPanel extends JPanel {
         
 
         add(startButton);
-        add(startText);
-        //add(infoIcon);
+        add(titleText);
+        add(infoButton);
     }
 
 
     public JButton getStartButton() {
         return startButton;
+    }
+
+    public JButton getInfoButton() {
+        return infoButton;
     }
 
     public void initComponents() {
@@ -39,10 +43,18 @@ public class StartPanel extends JPanel {
         
         startBG = ImageEnum.TITLEBG.getImage();
 
-        startText = PNGEnum.TITLETEXT.getImage();
-        startText.setBounds(PositionEnum.STARTTEXT.getX(), PositionEnum.STARTTEXT.getY(), PNGEnum.TITLETEXT.getWidth(), PNGEnum.TITLETEXT.getHeight());
+        titleText = PNGEnum.TITLETEXT.getImage();
+        titleText.setBounds(PositionEnum.TITLETEXT.getX(), PositionEnum.TITLETEXT.getY(), PNGEnum.TITLETEXT.getWidth(), PNGEnum.TITLETEXT.getHeight());
+        
+        infoButton = new JButton();
+        infoButton.add(PNGEnum.INFOICON.getImage());
+        
 
-        infoIcon = PNGEnum.INFOICON.getImage();
+        infoButton.setBounds(PositionEnum.INFOICON.getX(), PositionEnum.INFOICON.getY(), PNGEnum.INFOICON.getWidth(), PNGEnum.INFOICON.getHeight() + 10);
+        infoButton.setOpaque(false);
+        infoButton.setContentAreaFilled(false);
+        infoButton.setBorderPainted(false);
+        infoButton.setFocusPainted(false);
     }
 
     @Override
