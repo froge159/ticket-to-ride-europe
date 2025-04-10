@@ -7,7 +7,6 @@ import utils.ColorEnum;
 
 public class RulesPanel extends JPanel {
 
-    
     public RulesPanel() {
         setBackground(ColorEnum.RED.getColor());
         repaint();

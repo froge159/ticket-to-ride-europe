@@ -7,9 +7,12 @@ import java.awt.image.BufferedImage;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import utils.Dimensions;
 import utils.ImageEnum;
 import utils.PNGEnum;
 import utils.PositionEnum;
+import utils.DimensionEnum;
 
 public class StartPanel extends JPanel {
 
@@ -39,7 +42,7 @@ public class StartPanel extends JPanel {
 
     public void initComponents() {
         startButton = new JButton("Start Game"); 
-        startButton.setBounds(PositionEnum.STARTBUTTON.getX(), PositionEnum.STARTBUTTON.getY(), 200, 40);
+        startButton.setBounds(PositionEnum.STARTBUTTON.getX(), PositionEnum.STARTBUTTON.getY(), DimensionEnum.STARTBUTTON.getWidth(), DimensionEnum.STARTBUTTON.getHeight());
         
         startBG = ImageEnum.TITLEBG.getImage();
 
