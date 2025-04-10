@@ -5,6 +5,7 @@ import panels.EndPanel;
 
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 
@@ -20,7 +21,7 @@ public class TTRFrame extends JFrame {
     private GamePanel gamePanel;
     private EndPanel endPanel;
 
-    public TTRFrame() {
+    public TTRFrame() throws IOException {
         setTitle("Ticket To Ride: Europe");
         setSize(Dimensions.WIDTH, Dimensions.HEIGHT);
 
