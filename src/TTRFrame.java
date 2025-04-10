@@ -24,15 +24,7 @@ public class TTRFrame extends JFrame {
         setTitle("Ticket To Ride: Europe");
         setSize(Dimensions.WIDTH, Dimensions.HEIGHT);
 
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                Dimensions.WIDTH = getWidth();
-                Dimensions.HEIGHT = getHeight();
-                revalidate();
-                repaint();
-            }
-        });
+        
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
