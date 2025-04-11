@@ -3,6 +3,7 @@ package controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import engine.StartEngine;
@@ -40,6 +41,19 @@ public class StartController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 startEngine.transitionToRulesPanel();
+            }
+        });
+
+
+        //delete this later
+        JButton tempButton = new JButton("End"); 
+        startPanel.add(tempButton);// Placeholder for replay button
+        tempButton.setBounds(0, 0, 200, 40);
+        tempButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Placeholder for end button action
+                startEngine.transitionToEndPanel();
             }
         });
     }

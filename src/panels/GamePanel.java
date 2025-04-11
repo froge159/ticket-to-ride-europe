@@ -51,7 +51,7 @@ public class GamePanel extends JPanel {
         BufferedReader br = new BufferedReader(new FileReader("assets/data/routeCards.txt"));
         
         String line;
-        while((line = br.readLine()) != null){
+        while(!(line = br.readLine()).equals("")){
             StringTokenizer st2 = new StringTokenizer(line);
             String city1 = st2.nextToken();
             String city2 = st2.nextToken();
