@@ -9,6 +9,8 @@ import javax.swing.SwingUtilities;
 
 import models.Player;
 import utils.ColorEnum;
+import utils.PNGEnum;
+
 import java.awt.GridLayout;
 
 public class PlayerPanel extends JPanel {
@@ -18,8 +20,15 @@ public class PlayerPanel extends JPanel {
 
     public PlayerPanel(Player[] pa) {
         playerArray = pa;
+        bgImage = PNGEnum.PLAYERPANEL.getImage();
 
         
+        
+        SwingUtilities.invokeLater(() -> {
+            add(bgImage);
+            revalidate();
+            repaint();
+        });
     }
 }
 

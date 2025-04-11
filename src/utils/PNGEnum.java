@@ -13,7 +13,8 @@ public enum PNGEnum {
     REDPFP("assets/avatars/redcircleavatar.png"),
     BLUEPFP("assets/avatars/bluecircleavatar.png"),
     YELLOWPFP("assets/avatars/yellowcircleavatar.png"),
-    GREENPFP("assets/avatars/greencircleavatar.png");
+    GREENPFP("assets/avatars/greencircleavatar.png"),
+    PLAYERPANEL("assets/playerPanelImage.png");
 
     private final JLabel b;
     private final int w, h;

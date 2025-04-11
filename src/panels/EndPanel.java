@@ -60,6 +60,7 @@ public class EndPanel extends JPanel {
         for (int i = 0; i < players.length; i++) {
             scoreText[i] = new JLabel("Player " + (i + 1) + ": " + (i * 10)); // Placeholder for scores
             scoreText[i].setBounds(200 + (i*200), 600, 200, 40); // Placeholder for score text
+            
         }*/
 
         /*for (JLabel label : scoreText) {

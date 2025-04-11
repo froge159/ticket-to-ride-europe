@@ -7,19 +7,22 @@ public enum DimensionEnum {
     INFOICON(160, 100),
     TITLETEXT(1000, 550),
 
-    TITLEBG(1950, 1200),
+    TITLEBG(1920, 1080),
     REDPFP(50, 50),
     BLUEPFP(50, 50),
     YELLOWPFP(50, 50),
-    GREENPFP(50, 50);
+    GREENPFP(50, 50),
+
+    PLAYERPANEL(204, 500);
 
     private final int w, h;
 
     private DimensionEnum(int w, int h) {
         this.w = (int) (Dimensions.WIDTH * (w / (double) 1920));
         this.h = (int) (Dimensions.HEIGHT * (h / (double) 1080));
-        
     }
+
+    
 
     public int getWidth() {
         return w;

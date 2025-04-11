@@ -18,14 +18,7 @@ import java.io.*;
 
 public class GamePanel extends JPanel {
 
-    private Player[] playerArray;
-
-    
-    
-
-
-
-    
+    private Player[] playerArray;   
     private ArrayList<TrainCard> trainCards, discard;
     private ArrayList<NormalPathCard> pathCards;
     private ArrayList<LongPathCard> longCards;
@@ -45,7 +38,6 @@ public class GamePanel extends JPanel {
         players = new Player[4];
         turn = 0;
         map = new TTRMap();
-        
         confirm = new JButton();
         cancel = new JButton();
         station = new JButton();
@@ -110,6 +102,7 @@ public class GamePanel extends JPanel {
         SwingUtilities.invokeLater(() -> {
             add(new PlayerPanel(playerArray));
             revalidate();
+            repaint();
         });
         setup();
         repaint();

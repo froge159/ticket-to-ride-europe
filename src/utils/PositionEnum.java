@@ -5,9 +5,10 @@ public enum PositionEnum {
 
     // enum for the positions of the buttons and images on the screen
 
-    STARTBUTTON(860, 860),
+    STARTBUTTON(840, 860),
     TITLETEXT(450, 0),
-    INFOICON(1650, 900);
+    INFOICON(1650, 900),
+    PLAYERPANEL(800, 100);
 
     private final int x, y;
 
