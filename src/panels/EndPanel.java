@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import utils.ImageEnum;
 
 import models.Player;
 import utils.ImageEnum;

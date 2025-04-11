@@ -2,7 +2,8 @@ package utils;
 
 
 public enum PositionEnum {
-    // returns new position of elements depending on original proportion
+
+    // enum for the positions of the buttons and images on the screen
 
     STARTBUTTON(860, 860),
     TITLETEXT(450, 0),
@@ -11,8 +12,8 @@ public enum PositionEnum {
     private final int x, y;
 
     private PositionEnum(int origX, int origY) {
-        x = (int) (Dimensions.WIDTH * (origX / (double) 1600));
-        y = (int) (Dimensions.HEIGHT * (origY / (double) 1200));
+        x = (int) (Dimensions.WIDTH * (origX / (double) 1920));
+        y = (int) (Dimensions.HEIGHT * (origY / (double) 1080));
     }
 
     public int getX(){

@@ -17,6 +17,15 @@ import utils.ColorEnum;
 import java.io.*;
 
 public class GamePanel extends JPanel {
+
+    private Player[] playerArray;
+
+    
+    
+
+
+
+    
     private ArrayList<TrainCard> trainCards, discard;
     private ArrayList<NormalPathCard> pathCards;
     private ArrayList<LongPathCard> longCards;
@@ -36,7 +45,7 @@ public class GamePanel extends JPanel {
         players = new Player[4];
         turn = 0;
         map = new TTRMap();
-        playerPanel = new PlayerPanel();
+        
         confirm = new JButton();
         cancel = new JButton();
         station = new JButton();
@@ -89,6 +98,19 @@ public class GamePanel extends JPanel {
         Collections.shuffle(longCards);
 
         setBackground(ColorEnum.YELLOW.getColor());
+      
+        playerArray = new Player[4];
+        playerArray[0] = new Player("red");
+        playerArray[1] = new Player("yellow");
+        playerArray[2] = new Player("green");
+        playerArray[3] = new Player("blue");
+
+        playerPanel = new PlayerPanel(players);
+        
+        SwingUtilities.invokeLater(() -> {
+            add(new PlayerPanel(playerArray));
+            revalidate();
+        });
         setup();
         repaint();
     }
@@ -121,4 +143,10 @@ public class GamePanel extends JPanel {
         });
 
     }
+    public Player[] getPlayers() {
+        return playerArray;
+    }
+
+
+    
 }
