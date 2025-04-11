@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 public enum ImageEnum {
 
     TITLEBG("assets/titlebg.png", 2000, 1200),
+    RULESBG("assets/rulesbg.png", 2000, 1200),
     INFOICON("assets/infoicon.png", 50, 50),
     TITLETEXT("assets/titletext.png", 500, 200);
 
