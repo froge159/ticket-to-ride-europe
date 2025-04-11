@@ -45,7 +45,7 @@ public class GamePanel extends JPanel {
         players = new Player[4];
         turn = 0;
         map = new TTRMap();
-        playerPanel = new PlayerPanel();
+        
         confirm = new JButton();
         cancel = new JButton();
         station = new JButton();
@@ -60,7 +60,7 @@ public class GamePanel extends JPanel {
         BufferedReader br = new BufferedReader(new FileReader("assets/data/routeCards.txt"));
         
         String line;
-        while((line = br.readLine()) != null){
+        while(!(line = br.readLine()).equals("")){
             StringTokenizer st2 = new StringTokenizer(line);
             String city1 = st2.nextToken();
             String city2 = st2.nextToken();
@@ -104,6 +104,8 @@ public class GamePanel extends JPanel {
         playerArray[1] = new Player("yellow");
         playerArray[2] = new Player("green");
         playerArray[3] = new Player("blue");
+
+        playerPanel = new PlayerPanel(players);
         
         SwingUtilities.invokeLater(() -> {
             add(new PlayerPanel(playerArray));
