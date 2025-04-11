@@ -29,6 +29,25 @@ public class StartEngine {
             ttrFrame.getContentPane().remove(startPanel);
             ttrFrame.add(gamePanel);
             ttrFrame.revalidate();
+            ttrFrame.repaint();
         });
+    }
+
+    public void transitionToRulesPanel() {
+        SwingUtilities.invokeLater(() -> {
+            ttrFrame.getContentPane().remove(startPanel);
+            ttrFrame.add(rulesPanel);
+            ttrFrame.revalidate();
+            ttrFrame.repaint();
+        });
+    }
+
+    public void transitionToEndPanel() {
+        SwingUtilities.invokeLater(() -> {
+            ttrFrame.getContentPane().remove(startPanel);
+            ttrFrame.add(endPanel);
+            ttrFrame.revalidate();
+        });
+
     }
 }

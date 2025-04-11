@@ -1,0 +1,501 @@
+Amsterdam Bruxelles 1
+black default
+
+Amsterdam Essen 3
+yellow default
+yellow default
+yellow default
+
+Amsterdam Frankfurt 2
+white default
+white default
+
+Amsterdam London 2
+gray ferry
+gray ferry
+
+Angora Constantinople 2
+gray mountain
+gray mountain
+
+Angora Erzurum 3
+black default
+black default
+black default
+
+Angora Smyrna 3
+orange mountain
+orange mountain
+orange mountain
+
+Athina Brindisi 4
+gray default
+gray default
+gray default
+gray ferry
+
+Athina Sarajevo 4
+green default
+green default
+green default
+green default
+
+Athina Smyrna 2
+gray ferry
+gray default
+
+Athina Sofia 3
+pink default
+pink default
+pink default
+
+Barcelona Madrid 2
+yellow default
+yellow default
+
+Barcelona Marseille 4
+gray default
+gray default
+gray default
+gray default
+
+Barcelona Pamplona 2
+gray mountain
+gray mountain
+
+Berlin Danzic 4
+gray default
+gray default
+gray default
+gray default
+
+Berlin Essen 2
+blue default
+blue default
+
+Berlin Frankfurt 3
+black default
+black default
+black default
+
+Berlin Frankfurt 3
+red default
+red default
+red default
+
+Berlin Warszawa 4
+pink default
+pink default
+pink default
+pink default
+
+Berlin Warszawa 4
+yellow default
+yellow default
+yellow default
+yellow default
+
+Berlin Wien 3
+green default
+green default
+green default
+
+Brest Dieppe 2
+orange default
+orange default
+
+Brest Pamplona 4
+pink default
+pink default
+pink default
+pink default
+
+Brest Paris 3
+black default
+black default
+black default
+
+Brindisi Palermo 3
+ferry default
+gray default
+gray default
+
+Brindisi Roma 2
+white default
+white default
+
+Bruxelles Diep 2
+green default
+green default
+
+Bruxelles Frankfurt 2
+blue default
+blue default
+
+Bruxelles Paris 2
+yellow default
+yellow default
+
+Bruxelles Paris 2
+red default
+red default
+
+București Budapest 4
+gray mountain
+gray mountain
+gray mountain
+gray mountain
+
+București Constantinople 3
+yellow default
+yellow default
+yellow default
+
+București Kyiv 4
+gray default
+gray default
+gray default
+gray default
+
+București Sevastopol 4
+white default
+white default
+white default
+white default
+
+București Sofia 2
+gray mountain
+gray mountain
+
+Budapest Kyiv 6
+gray mountain
+gray mountain
+gray mountain
+gray mountain
+gray mountain
+gray mountain
+
+Budapest Sarajevo 3
+pink default
+pink default
+pink default
+
+Budapest Wien 1
+red default
+
+Budapest Wien 1
+white default
+
+Budapest Zagreb 2
+orange default
+orange default
+
+Cadiz Lisboa 2
+blue default
+blue default
+
+Cadiz Madrid 3
+orange default
+orange default
+orange default
+
+Constantinople Sevastopol 4
+gray default
+gray default
+gray ferry
+gray ferry
+
+Constantinople Smyrna 2
+gray mountain
+gray mountain
+
+Constantinople Sofia 3
+blue default
+blue default
+blue default
+
+Danzic Rica 3
+black default
+black default
+black default
+
+Danzic Warszawa 2
+white default
+white default
+
+Dieppe London 2
+gray default
+gray ferry
+
+Dieppe London 2
+gray default
+gray ferry
+
+Dieppe Paris 1
+pink default
+
+Edinburgh London 4
+orange default
+orange default
+orange default
+orange default
+
+Edinburgh London 4
+black default
+black default
+black default
+black default
+
+Erzurum Sevastopol 4
+gray ferry
+gray ferry
+gray default
+gray default
+
+Erzurum Sochi 3
+red mountain
+red mountain
+red mountain
+
+Essen Frankfurt 2
+green default
+green default
+
+Essen Kobenhavn 3
+gray ferry
+gray default
+gray default
+
+Essen Kobenhavn 3
+gray ferry
+gray default
+gray default
+
+Frankfurt Munchen 2
+pink default
+pink default
+
+Frankfurt Paris 3
+white default
+white default
+white default
+
+Frankfurt Paris 3
+orange default
+orange default
+orange default
+
+Kharkov Kyiv 4
+gray default
+gray default
+gray default
+gray default
+
+Kharkov Moskva 4
+gray default
+gray default
+gray default
+gray default
+
+Kharkov Rostov 2
+green default
+green default
+
+Kobenhavn Stockholm 3
+yellow default
+yellow default
+yellow default
+
+Kobenhavn Stockholm 3
+white default
+white default
+white default
+
+Kyiv Smolensk 3
+red default
+red default
+red default
+
+Kyiv Warszawa 4
+gray default
+gray default
+gray default
+gray default
+
+Kyiv Wilno 2
+gray default
+gray default
+
+Lisboa Madrid 3
+pink default
+pink default
+pink default
+
+Madrid Pamplona 3
+black mountain
+black mountain
+black mountain
+
+Madrid Pamplona 3
+white mountain
+white mountain
+white mountain
+
+Marseille Pamplona 4
+red default
+red default
+red default
+red default
+
+Marseille Paris 4
+gray default
+gray default
+gray default
+gray default
+
+Marseille Roma 4
+gray mountain
+gray mountain
+gray mountain
+gray mountain
+
+Marseille Zurich 2
+pink mountain
+pink mountain
+
+Moskva Petrograd 4
+white default
+white default
+white default
+white default
+
+Moskva Smolensk 2
+orange default
+orange default
+
+Munchen Venezia 2
+blue mountain
+blue mountain
+
+Munchen Wien 3
+orange default
+orange default
+orange default
+
+Munchen Zurich 2
+yellow mountain
+yellow mountain
+
+Palermo Roma 4
+gray default
+gray default
+gray default
+gray ferry
+
+Palermo Smyrna 6
+gray ferry
+gray ferry
+gray default
+gray default
+gray default
+gray default
+
+Pamplona Paris 4
+blue default
+blue default
+blue default
+blue default
+
+Pamplona Paris 4
+green default
+green default
+green default
+green default
+
+Paris Zurich 3
+gray mountain
+gray mountain
+gray mountain
+
+Petrograd Rica 4
+gray default
+gray default
+gray default
+gray default
+
+Petrograd Stockholm 8
+gray mountain
+gray mountain
+gray mountain
+gray mountain
+gray mountain
+gray mountain
+gray mountain
+gray mountain
+
+Petrograd Wilno 4
+blue default
+blue default
+blue default
+blue default
+
+Rica Wilno 4
+green default
+green default
+green default
+green default
+
+Roma Venezia 2
+black default
+black default
+
+Rostov Sevastopol 4
+gray default
+gray default
+gray default
+gray default
+
+Rostov Sochi 2
+gray default
+gray default
+
+Sarajevo Sofia 2
+gray mountain
+gray mountain
+
+Sarajevo Zagreb 3
+red default
+red default
+red default
+
+Sevastopol Sochi 2
+gray ferry
+gray default
+
+Smolensk Wilno 3
+yellow default
+yellow default
+yellow default
+
+Venezia Zagreb 2
+gray default
+gray default
+
+Venezia Zurich 2
+green default
+green default
+
+Warszawa Wien 4
+blue default
+blue default
+blue default
+blue default
+
+Warszawa Wilno 3
+red default
+red default
+red default
+
+Wien Zagreb 2
+gray default
+gray default

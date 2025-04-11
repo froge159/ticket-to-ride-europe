@@ -7,15 +7,18 @@ import javax.imageio.ImageIO;
 
 public enum ImageEnum {
 
-    TITLEBG("assets/titlebg.png", 2000, 1200),
-    RULESBG("assets/rulesbg.png", 2000, 1200),
-    INFOICON("assets/infoicon.png", 50, 50),
-    TITLETEXT("assets/titletext.png", 500, 200);
+    // enum for non-png images
+
+    TITLEBG("assets/titlebg.png");
+    
 
     private final BufferedImage b;
+    private final int w, h;
 
-    private ImageEnum(String path, int w, int h) {
+    private ImageEnum(String path) {
         BufferedImage temp = null;
+        this.w = DimensionEnum.valueOf(name()).getWidth();
+        this.h = DimensionEnum.valueOf(name()).getHeight();
         try {
             temp = ImageIO.read(new File(path));
             temp = scale(temp, w, h);
@@ -48,5 +51,4 @@ public enum ImageEnum {
     public BufferedImage getImage(){
         return b;
     }
-
 }
