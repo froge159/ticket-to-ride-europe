@@ -23,7 +23,8 @@ public class EndPanel extends JPanel {
     private JLabel[] scoreText;
     private Player[] players;
 
-    public EndPanel(JButton re, Player[] plays) {
+    public EndPanel() {
+        /* 
         setLayout(null);
         initComponents();
         add(replay);
@@ -31,13 +32,13 @@ public class EndPanel extends JPanel {
         add(winnerText);
         for (JLabel label : scoreText) {
             add(label);
-        }
+        }*/
 
-        replay = re;
-        players = plays;
+        
     }
 
     public void initComponents(){
+        /*
         replay.setBounds(PositionEnum.STARTBUTTON.getX(), PositionEnum.STARTBUTTON.getY(), 200, 40);
         
         endBG = ImageEnum.TITLEBG.getImage();
@@ -54,7 +55,7 @@ public class EndPanel extends JPanel {
             scoreText[i].setBounds(200 + (i*200), 600, 200, 40); // Placeholder for score text
         }
         replay.setOpaque(false);
-        replay.setContentAreaFilled(false);
+        replay.setContentAreaFilled(false);*/
     }
 
     @Override

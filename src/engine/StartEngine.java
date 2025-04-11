@@ -29,6 +29,7 @@ public class StartEngine {
             ttrFrame.getContentPane().remove(startPanel);
             ttrFrame.add(gamePanel);
             ttrFrame.revalidate();
+            ttrFrame.repaint();
         });
     }
 
@@ -37,6 +38,7 @@ public class StartEngine {
             ttrFrame.getContentPane().remove(startPanel);
             ttrFrame.add(rulesPanel);
             ttrFrame.revalidate();
+            ttrFrame.repaint();
         });
     }
 }
