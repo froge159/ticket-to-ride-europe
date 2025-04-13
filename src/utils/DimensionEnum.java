@@ -15,7 +15,8 @@ public enum DimensionEnum {
 
     PLAYERPANELIMG(163, 400),
     STATIONBUTTON(170, 60),
-    GAMEBG(1920, 1080);
+    GAMEBG(1920, 1080),
+    RULESBG(1920, 1080);
 
     private final int w, h;
 
