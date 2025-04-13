@@ -3,18 +3,16 @@ import panels.RulesPanel;
 import panels.GamePanel;
 import panels.EndPanel;
 
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.io.IOException;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 import controllers.StartController;
 import engine.StartEngine;
 import utils.Dimensions;
 
 public class TTRFrame extends JFrame {
-
 
     private StartPanel startPanel;
     private RulesPanel rulesPanel;
@@ -24,13 +22,9 @@ public class TTRFrame extends JFrame {
     public TTRFrame() throws IOException {
         setTitle("Ticket To Ride: Europe");
         setSize(Dimensions.WIDTH, Dimensions.HEIGHT);
-
-        
-
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(true);
-
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         startPanel = new StartPanel();
@@ -38,12 +32,14 @@ public class TTRFrame extends JFrame {
         gamePanel = new GamePanel();
         endPanel = new EndPanel();
 
-        add(startPanel);
+        SwingUtilities.invokeLater(() -> {
+            add(startPanel);
+        });
 
         StartEngine startEngine = new StartEngine(startPanel, rulesPanel, gamePanel, endPanel, this);
         StartController startController = new StartController(startPanel, rulesPanel, gamePanel, endPanel, startEngine);
 
-        
-
+        gamePanel.setStartEngine(startEngine);
+        gamePanel.initComponents();
     }
 }

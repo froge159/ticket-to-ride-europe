@@ -14,7 +14,6 @@ public class Player {
     private ArrayList<PathCard> pathCards;
     private LinkedList<City> cities;
     private LinkedList<Path> paths;
-    private JLabel pfp;
 
     public Player(String c){
         trainCards = new TreeMap<>();
@@ -33,20 +32,7 @@ public class Player {
         trainCards.put("green", 0);
         trainCards.put("wild", 0);
 
-        switch (c) {
-            case "red":
-                pfp = PNGEnum.REDPFP.getImage();
-                break;
-            case "green":
-                pfp = PNGEnum.GREENPFP.getImage();
-                break;
-            case "blue":
-                pfp = PNGEnum.BLUEPFP.getImage();
-                break;
-            case "yellow":
-                pfp = PNGEnum.YELLOWPFP.getImage();
-                break;
-        }
+        
     }
 
     public void addTrainCard(TrainCard card){
@@ -89,4 +75,6 @@ public class Player {
     public int getStations(){return stations;}
     public TreeMap<String, Integer> getTrainCards(){return trainCards;}
     public ArrayList<PathCard> getPathCards(){return pathCards;}
+
+    public int getPoints(){return points;}
 }

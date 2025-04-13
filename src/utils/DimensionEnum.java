@@ -4,7 +4,7 @@ package utils;
 public enum DimensionEnum {
 
     STARTBUTTON(200, 40),
-    INFOICON(160, 100),
+    INFOICON(70, 70),
     TITLETEXT(1000, 550),
 
     TITLEBG(1920, 1080),
@@ -13,7 +13,9 @@ public enum DimensionEnum {
     YELLOWPFP(50, 50),
     GREENPFP(50, 50),
 
-    PLAYERPANEL(204, 500);
+    PLAYERPANELIMG(163, 400),
+    STATIONBUTTON(170, 60),
+    GAMEBG(1920, 1080);
 
     private final int w, h;
 
