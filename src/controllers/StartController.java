@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import engine.StartEngine;
 import panels.EndPanel;
@@ -29,31 +30,33 @@ public class StartController {
         initListeners();
     }
 
-    public void initListeners() {
+    private void initListeners() {
         startPanel.getStartButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                startEngine.transitionToGamePanel();
+                startEngine.transitionToPanel(startPanel, gamePanel);
             }
         });
 
         startPanel.getInfoButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                startEngine.transitionToRulesPanel();
+                startEngine.transitionToPanel(startPanel, rulesPanel);
             }
         });
 
 
         //delete this later
         JButton tempButton = new JButton("End"); 
-        startPanel.add(tempButton);// Placeholder for replay button
-        tempButton.setBounds(0, 0, 200, 40);
+        SwingUtilities.invokeLater(() -> {
+            startPanel.add(tempButton);// Placeholder for replay button
+            tempButton.setBounds(0, 0, 200, 40);
+        });
         tempButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Placeholder for end button action
-                startEngine.transitionToEndPanel();
+                startEngine.transitionToPanel(startPanel, endPanel);
             }
         });
     }
