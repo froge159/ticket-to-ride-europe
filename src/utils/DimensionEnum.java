@@ -7,6 +7,8 @@ public enum DimensionEnum {
     INFOICON(160, 100),
     TITLETEXT(1000, 550),
 
+    BLACKRECT(1620, 880),
+
     TITLEBG(1950, 1200),
     REDPFP(50, 50),
     BLUEPFP(50, 50),
