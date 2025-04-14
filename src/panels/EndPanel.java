@@ -1,14 +1,19 @@
 package panels;
 
+import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import utils.DimensionEnum;
+import utils.Dimensions;
 import utils.ImageEnum;
 
 import models.Player;
@@ -44,9 +49,9 @@ public class EndPanel extends JPanel {
         
 
         replay = new JButton("Press to return"); // Placeholder for replay button
-        replay.setFont(new Font("Arial", Font.PLAIN, 20));
+        replay.setFont(new Font("Arial", Font.PLAIN, (int)(20*Dimensions.HEIGHT/(double)1080)));
         replay.setForeground(Color.WHITE);
-        replay.setBounds(PositionEnum.STARTBUTTON.getX(), PositionEnum.STARTBUTTON.getY(), 200, 40);
+        replay.setBounds(PositionEnum.STARTBUTTON.getX(), PositionEnum.STARTBUTTON.getY(), DimensionEnum.STARTBUTTON.getWidth(), DimensionEnum.STARTBUTTON.getHeight());
         
         endBG = ImageEnum.TITLEBG.getImage();
 
@@ -77,5 +82,25 @@ public class EndPanel extends JPanel {
         if (endBG != null) {
             g.drawImage(endBG, 0, 0, this);
         }
+        // Cast Graphics to Graphics2D to enable advanced features
+    Graphics2D g2d = (Graphics2D) g;
+
+    // Set transparency using AlphaComposite
+    float transparency = 0.5f; // 0.0f is fully transparent, 1.0f is fully opaque
+    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, transparency));
+
+    // Set the color for the rectangle
+    g2d.setColor(Color.BLACK);
+
+    // Draw the semi-transparent rectangle
+    g2d.fillRect(PositionEnum.BLACKRECT.getX(), PositionEnum.BLACKRECT.getY(), DimensionEnum.BLACKRECT.getWidth(), DimensionEnum.BLACKRECT.getHeight());
+
+    // Reset the composite to default (fully opaque) for subsequent drawings
+    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+
+    g.setFont(new Font("Arial", Font.PLAIN, (int)(150*Dimensions.HEIGHT/(double)1080)));
+    g.setColor(Color.WHITE);
+    g.drawString("GAME OVER", PositionEnum.GAMETEXT.getX(), PositionEnum.GAMETEXT.getY() + 50);
+    g.drawString("Winner: Player 1", PositionEnum.STARTBUTTON.getX(), PositionEnum.STARTBUTTON.getY() - 20);
     }
 }

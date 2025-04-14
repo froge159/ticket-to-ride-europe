@@ -7,7 +7,9 @@ public enum PositionEnum {
 
     STARTBUTTON(860, 860),
     TITLETEXT(450, 0),
-    INFOICON(1650, 900);
+    INFOICON(1650, 900),
+    BLACKRECT(150, 100),
+    GAMETEXT(540, 200);
 
     private final int x, y;
 
