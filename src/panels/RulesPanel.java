@@ -5,6 +5,9 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 import javax.swing.JButton;
+
+import utils.PositionEnum;
+import utils.DimensionEnum;
 import utils.ImageEnum;
 
 
@@ -14,7 +17,9 @@ public class RulesPanel extends JPanel {
     private BufferedImage rulesBG;
 
     public RulesPanel() {
-        returnButton = new JButton();
+        setLayout(null);
+        returnButton = new JButton("Press to Return");
+        returnButton.setBounds(PositionEnum.RETURNBUTTON.getX(), PositionEnum.RETURNBUTTON.getY(), DimensionEnum.RETURNBUTTON.getWidth(), DimensionEnum.RETURNBUTTON.getHeight());
         rulesBG = ImageEnum.RULESBG.getImage();
         add(returnButton);
     }

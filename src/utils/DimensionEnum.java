@@ -4,10 +4,12 @@ package utils;
 public enum DimensionEnum {
 
     STARTBUTTON(200, 40),
+    RETURNBUTTON(200, 40),
     INFOICON(160, 100),
     TITLETEXT(1000, 550),
 
     TITLEBG(1950, 1200),
+    RULESBG(1920, 1080),
     REDPFP(50, 50),
     BLUEPFP(50, 50),
     YELLOWPFP(50, 50),

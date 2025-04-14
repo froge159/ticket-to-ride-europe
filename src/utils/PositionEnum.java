@@ -6,6 +6,7 @@ public enum PositionEnum {
     // enum for the positions of the buttons and images on the screen
 
     STARTBUTTON(860, 860),
+    RETURNBUTTON(860, 865),
     TITLETEXT(450, 0),
     INFOICON(1650, 900);
 
