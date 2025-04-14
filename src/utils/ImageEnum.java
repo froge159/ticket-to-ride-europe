@@ -9,9 +9,10 @@ public enum ImageEnum {
 
     // enum for non-png images
 
-    TITLEBG("assets/titlebg.png");
+    TITLEBG("assets/titlebg.png"),
+    GAMEBG("assets/gamebg.png"),
+    RULESBG("assets/rulesbg.png");
     
-
     private final BufferedImage b;
     private final int w, h;
 

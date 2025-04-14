@@ -10,17 +10,20 @@ public enum PNGEnum {
 
     INFOICON("assets/infoicon.png"),
     TITLETEXT("assets/titletext.png"),
-    REDPFP("assets/avatars/redcircleavatar.png"),
-    BLUEPFP("assets/avatars/bluecircleavatar.png"),
-    YELLOWPFP("assets/avatars/yellowcircleavatar.png"),
-    GREENPFP("assets/avatars/greencircleavatar.png");
+    //REDPFP("assets/avatars/redcircleavatar.png"),
+    //BLUEPFP("assets/avatars/bluecircleavatar.png"),
+    //YELLOWPFP("assets/avatars/yellowcircleavatar.png"),
+    //GREENPFP("assets/avatars/greencircleavatar.png"),
+    PLAYERPANELIMG("assets/playerPanelImage.png"),
+    STATIONBUTTON("assets/stationButton.png");
 
-    private final JLabel b;
+    private final ImageIcon b;
     private final int w, h;
 
     private PNGEnum(String path) {
         this.w = DimensionEnum.valueOf(name()).getWidth();
         this.h = DimensionEnum.valueOf(name()).getHeight();
+
         ImageIcon temp = null;
         try {
             Image img = new ImageIcon(path).getImage().getScaledInstance(this.w, this.h, java.awt.Image.SCALE_SMOOTH);
@@ -29,11 +32,11 @@ public enum PNGEnum {
         catch(Exception e) {
             System.out.println("Failed to find path " + path);
         }
-        b = new JLabel(temp);
+        b = temp;
     }
 
 
-    public JLabel getImage(){
+    public ImageIcon getImage(){
         return b;
     }
 
@@ -44,5 +47,4 @@ public enum PNGEnum {
     public int getHeight() {
         return h;
     }
-
 }
