@@ -6,14 +6,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
-import utils.Dimensions;
+import utils.Rel;
 import utils.ImageEnum;
 import utils.PNGEnum;
-import utils.PositionEnum;
 import utils.DimensionEnum;
 
 public class StartPanel extends JPanel {
@@ -23,14 +24,15 @@ public class StartPanel extends JPanel {
     private JLabel titleText;
 
     public StartPanel() {
-        setLayout(null);
+        
         initComponents();
 
-        
-
-        add(startButton);
-        add(titleText);
-        add(infoButton);
+        SwingUtilities.invokeLater(() -> {
+            setLayout(null);
+            add(startButton);
+            add(titleText);
+            add(infoButton);
+        });
     }
 
 
@@ -44,18 +46,16 @@ public class StartPanel extends JPanel {
 
     public void initComponents() {
         startButton = new JButton("Start Game"); 
-        startButton.setBounds(PositionEnum.STARTBUTTON.getX(), PositionEnum.STARTBUTTON.getY(), DimensionEnum.STARTBUTTON.getWidth(), DimensionEnum.STARTBUTTON.getHeight());
+        startButton.setBounds(Rel.X(840), Rel.Y(860), DimensionEnum.STARTBUTTON.getWidth(), DimensionEnum.STARTBUTTON.getHeight());
         
         startBG = ImageEnum.TITLEBG.getImage();
 
-        titleText = PNGEnum.TITLETEXT.getImage();
-        titleText.setBounds(PositionEnum.TITLETEXT.getX(), PositionEnum.TITLETEXT.getY(), PNGEnum.TITLETEXT.getWidth(), PNGEnum.TITLETEXT.getHeight());
+        titleText = new JLabel(PNGEnum.TITLETEXT.getImage());
+        titleText.setBounds(Rel.X(450), Rel.Y(0), PNGEnum.TITLETEXT.getWidth(), PNGEnum.TITLETEXT.getHeight());
         
         infoButton = new JButton();
-        infoButton.add(PNGEnum.INFOICON.getImage());
-        
-
-        infoButton.setBounds(PositionEnum.INFOICON.getX(), PositionEnum.INFOICON.getY(), PNGEnum.INFOICON.getWidth(), PNGEnum.INFOICON.getHeight() + 10);
+        infoButton.setIcon(PNGEnum.INFOICON.getImage());
+        infoButton.setBounds(Rel.X(1750), Rel.Y(900), PNGEnum.INFOICON.getWidth(), PNGEnum.INFOICON.getHeight());
         infoButton.setOpaque(false);
         infoButton.setContentAreaFilled(false);
         infoButton.setBorderPainted(false);

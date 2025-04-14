@@ -12,9 +12,8 @@ import javax.swing.JPanel;
 import utils.ImageEnum;
 
 import models.Player;
-import utils.ImageEnum;
 import utils.PNGEnum;
-import utils.PositionEnum;
+import utils.Rel;
 
 public class EndPanel extends JPanel {
     // panel for end screen
@@ -46,20 +45,21 @@ public class EndPanel extends JPanel {
         replay = new JButton("Press to return"); // Placeholder for replay button
         replay.setFont(new Font("Arial", Font.PLAIN, 20));
         replay.setForeground(Color.WHITE);
-        replay.setBounds(PositionEnum.STARTBUTTON.getX(), PositionEnum.STARTBUTTON.getY(), 200, 40);
+        replay.setBounds(Rel.X(840), Rel.Y(860), 200, 40);
         
         endBG = ImageEnum.TITLEBG.getImage();
 
         titleText = new JLabel("Game Over"); // Placeholder for title text
-        titleText.setBounds(PositionEnum.TITLETEXT.getX(), PositionEnum.TITLETEXT.getY(), PNGEnum.TITLETEXT.getWidth(), PNGEnum.TITLETEXT.getHeight());
+        titleText.setBounds(Rel.X(450), Rel.Y(0), PNGEnum.TITLETEXT.getWidth(), PNGEnum.TITLETEXT.getHeight());
         
         winnerText = new JLabel("Winner: Player 1"); // Placeholder for winner text
-        winnerText.setBounds(PositionEnum.STARTBUTTON.getX(), PositionEnum.STARTBUTTON.getY() - 20, 200, 40);
+        winnerText.setBounds(Rel.X(840), Rel.Y(840), 200, 40);
 /* 
         scoreText = new JLabel[4];
         for (int i = 0; i < players.length; i++) {
             scoreText[i] = new JLabel("Player " + (i + 1) + ": " + (i * 10)); // Placeholder for scores
             scoreText[i].setBounds(200 + (i*200), 600, 200, 40); // Placeholder for score text
+            
         }*/
 
         /*for (JLabel label : scoreText) {
