@@ -1,6 +1,7 @@
 package engine;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import panels.EndPanel;
@@ -24,30 +25,15 @@ public class StartEngine {
         ttrFrame = tf;
     }
 
-    public void transitionToGamePanel() {
+    public void transitionToPanel(JPanel orig, JPanel target) {
         SwingUtilities.invokeLater(() -> {
-            ttrFrame.getContentPane().remove(startPanel);
-            ttrFrame.add(gamePanel);
+            ttrFrame.getContentPane().remove(orig);
+            ttrFrame.add(target);
             ttrFrame.revalidate();
-            ttrFrame.repaint();
         });
     }
 
-    public void transitionToRulesPanel() {
-        SwingUtilities.invokeLater(() -> {
-            ttrFrame.getContentPane().remove(startPanel);
-            ttrFrame.add(rulesPanel);
-            ttrFrame.revalidate();
-            ttrFrame.repaint();
-        });
-    }
-
-    public void transitionToEndPanel() {
-        SwingUtilities.invokeLater(() -> {
-            ttrFrame.getContentPane().remove(startPanel);
-            ttrFrame.add(endPanel);
-            ttrFrame.revalidate();
-        });
-
+    public void transitionToRulesPanel(JPanel orig) {
+        transitionToPanel(orig, rulesPanel);
     }
 }

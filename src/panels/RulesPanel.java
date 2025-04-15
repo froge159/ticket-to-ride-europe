@@ -1,21 +1,33 @@
 package panels;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
-import utils.ColorEnum;
+import javax.swing.JButton;
+import utils.ImageEnum;
+
 
 public class RulesPanel extends JPanel {
 
+    private JButton returnButton;
+    private BufferedImage rulesBG;
+
     public RulesPanel() {
-        setBackground(ColorEnum.RED.getColor());
-        repaint();
+        returnButton = new JButton();
+        rulesBG = ImageEnum.RULESBG.getImage();
+        add(returnButton);
     }
 
+    public JButton getReturnButton() {
+        return returnButton;
+    }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        setBackground(ColorEnum.RED.getColor()); 
+        if (rulesBG != null) {
+            g.drawImage(rulesBG, 0, 0, this);
+        }
     }
 }
