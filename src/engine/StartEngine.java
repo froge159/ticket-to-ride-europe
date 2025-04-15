@@ -27,8 +27,12 @@ public class StartEngine {
 
     public void transitionToPanel(JPanel orig, JPanel target) {
         SwingUtilities.invokeLater(() -> {
-            ttrFrame.getContentPane().remove(orig);
-            ttrFrame.add(target);
+            orig.setVisible(false);
+            if (target.getParent() == null) {
+                ttrFrame.add(target);
+            } else {
+                target.setVisible(true);
+            }
             ttrFrame.revalidate();
         });
     }
