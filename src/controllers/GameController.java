@@ -45,6 +45,7 @@ public class GameController {
         buttonPanel.getInfoButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                startEngine.setRulesPanelOrigin(gamePanel);
                 startEngine.transitionToRulesPanel(gamePanel);
             }
         });

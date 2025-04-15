@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import engine.StartEngine;
@@ -41,10 +40,21 @@ public class StartController {
         startPanel.getInfoButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                startEngine.setRulesPanelOrigin(startPanel);
                 startEngine.transitionToPanel(startPanel, rulesPanel);
             }
         });
 
+        rulesPanel.getReturnButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (rulesPanel.getOriginPanel().equals(startPanel)) {
+                    startEngine.transitionToPanel(rulesPanel, startPanel);
+                } else if (rulesPanel.getOriginPanel().equals(gamePanel)) {
+                    startEngine.transitionToPanel(rulesPanel, gamePanel);
+                }
+            }
+        });
 
         //delete this later
         JButton tempButton = new JButton("End"); 

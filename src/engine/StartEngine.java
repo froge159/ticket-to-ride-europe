@@ -25,6 +25,10 @@ public class StartEngine {
         ttrFrame = tf;
     }
 
+    public void setRulesPanelOrigin(JPanel panel) {
+        rulesPanel.setOriginPanel(panel);
+    }
+
     public void transitionToPanel(JPanel orig, JPanel target) {
         SwingUtilities.invokeLater(() -> {
             orig.setVisible(false);
