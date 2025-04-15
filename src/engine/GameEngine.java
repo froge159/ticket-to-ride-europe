@@ -4,11 +4,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import java.awt.event.MouseEvent;
+
 import panels.ButtonPanel;
 import panels.DrawPanel;
 import panels.HandPanel;
 import panels.MapPanel;
 import panels.PlayerPanel;
+
+
 
 public class GameEngine {
     private ButtonPanel buttonPanel;
@@ -27,4 +31,14 @@ public class GameEngine {
     }
 
     
+    public void handleMouseClick(MouseEvent e) {
+        int x = e.getX();
+        int y = e.getY();
+        System.out.println("\n" + x + " " + y);
+
+        // Check if the click is within the bounds of a station
+        // Example: if (x >= stationX && x <= stationX + stationWidth && y >= stationY && y <= stationY + stationHeight) {
+        //     // Handle station click
+        // }
+    }
 }

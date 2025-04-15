@@ -2,10 +2,13 @@ package controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
+import java.awt.event.MouseEvent;
 
 import engine.GameEngine;
 import engine.StartEngine;
@@ -45,6 +48,15 @@ public class GameController {
                 startEngine.transitionToRulesPanel(gamePanel);
             }
         });
+        
+        mapPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                gameEngine.handleMouseClick(e);
+            }
+        });
     }
+
+    
 
 }

@@ -2,6 +2,9 @@ package panels;
 
 
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
@@ -11,7 +14,7 @@ import utils.ImageEnum;
 
 
 
-public class MapPanel extends JPanel {
+public class MapPanel extends JPanel{
 
     private BufferedImage mapBG;
 
@@ -30,5 +33,4 @@ public class MapPanel extends JPanel {
         super.paintComponent(g);
         g.drawImage(mapBG, 0, 0, null);
     }
-    
 }
