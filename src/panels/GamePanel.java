@@ -123,11 +123,13 @@ public class GamePanel extends JPanel {
 
         pp.setBounds(Rel.X(1730), Rel.Y(20), pp.getWidth(), pp.getHeight());
         bp.setBounds(Rel.X(1680), Rel.Y(550), bp.getWidth(), bp.getHeight());
+        mp.setBounds(Rel.X(20), Rel.Y(0), mp.getWidth(), mp.getHeight());
 
         SwingUtilities.invokeLater(() -> {
             setLayout(null);
             add(pp);
             add(bp);
+            add(mp);
             revalidate();
             repaint();
         });

@@ -11,7 +11,8 @@ public enum ImageEnum {
 
     TITLEBG("assets/titlebg.png"),
     GAMEBG("assets/gamebg.png"),
-    RULESBG("assets/rulesbg.png");
+    RULESBG("assets/rulesbg.png"),
+    MAPBG("assets/mapBG.png");
     
     private final BufferedImage b;
     private final int w, h;
