@@ -10,6 +10,7 @@ public enum ImageEnum {
     // enum for non-png images
 
     TITLEBG("assets/titlebg.png"),
+    ENDBG("assets/endBG.png"),
     GAMEBG("assets/gamebg.png"),
     RULESBG("assets/rulesbg.png"),
     MAPBG("assets/mapBG.png");
