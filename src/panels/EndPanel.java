@@ -1,14 +1,19 @@
 package panels;
 
+import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import utils.DimensionEnum;
+import utils.Dimensions;
 import utils.ImageEnum;
 
 import models.Player;
@@ -19,8 +24,6 @@ public class EndPanel extends JPanel {
     // panel for end screen
     private JButton replay;
     private BufferedImage endBG;
-    private JLabel titleText;
-    private JLabel winnerText;
     private JLabel[] scoreText;
    // private Player[] players;
 
@@ -28,8 +31,6 @@ public class EndPanel extends JPanel {
         setLayout(null);
         initComponents();
         add(replay);
-        add(titleText);
-        add(winnerText);
         /*for (JLabel label : scoreText) {
             add(label);
         }*/
@@ -43,17 +44,11 @@ public class EndPanel extends JPanel {
         
 
         replay = new JButton("Press to return"); // Placeholder for replay button
-        replay.setFont(new Font("Arial", Font.PLAIN, 20));
+        replay.setFont(new Font("Arial", Font.PLAIN, (int)(Rel.H(20))));
         replay.setForeground(Color.WHITE);
         replay.setBounds(Rel.X(840), Rel.Y(860), 200, 40);
         
-        endBG = ImageEnum.TITLEBG.getImage();
-
-        titleText = new JLabel("Game Over"); // Placeholder for title text
-        titleText.setBounds(Rel.X(450), Rel.Y(0), PNGEnum.TITLETEXT.getWidth(), PNGEnum.TITLETEXT.getHeight());
-        
-        winnerText = new JLabel("Winner: Player 1"); // Placeholder for winner text
-        winnerText.setBounds(Rel.X(840), Rel.Y(840), 200, 40);
+        endBG = ImageEnum.ENDBG.getImage();
 /* 
         scoreText = new JLabel[4];
         for (int i = 0; i < players.length; i++) {
@@ -77,5 +72,29 @@ public class EndPanel extends JPanel {
         if (endBG != null) {
             g.drawImage(endBG, 0, 0, this);
         }
+    /* 
+        // Cast Graphics to Graphics2D to enable advanced features
+    Graphics2D g2d = (Graphics2D) g;
+
+    // Set transparency using AlphaComposite
+    float transparency = 0.5f; // 0.0f is fully transparent, 1.0f is fully opaque
+    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, transparency));
+
+    // Set the color for the rectangle
+    g2d.setColor(Color.BLACK);
+
+    // Draw the semi-transparent rectangle
+    g2d.fillRect(Rel.X(170), Rel.Y(120), Rel.W(1580), Rel.H(840));
+
+    // Reset the composite to default (fully opaque) for subsequent drawings
+    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+
+    g.setFont(new Font("Arial", Font.PLAIN, (int)(150*Dimensions.HEIGHT/(double)1080)));
+    g.setColor(Color.WHITE);
+    g.drawString("GAME OVER", Rel.X(500), Rel.Y(250));
+    */
+    g.setColor(Color.WHITE);
+    g.setFont(new Font("Arial", Font.PLAIN, (int)(50*Dimensions.HEIGHT/(double)1080)));
+    g.drawString("Winner: Player 1", Rel.X(770), Rel.Y(840));
     }
 }
