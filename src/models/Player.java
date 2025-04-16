@@ -1,11 +1,5 @@
 package models;
-import java.awt.image.BufferedImage;
 import java.util.*;
-
-import javax.swing.JLabel;
-
-import utils.ImageEnum;
-import utils.PNGEnum;
 
 public class Player {
     private String color;
@@ -36,7 +30,7 @@ public class Player {
     }
 
     public void addTrainCard(TrainCard card){
-        trainCards.put(card.getColor(), trainCards.get(card.getColor()) + 1);
+        trainCards.put(card.getTrainCardType(), trainCards.get(card.getTrainCardType()) + 1);
     }
 
     public void claimRoute(/*GamePanel?*/Path route){
