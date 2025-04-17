@@ -14,10 +14,9 @@ public enum ImageEnum {
     ENDBG("assets/endBG.png"),
     GAMEBG("assets/gamebg.png"),
     RULESBG("assets/rulesbg.png"),
-    MAPBG("assets/mapBG.png"),
-    PATHBACK("assets/destinationticketback.png"),
-    TRAINBACK("assets/cardback.png");
+    MAPBG("assets/mapBG.png");
     
+
     private final BufferedImage b;
     private int w;
     private int h;

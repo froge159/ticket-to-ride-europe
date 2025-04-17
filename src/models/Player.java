@@ -16,17 +16,15 @@ public class Player {
         paths = new LinkedList<>();
         color = c;
 
-        trainCards.put("pink", 0);
-        trainCards.put("white", 0);
-        trainCards.put("blue", 0);
-        trainCards.put("yellow", 0);
-        trainCards.put("orange", 0);
         trainCards.put("black", 0);
-        trainCards.put("red", 0);
+        trainCards.put("blue", 0);
+        trainCards.put("brown", 0);
         trainCards.put("green", 0);
+        trainCards.put("purple", 0);
+        trainCards.put("red", 0);
+        trainCards.put("white", 0);
         trainCards.put("wild", 0);
-
-        
+        trainCards.put("yellow", 0);
     }
 
     public void addTrainCard(TrainCard card){

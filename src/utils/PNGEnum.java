@@ -14,7 +14,9 @@ public enum PNGEnum {
     //YELLOWPFP("assets/avatars/yellowcircleavatar.png"),
     //GREENPFP("assets/avatars/greencircleavatar.png"),
     PLAYERPANELIMG("assets/playerPanelImage.png"),
-    STATIONBUTTON("assets/stationButton.png");
+    STATIONBUTTON("assets/stationButton.png"),
+    TRAINBACK("assets/cardback.png"),
+    PATHBACK("assets/destinationticketback.png");
 
     private final ImageIcon b;
     private final int w, h;

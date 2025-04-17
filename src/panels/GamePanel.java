@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.*;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -61,12 +62,12 @@ public class GamePanel extends JPanel {
         for (String i : temp) {
             for (int j = 0; j < 12; j++)
                 trainCards.add(new TrainCard(i, false, CardImages.addImage(i + "-train",
-                        ImageIO.read(new File("assets/traincards/" + i + "card.png")))));
+                        ImageIO.read(new File("assets/traincards/" + i + "card.png")), 125, 200)));
         }
         trainCards.add(new TrainCard("wild", false,
-                CardImages.addImage("wild-train", ImageIO.read(new File("assets/traincards/wildcard.png")))));
+                CardImages.addImage("wild-train", ImageIO.read(new File("assets/traincards/wildcard.png")), 125, 200)));
         trainCards.add(new TrainCard("wild", false,
-                CardImages.addImage("wild-train", ImageIO.read(new File("assets/traincards/wildcard.png")))));
+                CardImages.addImage("wild-train", ImageIO.read(new File("assets/traincards/wildcard.png")), 125, 200)));
 
         BufferedReader br = new BufferedReader(new FileReader("assets/data/routeCards.txt"));
 
@@ -78,7 +79,7 @@ public class GamePanel extends JPanel {
             String city2 = st2.nextToken().toLowerCase();
             int points = Integer.parseInt(st2.nextToken());
             longCards.add(new LongPathCard(city1, city2, points, CardImages.addImage(city1 + "-" + city2 + "-long-path",
-                    ImageIO.read(new File("assets/longroutes/" + city1 + "-" + city2 + ".png")))));
+                    ImageIO.read(new File("assets/longroutes/" + city1 + "-" + city2 + ".png")), 125, 200)));
         }
 
         br.readLine(); // Skip the first line   
@@ -90,7 +91,7 @@ public class GamePanel extends JPanel {
             String city2 = st2.nextToken().toLowerCase();
             int points = Integer.parseInt(st2.nextToken());
                 pathCards.add(new NormalPathCard(city1, city2, points, CardImages.addImage(city1 + "-" + city2 + "-path",
-                        ImageIO.read(new File("assets/routes/" + city1 + "-" + city2 + ".png")))));            
+                        ImageIO.read(new File("assets/routes/" + city1 + "-" + city2 + ".png")), 125, 200)));            
         }
 
         /*
@@ -138,7 +139,7 @@ public class GamePanel extends JPanel {
         bp.setBounds(Rel.X(1680), Rel.Y(550), bp.getWidth(), bp.getHeight());
         mp.setBounds(Rel.X(20), Rel.Y(0), mp.getWidth(), mp.getHeight());
         for (int i = 0; i < 4; i++) {
-            handPanels[i].setBounds(Rel.X(20), Rel.Y(890), handPanels[i].getWidth(), handPanels[i].getHeight());
+            handPanels[i].setBounds(Rel.X(-55), Rel.Y(870), handPanels[i].getWidth(), handPanels[i].getHeight());
         }
 
         SwingUtilities.invokeLater(() -> {
