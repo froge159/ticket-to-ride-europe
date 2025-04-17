@@ -22,17 +22,17 @@ import panels.PlayerPanel;
 public class GameController {
     private ButtonPanel buttonPanel;
     private DrawPanel drawPanel;
-    private HandPanel handPanel;
+    private HandPanel[] handPanels;
     private MapPanel mapPanel;
     private PlayerPanel playerPanel;
     private GamePanel gamePanel;
     private StartEngine startEngine;
     private GameEngine gameEngine;
 
-    public GameController(ButtonPanel b, DrawPanel d, HandPanel h, MapPanel m, PlayerPanel p, GamePanel gp, StartEngine se, GameEngine ge) {
+    public GameController(ButtonPanel b, DrawPanel d, HandPanel[] h, MapPanel m, PlayerPanel p, GamePanel gp, StartEngine se, GameEngine ge) {
         buttonPanel = b;
         drawPanel = d;
-        handPanel = h;
+        handPanels = h;
         mapPanel = m;
         playerPanel = p;
         gamePanel = gp;

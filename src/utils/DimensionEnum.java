@@ -18,7 +18,9 @@ public enum DimensionEnum {
     STATIONBUTTON(170, 60),
     GAMEBG(1920, 1080),
     RULESBG(1920, 1080),
-    MAPBG(1350, 872);
+    MAPBG(1350, 872),
+    PATHBACK(50, 70),
+    TRAINBACK(50, 70);
 
     private final int w, h;
 

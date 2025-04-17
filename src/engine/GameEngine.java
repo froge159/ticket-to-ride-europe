@@ -17,15 +17,15 @@ import panels.PlayerPanel;
 public class GameEngine {
     private ButtonPanel buttonPanel;
     private DrawPanel drawPanel;
-    private HandPanel handPanel;
+    private HandPanel[] handPanels;
     private MapPanel mapPanel;
     private PlayerPanel playerPanel;
     private GameEngine engine;
 
-    public GameEngine(ButtonPanel b, DrawPanel d, HandPanel h, MapPanel m, PlayerPanel p) {
+    public GameEngine(ButtonPanel b, DrawPanel d, HandPanel[] h, MapPanel m, PlayerPanel p) {
         buttonPanel = b;
         drawPanel = d;
-        handPanel = h;
+        handPanels = h;
         mapPanel = m;
         playerPanel = p;
     }

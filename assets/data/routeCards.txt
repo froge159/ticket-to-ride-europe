@@ -2,7 +2,7 @@ Palermo Moskva 20
 Brest Petrograd 20
 Kobenhavn Erzurum 21
 Cadiz Stockholm 21
-Lisboa Danzic 20
+Lisboa Danzig 20
 Edinburgh Athina 21
 
 Amsterdam Pamplona 7
@@ -12,8 +12,8 @@ Athina Angora 5
 Athina Wilno 11
 Barcelona Bruxelles 8
 Barcelona Munchen 8
-Berlin București 8
-Berlin Mosva 12
+Berlin Bucuresti 8
+Berlin Moskva 12
 Berlin Roma 9
 Brest Marseille 7
 Brest Venezia 8
@@ -34,7 +34,7 @@ Marseille Essen 8
 Palermo Constantinople 8
 Paris Wien 8
 Paris Zagreb 7
-Rica București 10
+Riga Bucuresti 10
 Roma Smyrna 8
 Sarajevo Sevastopol 8
 Smolensk Rostov 8

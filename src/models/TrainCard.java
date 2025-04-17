@@ -1,13 +1,22 @@
 package models;
 
-public class TrainCard extends Card{
-    private String color;
+import java.awt.image.BufferedImage;
 
-    public TrainCard(String c){
-        super();
-        color = c;
-        //set Images
+import javax.swing.ImageIcon;
+
+import utils.ImageEnum;
+
+public class TrainCard extends Card {
+    private String type;
+    private BufferedImage back;
+
+    public TrainCard(String t, boolean isFaceUp, BufferedImage front){
+        super(isFaceUp, front);
+        back = ImageEnum.TRAINBACK.getImage();
+        type = t;
     }
 
-    public String getColor(){return color;}
+    public String getTrainCardType() {
+        return type;
+    }
 }

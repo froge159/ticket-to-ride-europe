@@ -2,6 +2,7 @@ package utils;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.rmi.server.ExportException;
 
 import javax.imageio.ImageIO;
 
@@ -13,15 +14,20 @@ public enum ImageEnum {
     ENDBG("assets/endBG.png"),
     GAMEBG("assets/gamebg.png"),
     RULESBG("assets/rulesbg.png"),
-    MAPBG("assets/mapBG.png");
+    MAPBG("assets/mapBG.png"),
+    PATHBACK("assets/destinationticketback.png"),
+    TRAINBACK("assets/cardback.png");
     
     private final BufferedImage b;
-    private final int w, h;
+    private int w;
+    private int h;
 
     private ImageEnum(String path) {
         BufferedImage temp = null;
-        this.w = DimensionEnum.valueOf(name()).getWidth();
-        this.h = DimensionEnum.valueOf(name()).getHeight();
+            this.w = DimensionEnum.valueOf(name()).getWidth();
+            this.h = DimensionEnum.valueOf(name()).getHeight();
+        
+        
         try {
             temp = ImageIO.read(new File(path));
             temp = scale(temp, w, h);
@@ -50,6 +56,8 @@ public enum ImageEnum {
         }
         return img;
     }
+
+
 
     public BufferedImage getImage(){
         return b;
