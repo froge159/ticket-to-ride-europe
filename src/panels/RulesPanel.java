@@ -27,7 +27,7 @@ public class RulesPanel extends JPanel {
     public JButton getReturnButton() {
         return returnButton;
     }
-
+    
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
