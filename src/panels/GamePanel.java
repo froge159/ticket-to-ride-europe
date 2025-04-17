@@ -14,6 +14,7 @@ import engine.GameEngine;
 import engine.StartEngine;
 import models.LongPathCard;
 import models.NormalPathCard;
+import models.Path;
 import models.Player;
 import models.TTRMap;
 import models.TrainCard;
@@ -119,7 +120,7 @@ public class GamePanel extends JPanel {
 
     }
 
-    public void initComponents() {
+    public void initComponents() throws IOException {
         gameBG = ImageEnum.GAMEBG.getImage();
         PlayerPanel pp = new PlayerPanel(players);
         ButtonPanel bp = new ButtonPanel();
@@ -166,5 +167,9 @@ public class GamePanel extends JPanel {
         if (gameBG != null) {
             g.drawImage(gameBG, 0, 0, this);
         }
+    }
+
+    public TTRMap getMap() {
+        return map;
     }
 }

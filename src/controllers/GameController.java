@@ -1,5 +1,6 @@
 package controllers;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -12,6 +13,9 @@ import java.awt.event.MouseEvent;
 
 import engine.GameEngine;
 import engine.StartEngine;
+import models.Path;
+import models.PathBlock;
+import models.TTRMap;
 import panels.ButtonPanel;
 import panels.DrawPanel;
 import panels.GamePanel;
@@ -54,6 +58,16 @@ public class GameController {
             @Override
             public void mouseClicked(MouseEvent e) {
                 gameEngine.handleMouseClick(e);
+                Point clickPoint = e.getPoint();
+                for (Path path : gamePanel.getMap().getPaths()) {
+                    for(PathBlock rect : path.getPath()) {
+                        if (rect.contains(clickPoint)) {
+                            System.out.println("clicked");
+                            // Add your click logic here
+                        }
+                    }
+                }
+                gamePanel.repaint();
             }
         });
     }

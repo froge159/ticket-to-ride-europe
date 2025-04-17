@@ -1,4 +1,5 @@
 package models;
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -14,7 +15,9 @@ public class TTRMap {
         cities = new LinkedList<>();
         paths = new LinkedList<>();
 
-        BufferedReader br = new BufferedReader(new FileReader("assets/data/mapRoutes.txt"));
+        paths.add(new Path(new PathBlock[]{new PathBlock(Color.BLACK, "default", 0, 915, 804), new PathBlock(Color.BLACK, "default", 25, 969, 815)}, new City("A", 0, 0), new City(("B"), 0, 0)));
+
+        //BufferedReader br = new BufferedReader(new FileReader("assets/data/mapRoutes.txt"));
         /* 
         String line;
         while((line = br.readLine()) != null){
@@ -42,5 +45,12 @@ public class TTRMap {
             }
         }
         return false;
+    }
+
+    public LinkedList<City> getCities(){
+        return cities;
+    }
+    public LinkedList<Path> getPaths(){
+        return paths;
     }
 }
