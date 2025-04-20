@@ -4,27 +4,27 @@ import java.util.*;
 public class Player {
     private String color;
     private int trains = 45, stations = 4, points = 0;
+    private LongPathCard longPath = null;
     private TreeMap<String, Integer> trainCards;
-    private ArrayList<PathCard> pathCards;
+    private TreeMap<String, Integer> trainCardsSelected;
+    private Stack<PathCard> pathCards;
     private LinkedList<City> cities;
     private LinkedList<Path> paths;
 
     public Player(String c){
+        String[] temp = { "black", "blue", "brown", "green", "purple", "red", "white", "yellow", "wild" };
+
         trainCards = new TreeMap<>();
-        pathCards = new ArrayList<>();
+        trainCardsSelected = new TreeMap<>();
+        pathCards = new Stack<>();
         cities = new LinkedList<>();
         paths = new LinkedList<>();
         color = c;
 
-        trainCards.put("black", 0);
-        trainCards.put("blue", 0);
-        trainCards.put("brown", 0);
-        trainCards.put("green", 0);
-        trainCards.put("purple", 0);
-        trainCards.put("red", 0);
-        trainCards.put("white", 0);
-        trainCards.put("wild", 0);
-        trainCards.put("yellow", 0);
+        for (String color: temp) {
+            trainCards.put(color, 0);
+            trainCardsSelected.put(color, 0);
+        }
     }
 
     public void addTrainCard(TrainCard card){
@@ -66,7 +66,13 @@ public class Player {
     public int getTrains(){return trains;}
     public int getStations(){return stations;}
     public TreeMap<String, Integer> getTrainCards(){return trainCards;}
-    public ArrayList<PathCard> getPathCards(){return pathCards;}
+    public Stack<PathCard> getPathCards(){return pathCards;}
 
     public int getPoints(){return points;}
+
+    public LongPathCard getLongPath() { return longPath; }
+
+    public TreeMap<String, Integer> getTrainCardsSelected() {
+        return trainCardsSelected;
+    }
 }

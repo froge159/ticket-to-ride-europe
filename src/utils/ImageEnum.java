@@ -2,7 +2,6 @@ package utils;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.rmi.server.ExportException;
 
 import javax.imageio.ImageIO;
 

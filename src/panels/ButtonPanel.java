@@ -27,13 +27,13 @@ public class ButtonPanel extends JPanel { // panel for Station and Info buttons
         ImageIcon infoPNG = PNGEnum.INFOICON.getImage();
         infoButton = new JButton();
         infoButton.setIcon(infoPNG);
-        infoButton.setBounds(Rel.X(120), Rel.Y(380), infoPNG.getIconWidth(), infoPNG.getIconHeight());
+        infoButton.setBounds(Rel.X(120), Rel.Y(555), infoPNG.getIconWidth(), infoPNG.getIconHeight());
         infoButton.setOpaque(false);
         infoButton.setContentAreaFilled(false);
         infoButton.setBorderPainted(false);
         infoButton.setFocusPainted(false);
 
-        setSize(new Dimension(200, 450));
+        setSize(new Dimension(200, 800));
         setOpaque(false);
         //setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.BLACK));
         SwingUtilities.invokeLater(() -> {

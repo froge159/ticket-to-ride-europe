@@ -1,10 +1,11 @@
 {
     "java.project.outputPath": "bin",
     "github.copilot.enable": {
-        "*": true,
+        "*": false,
         "plaintext": false,
         "markdown": false,
-        "scminput": false
+        "scminput": false,
+        "java": true
     },
     "java.search.scope": "all",
 }

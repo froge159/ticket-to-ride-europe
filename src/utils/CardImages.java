@@ -10,7 +10,9 @@ public class CardImages {
     public static HashMap<String, ImageIcon> cardImages = new HashMap<>();
 
     public static ImageIcon addImage(String name, BufferedImage image, int w, int h) {
-        return cardImages.put(name, new ImageIcon(new ImageIcon(image).getImage().getScaledInstance(w, h, java.awt.Image.SCALE_SMOOTH)));
+        ImageIcon res = new ImageIcon(new ImageIcon(image).getImage().getScaledInstance(Rel.W(w), Rel.H(h), java.awt.Image.SCALE_SMOOTH));
+        cardImages.put(name, res);
+        return res;
     }
 
     public static ImageIcon getImg(String name) {

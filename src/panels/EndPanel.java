@@ -1,23 +1,19 @@
 package panels;
 
-import java.awt.AlphaComposite;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import utils.DimensionEnum;
+
+
 import utils.Dimensions;
 import utils.ImageEnum;
 
-import models.Player;
-import utils.PNGEnum;
 import utils.Rel;
 
 public class EndPanel extends JPanel {

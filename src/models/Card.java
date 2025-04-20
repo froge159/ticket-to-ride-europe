@@ -21,4 +21,6 @@ abstract class Card {
     public boolean isFaceUp(){
         return isFaceUp;
     }
+
+    public ImageIcon getFront() { return front; }
 }
