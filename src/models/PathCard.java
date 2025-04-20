@@ -1,21 +1,22 @@
 package models;
 
-import java.awt.image.BufferedImage;
 
-import utils.ImageEnum;
+import javax.swing.ImageIcon;
+
+import utils.PNGEnum;
 
 
-abstract class PathCard extends Card {
+public abstract class PathCard extends Card {
     private int points;
     private String city1, city2;
     private boolean completed = false;
-    private BufferedImage back;
+    private ImageIcon back;
 
-    public PathCard(int p, String c1, String c2, boolean isFaceUp, BufferedImage front) {
+    public PathCard(int p, String c1, String c2, boolean isFaceUp, ImageIcon front) {
         super(isFaceUp, front);
         points = p;
         city1 = c1; city2 = c2;
-        back = ImageEnum.PATHBACK.getImage();
+        back = PNGEnum.PATHBACK.getImage();
     }
 
     public void setPoints(int p){points = p;}
@@ -28,4 +29,14 @@ abstract class PathCard extends Card {
     public int getPoints(){return points;}
     public String[] getCities(){return new String[]{city1, city2};}
     public boolean isComplete(){return completed;}
+
+    @Override
+    public String toString() {
+        return "PathCard{" +
+                "points=" + points +
+                ", city1='" + city1 + '\n' +
+                ", city2='" + city2 + '\n' +
+                ", completed=" + completed +
+                '}';
+    }
 }

@@ -3,6 +3,7 @@ package panels;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -70,4 +71,10 @@ public class PlayerPanel extends JPanel  {
 		repaint();
 	}
 
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.setColor(Color.YELLOW);
+		g.drawRect(0, 0, getWidth(), getHeight() / 4 + Rel.H(10));
+	}
 }

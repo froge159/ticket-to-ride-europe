@@ -1,13 +1,14 @@
 package models;
 
-import java.awt.image.BufferedImage;
+
+import javax.swing.ImageIcon;
 
 
 abstract class Card {
     private boolean isFaceUp = false;
-    private BufferedImage front;
+    private ImageIcon front;
 
-    public Card(boolean isFaceUp, BufferedImage front) {
+    public Card(boolean isFaceUp, ImageIcon front) {
         this.isFaceUp = isFaceUp;
         this.front = front;
     }
@@ -20,4 +21,6 @@ abstract class Card {
     public boolean isFaceUp(){
         return isFaceUp;
     }
+
+    public ImageIcon getFront() { return front; }
 }
