@@ -4,19 +4,24 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 
-import utils.ImageEnum;
+import utils.PNGEnum;
 
 public class TrainCard extends Card {
     private String type;
-    private BufferedImage back;
+    private ImageIcon back;
 
-    public TrainCard(String t, boolean isFaceUp, BufferedImage front){
+    public TrainCard(String t, boolean isFaceUp, ImageIcon front){
         super(isFaceUp, front);
-        back = ImageEnum.TRAINBACK.getImage();
+        back = PNGEnum.TRAINBACK.getImage();
         type = t;
     }
 
     public String getTrainCardType() {
         return type;
+    }
+
+    public ImageIcon getScaledFront(int w, int h) {
+        ImageIcon res = new ImageIcon(getFront().getImage().getScaledInstance(w, h, java.awt.Image.SCALE_SMOOTH));
+        return res;
     }
 }

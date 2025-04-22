@@ -6,9 +6,8 @@ public class Main {
     // entry point
     /*
      * TODO:
-     * add rotated train cards
-     * update cardimages to accept with and height as it isn't constant anymore
-     * 
+     * add button hover effects
+     * style buttons
      */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -16,7 +15,6 @@ public class Main {
             try {
                 frame = new TTRFrame();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             } 
             frame.setVisible(true);
