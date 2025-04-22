@@ -9,20 +9,21 @@ import java.awt.geom.Point2D;
 public class PathBlock {
     private Color color;
     String type;
-    private int deg, x, y;
+    private double deg, x, y;
+    private double centerX = x + 48/2.0;
+    private double centerY = y + 14/2.0;
 
     public PathBlock(Color col, String ty, int d, int x, int y){
         color = col;
         type = ty;
         deg = d;
-        this.x = x;
-        this.y = y;
+        centerX = x;
+        centerY = y;
+        this.x = centerX - 48/2.0;
+        this.y = centerY - 14/2.0;
     }
 
     public boolean contains(Point p) {
-        // Get rectangle center
-        double centerX = x + 48/2.0;
-        double centerY = y + 14/2.0;
         
         // Create inverse transform to un-rotate the point
         AffineTransform transform = new AffineTransform();
@@ -41,12 +42,12 @@ public class PathBlock {
         AffineTransform oldTransform = g2d.getTransform();
         g2d.rotate(Math.toRadians(deg), x + 48/2.0, y + 14/2.0);
         g2d.setColor(color);
-        g2d.fillRect(x, y, 48, 14);
+        g2d.fillRect((int)x, (int)y, 48, 14);
         g2d.setTransform(oldTransform);
     }
 
 
     public Color getColor(){return color;}
     public String getType(){return type;}
-    public int[] getPos(){return new int[]{x, y, deg};}
+    public int[] getPos(){return new int[]{(int)x, (int)y, (int)deg};}
 }

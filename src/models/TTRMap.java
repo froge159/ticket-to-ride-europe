@@ -15,7 +15,7 @@ public class TTRMap {
         cities = new LinkedList<>();
         paths = new LinkedList<>();
 
-        paths.add(new Path(new PathBlock[]{new PathBlock(Color.BLACK, "default", 0, 915, 804), new PathBlock(Color.BLACK, "default", 25, 969, 815)}, new City("A", 0, 0), new City(("B"), 0, 0)));
+        //paths.add(new Path(new PathBlock[]{new PathBlock(Color.BLACK, "default", 0, 938, 810), new PathBlock(Color.BLACK, "default", 25, 988, 821)}, new City("A", 0, 0), new City(("B"), 0, 0)));
 
         //BufferedReader br = new BufferedReader(new FileReader("assets/data/mapRoutes.txt"));
         /* 
