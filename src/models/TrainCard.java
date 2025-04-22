@@ -19,4 +19,9 @@ public class TrainCard extends Card {
     public String getTrainCardType() {
         return type;
     }
+
+    public ImageIcon getScaledFront(int w, int h) {
+        ImageIcon res = new ImageIcon(getFront().getImage().getScaledInstance(w, h, java.awt.Image.SCALE_SMOOTH));
+        return res;
+    }
 }

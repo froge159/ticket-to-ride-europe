@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import utils.PNGEnum;
 import utils.Rel;
 
@@ -18,7 +17,7 @@ public class ButtonPanel extends JPanel { // panel for Station and Info buttons
         ImageIcon stationPNG = PNGEnum.STATIONBUTTON.getImage();
         stationButton = new JButton();
         stationButton.setIcon(stationPNG);
-        stationButton.setBounds(Rel.X(30), 0, stationPNG.getIconWidth(), stationPNG.getIconHeight());
+        stationButton.setBounds(Rel.X(27), Rel.Y(15), stationPNG.getIconWidth(), stationPNG.getIconHeight());
         stationButton.setOpaque(false);
         stationButton.setContentAreaFilled(false);
         stationButton.setBorderPainted(false);
@@ -27,20 +26,22 @@ public class ButtonPanel extends JPanel { // panel for Station and Info buttons
         ImageIcon infoPNG = PNGEnum.INFOICON.getImage();
         infoButton = new JButton();
         infoButton.setIcon(infoPNG);
-        infoButton.setBounds(Rel.X(120), Rel.Y(555), infoPNG.getIconWidth(), infoPNG.getIconHeight());
+        infoButton.setBounds(Rel.X(120), Rel.Y(535), infoPNG.getIconWidth(), infoPNG.getIconHeight());
         infoButton.setOpaque(false);
         infoButton.setContentAreaFilled(false);
         infoButton.setBorderPainted(false);
         infoButton.setFocusPainted(false);
 
-        setSize(new Dimension(200, 800));
+
+        
         setOpaque(false);
         //setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.BLACK));
-        SwingUtilities.invokeLater(() -> {
+        //SwingUtilities.invokeLater(() -> {
             setLayout(null);
+            setSize(new Dimension(200, 800));
             add(stationButton);
             add(infoButton);
-        });
+        //});
     }
 
     public JButton getStationButton() { return stationButton; }

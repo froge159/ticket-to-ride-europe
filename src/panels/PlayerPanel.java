@@ -30,45 +30,50 @@ public class PlayerPanel extends JPanel  {
 						PNGEnum.PLAYERPANELIMG.getHeight()));
 		
 		setOpaque(false);
-		SwingUtilities.invokeLater(() -> {
-			setLayout(null);
-			updatePanel();
-		});
+		setLayout(null);
+		updatePanel();
 	}
 
 	public void updatePanel() {
-		removeAll();
-		add(bgImage);
+		SwingUtilities.invokeLater(() -> {
+			removeAll();
+		});
 		for (int i = 0; i < playerArray.length; i++) {
+			final int index = i; // Create a final copy of i
 			JLabel trainLabel = new JLabel(
-					String.valueOf(playerArray[i].getTrains()));
+					String.valueOf(playerArray[index].getTrains()));
 			JLabel stationsLabel = new JLabel(
-					String.valueOf(playerArray[i].getStations()));
+					String.valueOf(playerArray[index].getStations()));
 			JLabel pointsLabel = new JLabel(
-					String.valueOf(playerArray[i].getPoints()));
+					String.valueOf(playerArray[index].getPoints()));
 			Font font = new Font("Arial", Font.PLAIN, Rel.W(20));
 
 			trainLabel.setForeground(Color.BLACK); // Set text color to black
-			trainLabel.setBounds(Rel.X(130), Rel.Y(i * 97 + 35), Rel.W(100), Rel.H(20));
+			trainLabel.setBounds(Rel.X(130), Rel.Y(index * 97 + 35), Rel.W(100), Rel.H(20));
 			trainLabel.setFont(font);
 
 			stationsLabel.setForeground(Color.BLACK);
-			stationsLabel.setBounds(Rel.X(130), Rel.Y(i * 97 + 63), Rel.W(100), Rel.H(20));
+			stationsLabel.setBounds(Rel.X(130), Rel.Y(index * 97 + 63), Rel.W(100), Rel.H(20));
 			stationsLabel.setFont(font);
 
 			pointsLabel.setForeground(Color.BLACK);
-			pointsLabel.setBounds(Rel.X(15), Rel.Y(i * 97 + 73), Rel.W(100), Rel.H(20));
+			pointsLabel.setBounds(Rel.X(15), Rel.Y(index * 97 + 73), Rel.W(100), Rel.H(20));
 			pointsLabel.setFont(font);
 
-			add(trainLabel);
-			add(stationsLabel);
-			setComponentZOrder(trainLabel, (i * 3));
-			setComponentZOrder(stationsLabel, (i * 3) + 1);
-			setComponentZOrder(pointsLabel, (i * 3) + 2);
+			SwingUtilities.invokeLater(() -> {
+				add(trainLabel);
+				add(stationsLabel);
+				setComponentZOrder(trainLabel, (index * 3));
+				setComponentZOrder(stationsLabel, (index * 3) + 1);
+				setComponentZOrder(pointsLabel, (index * 3) + 2);
+			});
 		}
-		setComponentZOrder(bgImage, 12);
-		revalidate();
-		repaint();
+		SwingUtilities.invokeLater(() -> {
+			add(bgImage);
+			setComponentZOrder(bgImage, 12);
+			revalidate();
+			repaint();
+		});
 	}
 
 	@Override

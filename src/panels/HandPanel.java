@@ -23,28 +23,50 @@ public class HandPanel extends JPanel {
     private Player p;
     private String[] temp = { "black", "blue", "brown", "green", "purple", "red", "white", "yellow", "wild" };
     private ArrayList<AnimatedCard> animatedPathCards;
+    private JButton okButton, cancelButton;
 
     public HandPanel(Player p) {
-        this.p = p;
-
-        setSize(Rel.W(1700), Rel.H(1080));
+        this.p = p; 
         setOpaque(false);
-        setBorder(new javax.swing.border.LineBorder(Color.YELLOW, Rel.W(3), true));
+        // setBorder(new javax.swing.border.LineBorder(Color.YELLOW, Rel.W(3), true));
 
         setLayout(null);
+        setSize(Rel.W(1700), Rel.H(1080));
         updatePanel();
     }
 
     public void updatePanel() {
-        removeAll();
-
+        SwingUtilities.invokeLater(() -> {
+            removeAll();
+        });
+        
         TreeMap<String, Integer> mp = p.getTrainCards();
         TreeMap<String, Integer> mpSelected = p.getTrainCardsSelected();
         Stack<PathCard> pc = p.getPathCards();
         animatedPathCards = new ArrayList<>();
 
-        int jlabelX = 70; 
-        int cardX = 17;
+        final int[] y = { 925 };
+        int x = 0;
+        Iterator<PathCard> it = pc.iterator();
+        while (it.hasNext()) {
+            PathCard currentCard = it.next();
+            AnimatedCard animatedCard = new AnimatedCard(currentCard, Rel.W(200), Rel.H(125), Rel.X(17), Rel.Y(y[0]));
+            animatedPathCards.add(animatedCard);
+
+            if (x < 2) { // only add first 2 cards
+                SwingUtilities.invokeLater(() -> {
+                    add(animatedCard);
+                    setComponentZOrder(animatedCard, 0); 
+                    //revalidate(); 
+                    //repaint();
+                });
+            }
+            x++;
+            y[0] -= 40; 
+        }
+
+        int jlabelX = 278; 
+        int cardX = 225;
         for (String color : temp) {
             JLabel count = new JLabel(String.valueOf(mp.get(color)));
             count.setFont(new Font("Arial", Font.PLAIN, Rel.W(30)));
@@ -62,9 +84,9 @@ public class HandPanel extends JPanel {
             card.setContentAreaFilled(false);
             card.setBorderPainted(false);
             
-            jlabelX += 150;
-            cardX += 150; 
-            SwingUtilities.invokeLater(() -> {
+            jlabelX += 140;
+            cardX += 140; 
+            SwingUtilities.invokeLater(() -> { 
                 add(count);
                 add(clickCount);
                 add(card);
@@ -74,26 +96,16 @@ public class HandPanel extends JPanel {
             });
         }
 
-        final int[] y = { 935 };
-        int x = 0;
-        Iterator<PathCard> it = pc.iterator();
-        while (it.hasNext()) {
-            PathCard currentCard = it.next();
-            AnimatedCard animatedCard = new AnimatedCard(currentCard, Rel.W(200), Rel.H(125), Rel.X(1370), Rel.Y(y[0]));
-            animatedPathCards.add(animatedCard);
 
-            if (x < 2) { // only add first 2 cards
-                SwingUtilities.invokeLater(() -> {
-                    add(animatedCard);
-                    setComponentZOrder(animatedCard, 0); 
-                    revalidate(); 
-                    repaint();
-                });
-            }
-            x++;
-            y[0] -= 40; 
-        }
+        okButton = new JButton("OK");
+        okButton.setBounds(Rel.X(1495), Rel.Y(910), Rel.W(80), Rel.H(40));
+
+        cancelButton = new JButton("Cancel");
+        cancelButton.setBounds(Rel.X(1495), Rel.Y(980), Rel.W(80), Rel.H(40));
+
         SwingUtilities.invokeLater(() -> {
+            add(okButton);
+            add(cancelButton);
             revalidate();
             repaint();
         });
@@ -105,7 +117,7 @@ public class HandPanel extends JPanel {
 
     public void setWarningText(String txt) {
         JLabel warning = new JLabel(txt);
-        warning.setFont(new Font("Arial", Font.BOLD, Rel.W(20)));
+        warning.setFont(new Font("Arial", Font.BOLD, Rel.W(15)));
         warning.setForeground(Color.RED);
         warning.setBounds(Rel.X(17), Rel.Y(845), Rel.W(1000), Rel.H(50));
         SwingUtilities.invokeLater(() -> {

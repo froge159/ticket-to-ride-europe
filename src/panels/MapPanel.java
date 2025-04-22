@@ -19,10 +19,10 @@ public class MapPanel extends JPanel{
         
         mapBG = ImageEnum.MAPBG.getImage();
 
-        SwingUtilities.invokeLater(() -> {
+        //SwingUtilities.invokeLater(() -> {
             setLayout(null);
             setSize(mapBG.getWidth(), mapBG.getHeight());
-        });
+        //});
     }
 
     @Override

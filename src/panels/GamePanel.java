@@ -24,8 +24,8 @@ import java.io.*;
 
 public class GamePanel extends JPanel {
 
-    private ArrayList<TrainCard> trainCards, discard;
-    private ArrayList<NormalPathCard> pathCards;
+    private Stack<TrainCard> trainCards, discard;
+    private Stack<NormalPathCard> pathCards;
     private ArrayList<LongPathCard> longCards;
     private Player[] players;
     private HandPanel[] handPanels;
@@ -39,9 +39,9 @@ public class GamePanel extends JPanel {
     public GamePanel() throws IOException {
         String[] temp = { "black", "blue", "brown", "green", "purple", "red", "white", "yellow", "wild" };
 
-        trainCards = new ArrayList<>();
-        discard = new ArrayList<>();
-        pathCards = new ArrayList<>();
+        trainCards = new Stack<>();
+        discard = new Stack<>();
+        pathCards = new Stack<>();
         longCards = new ArrayList<>();
         players = new Player[4];
         turn = 0;
@@ -56,6 +56,7 @@ public class GamePanel extends JPanel {
         players[1] = new Player("yellow");
         players[2] = new Player("green");
         players[3] = new Player("blue");
+
 
         // load train cards
         for (String i : temp) {
@@ -121,7 +122,7 @@ public class GamePanel extends JPanel {
         gameBG = ImageEnum.GAMEBG.getImage();
         PlayerPanel pp = new PlayerPanel(players);
         ButtonPanel bp = new ButtonPanel();
-        DrawPanel dp = new DrawPanel();
+        DrawPanel dp = new DrawPanel(trainCards, pathCards);
         MapPanel mp = new MapPanel();
         // FOR TESTING
         players[0].addPathCard(pathCards.get(0));
@@ -148,6 +149,7 @@ public class GamePanel extends JPanel {
         pp.setBounds(Rel.X(1730), Rel.Y(20), pp.getWidth(), pp.getHeight());
         bp.setBounds(Rel.X(1700), Rel.Y(420), bp.getWidth(), bp.getHeight());
         mp.setBounds(Rel.X(20), Rel.Y(0), mp.getWidth(), mp.getHeight());
+        dp.setBounds(Rel.X(1380), Rel.Y(0), dp.getWidth(), dp.getHeight());
         for (int i = 0; i < 4; i++) {
             handPanels[i].setBounds(Rel.X(10), Rel.Y(10), handPanels[i].getWidth(), handPanels[i].getHeight());
         }
@@ -158,6 +160,7 @@ public class GamePanel extends JPanel {
             add(bp);
             add(mp);
             add(handPanels[0]); 
+            add(dp);
             setComponentZOrder(handPanels[0], 0);
             revalidate();
             repaint();

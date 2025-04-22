@@ -23,12 +23,12 @@ public class StartPanel extends JPanel {
         
         initComponents();
 
-        SwingUtilities.invokeLater(() -> {
+        //SwingUtilities.invokeLater(() -> {
             setLayout(null);
             add(startButton);
             add(titleText);
             add(infoButton);
-        });
+        //});
     }
 
 
