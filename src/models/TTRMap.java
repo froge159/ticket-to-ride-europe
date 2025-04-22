@@ -1,4 +1,5 @@
 package models;
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -13,7 +14,9 @@ public class TTRMap {
         cities = new LinkedList<>();
         paths = new LinkedList<>();
 
-        BufferedReader br = new BufferedReader(new FileReader("assets/data/mapRoutes.txt"));
+        //paths.add(new Path(new PathBlock[]{new PathBlock(Color.BLACK, "default", 0, 938, 810), new PathBlock(Color.BLACK, "default", 25, 988, 821)}, new City("A", 0, 0), new City(("B"), 0, 0)));
+
+        //BufferedReader br = new BufferedReader(new FileReader("assets/data/mapRoutes.txt"));
         /* 
         String line;
         while((line = br.readLine()) != null){
@@ -41,5 +44,12 @@ public class TTRMap {
             }
         }
         return false;
+    }
+
+    public LinkedList<City> getCities(){
+        return cities;
+    }
+    public LinkedList<Path> getPaths(){
+        return paths;
     }
 }
