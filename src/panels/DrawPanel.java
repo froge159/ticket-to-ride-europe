@@ -32,7 +32,7 @@ public class DrawPanel extends JPanel {
 
         setSize(Rel.W(720), Rel.H(800));
         setOpaque(false);
-        setBorder(new javax.swing.border.LineBorder(Color.YELLOW, Rel.W(3), true));
+        //setBorder(new javax.swing.border.LineBorder(Color.YELLOW, Rel.W(3), true));
 
         
         setLayout(null);
