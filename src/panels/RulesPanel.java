@@ -20,10 +20,10 @@ public class RulesPanel extends JPanel {
         returnButton = new JButton("Return");
         returnButton.setBounds(Rel.X(820), Rel.Y(900), Rel.W(240), Rel.H(30));
         rulesBG = ImageEnum.RULESBG.getImage();
-        SwingUtilities.invokeLater(() -> {
+        //SwingUtilities.invokeLater(() -> {
             setLayout(null);
             add(returnButton);
-        });
+        //});
     }
 
     public void setOriginPanel(JPanel p) {

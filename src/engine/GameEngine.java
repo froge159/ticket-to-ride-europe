@@ -18,6 +18,9 @@ import panels.PlayerPanel;
 import utils.Rel;
 import panels.AnimatedCard;
 
+// IMPORTANT: should be accessing attributes inside panels only.
+// gamePanel is only for initializion. its attributes are passed down into the subpanels. use those attributes instead of gamePanel's attributes
+
 
 public class GameEngine {
     private ButtonPanel buttonPanel;
@@ -52,7 +55,7 @@ public class GameEngine {
         for (int i = 1; i < animatedPathCards.size(); i++) {
             final int index = i; 
             AnimatedCard c = animatedPathCards.get(index);
-            animatedPathCards.get(index).setCorner(new Point(Rel.X(c.getX()), Rel.Y(c.getY() + 40 * index - index * 130))); // move cards up
+            animatedPathCards.get(index).setCorner(new Point(c.getX(), c.getY() + Rel.Y(40) * index - index * Rel.Y(130))); // move cards up
             SwingUtilities.invokeLater(() -> {
                 animatedPathCards.get(index).repaint();
                 hp.repaint(); hp.revalidate();
@@ -70,7 +73,7 @@ public class GameEngine {
         ArrayList<AnimatedCard> animatedPathCards = hp.getAnimatedPathCards();
         for (int i = 2; i < animatedPathCards.size(); i++) { // remove all cards except first two
             AnimatedCard c = animatedPathCards.get(i);
-            c.setCorner(new Point(Rel.X(c.getX()), Rel.Y(c.getY() - 40 * i + i * 130))); // move cards down
+            c.setCorner(new Point(c.getX(), c.getY() - Rel.Y(40) * i + i * Rel.Y(130))); // move cards down
             if (java.util.Arrays.asList(hp.getComponents()).contains(c)) {
                 SwingUtilities.invokeLater(() -> {
                     hp.remove(c);
@@ -79,7 +82,7 @@ public class GameEngine {
                 });
             }
         }
-        animatedPathCards.get(1).setCorner(new Point(Rel.X(1370), Rel.Y(895))); // update position if 2nd card
+        animatedPathCards.get(1).setCorner(new Point(Rel.X(17), Rel.Y(885))); // update position if 2nd card
         SwingUtilities.invokeLater(() -> {
             animatedPathCards.get(1).repaint();
             hp.repaint(); hp.revalidate();

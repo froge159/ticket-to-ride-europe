@@ -15,8 +15,12 @@ public enum PNGEnum {
     //GREENPFP("assets/avatars/greencircleavatar.png"),
     PLAYERPANELIMG("assets/playerPanelImage.png"),
     STATIONBUTTON("assets/stationButton.png"),
-    TRAINBACK("assets/cardback.png"),
-    PATHBACK("assets/destinationticketback.png");
+    TRAINBACK("assets/trainCardBack.png"),
+    TRAINBACKBW("assets/trainCardBackBW.png"),
+    PATHBACK("assets/destinationticketback.png"),
+    TICKETBACK("assets/ticketBack.png"),
+    TICKETBACKBW("assets/ticketBackBW.png");
+
 
     private final ImageIcon b;
     private final int w, h;

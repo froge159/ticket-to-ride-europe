@@ -20,7 +20,10 @@ public enum DimensionEnum {
     RULESBG(1920, 1080),
     MAPBG(1350, 872),
     PATHBACK(50, 70),
-    TRAINBACK(50, 70);
+    TRAINBACK(200, 125),
+    TRAINBACKBW(200, 125),
+    TICKETBACK(200, 125),
+    TICKETBACKBW(200, 125);
 
     private final int w, h;
 
