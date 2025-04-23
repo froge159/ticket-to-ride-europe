@@ -23,12 +23,14 @@ import panels.AnimatedCard;
 
 
 public class GameEngine {
+
     private ButtonPanel buttonPanel;
     private DrawPanel drawPanel;
     private HandPanel[] handPanels;
     private MapPanel mapPanel;
     private PlayerPanel playerPanel;
     private GameEngine engine;
+    private int currentPlayer = 0;
 
     public GameEngine(ButtonPanel b, DrawPanel d, HandPanel[] h, MapPanel m, PlayerPanel p) {
         buttonPanel = b;
@@ -87,6 +89,17 @@ public class GameEngine {
             animatedPathCards.get(1).repaint();
             hp.repaint(); hp.revalidate();
         });
+    }
+
+    public void deckClick() {
+        setDrawCardState(true);
+        
+    }
+
+    public void setDrawCardState(boolean state) {
+        buttonPanel.setEnabled(!state);
+        handPanels[currentPlayer].setEnabled(!state);
+        // disable mapPanel
     }
 
 }
