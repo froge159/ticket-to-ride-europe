@@ -106,6 +106,12 @@ public class DrawPanel extends JPanel {
     public JButton getDeckButton() {
         return deckButton;
     }
+    public JButton getTicketButton() {
+        return ticketButton;
+    }
+    public JButton[] getFaceUpButtons() {
+        return faceUpButtons;
+    }
 
     public void setDrawTrainCardsEnabled(boolean enabled) {
         deckButton.setEnabled(enabled);

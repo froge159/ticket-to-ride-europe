@@ -45,4 +45,6 @@ public class RulesPanel extends JPanel {
             g.drawImage(rulesBG, 0, 0, this);
         }
     }
+
+
 }

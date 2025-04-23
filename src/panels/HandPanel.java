@@ -132,6 +132,12 @@ public class HandPanel extends JPanel {
         });
     }
 
+    public JButton getOkButton() {
+        return okButton;
+    }
+    public JButton getCancelButton() {
+        return cancelButton;
+    }
     public void setEnabled(boolean state) {
         okButton.setEnabled(state);
         cancelButton.setEnabled(state);
