@@ -113,6 +113,10 @@ public class DrawPanel extends JPanel {
         return faceUpButtons;
     }
 
+    public void showDrawnCard(ImageIcon icon) {
+        deckButton.setIcon(icon);
+    }
+
     public void setDrawTrainCardsEnabled(boolean enabled) {
         deckButton.setEnabled(enabled);
         for (int i = 0; i < faceUpButtons.length; i++) {

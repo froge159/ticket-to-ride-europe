@@ -73,10 +73,14 @@ public class GameController {
             });
         }
 
-        drawPanel.getDeckButton().addActionListener(new ActionListener() { // deck button clicked
+        drawPanel.getDeckButton().addActionListener(new ActionListener() {  // deck button clicked
             @Override
             public void actionPerformed(ActionEvent e) {
-                ge.deckClick();
+                try {
+                    ge.deckClick();
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
     }

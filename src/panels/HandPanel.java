@@ -14,6 +14,7 @@ import javax.swing.SwingUtilities;
 
 import models.PathCard;
 import models.Player;
+import models.TrainCard;
 import utils.Rel;
 import utils.CardImages;
 
@@ -144,5 +145,11 @@ public class HandPanel extends JPanel {
         for (int i = 0; i < playerTrainButtons.length; i++) {
             playerTrainButtons[i].setEnabled(state);
         }
+    }
+
+    public void addTrainCard(TrainCard drawnCard) {
+        String color = drawnCard.getType();
+        TreeMap<String, Integer> mp = p.getTrainCards();
+        mp.put(color, mp.get(color) + 1);
     }
 }
