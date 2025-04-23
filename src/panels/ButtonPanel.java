@@ -47,4 +47,8 @@ public class ButtonPanel extends JPanel { // panel for Station and Info buttons
     public JButton getStationButton() { return stationButton; }
 
     public JButton getInfoButton() { return infoButton; }
+
+    public void setEnabled(boolean enabled) {
+        stationButton.setEnabled(enabled);
+    }
 }

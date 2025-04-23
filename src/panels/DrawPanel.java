@@ -113,4 +113,17 @@ public class DrawPanel extends JPanel {
         return faceUpButtons;
     }
 
+    public void setDrawTrainCardsEnabled(boolean enabled) {
+        deckButton.setEnabled(enabled);
+        for (int i = 0; i < faceUpButtons.length; i++) {
+            if (faceUpButtons[i] != null) {
+                faceUpButtons[i].setEnabled(enabled);
+            }
+        }
+    }
+
+    public void setTicketButtonEnabled(boolean enabled) {
+        ticketButton.setEnabled(enabled);
+    }
+
 }

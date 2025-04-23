@@ -125,6 +125,7 @@ public class GamePanel extends JPanel {
         ButtonPanel bp = new ButtonPanel();
         DrawPanel dp = new DrawPanel(trainCards, pathCards);
         MapPanel mp = new MapPanel();
+        
         // FOR TESTING
         players[0].addPathCard(pathCards.get(0));
         players[0].addPathCard(pathCards.get(1));
