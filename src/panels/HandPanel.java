@@ -126,4 +126,11 @@ public class HandPanel extends JPanel {
             repaint();
         });
     }
+
+    public JButton getOkButton() {
+        return okButton;
+    }
+    public JButton getCancelButton() {
+        return cancelButton;
+    }
 }

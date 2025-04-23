@@ -8,8 +8,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-
+import javax.swing.SwingUtilities;
 
 import utils.Dimensions;
 import utils.ImageEnum;
@@ -28,13 +27,16 @@ public class EndPanel extends JPanel {
     public EndPanel() {
         setLayout(null);
         initComponents();
-        add(replay);
-        for (JLabel label : scoreText) {
-            add(label);
-        }
-        for (JLabel label : playersText){
-            add(label);
-        }
+        SwingUtilities.invokeLater(() ->{
+            setLayout(null);
+            add(replay);
+            for (JLabel label : scoreText) {
+                add(label);
+            }
+            for (JLabel label : playersText){
+                add(label);
+            }
+        });
     }
 
     public JButton getButton() {
@@ -105,4 +107,5 @@ public class EndPanel extends JPanel {
     g.setFont(new Font("Arial", Font.PLAIN, (int)(50*Dimensions.HEIGHT/(double)1080)));
     g.drawString("Winner: Player 1", Rel.X(770), Rel.Y(840));
     }
+
 }

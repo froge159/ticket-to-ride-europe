@@ -187,4 +187,17 @@ public class GamePanel extends JPanel {
     public TTRMap getMap() {
         return map;
     }
+
+    public JButton getConfirmButton() {
+        return confirm;
+    }
+    public JButton getCancelButton() {
+        return cancel;
+    }
+    public JButton getStationButton() {
+        return station;
+    }
+    public JButton getEndGameButton() {
+        return endGame;
+    }
 }
