@@ -19,7 +19,7 @@ public class TTRFrame extends JFrame {
     private GamePanel gamePanel;
     private EndPanel endPanel;
 
-    public TTRFrame() throws IOException {
+    public TTRFrame() throws IOException, InterruptedException {
         setTitle("Ticket To Ride: Europe");
         setSize(Dimensions.WIDTH, Dimensions.HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
