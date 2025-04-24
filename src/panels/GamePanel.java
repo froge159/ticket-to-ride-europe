@@ -25,8 +25,8 @@ import java.io.*;
 
 public class GamePanel extends JPanel {
 
-    private Stack<TrainCard> trainCards, discard;
-    private Stack<NormalPathCard> pathCards;
+    private ArrayList<TrainCard> trainCards, discard;
+    private ArrayList<NormalPathCard> pathCards;
     private ArrayList<LongPathCard> longCards;
     private Player[] players;
     private HandPanel[] handPanels;
@@ -40,9 +40,9 @@ public class GamePanel extends JPanel {
     public GamePanel() throws IOException {
         String[] temp = { "black", "blue", "brown", "green", "purple", "red", "white", "yellow", "wild" };
 
-        trainCards = new Stack<>();
-        discard = new Stack<>();
-        pathCards = new Stack<>();
+        trainCards = new ArrayList<>();
+        discard = new ArrayList<>();
+        pathCards = new ArrayList<>();
         longCards = new ArrayList<>();
         players = new Player[4];
         turn = 0;
@@ -125,6 +125,8 @@ public class GamePanel extends JPanel {
         ButtonPanel bp = new ButtonPanel();
         DrawPanel dp = new DrawPanel(trainCards, pathCards);
         MapPanel mp = new MapPanel();
+        SidePanel sp = new SidePanel(longCards, pathCards, trainCards);
+
         // FOR TESTING
         players[0].addPathCard(pathCards.get(0));
         players[0].addPathCard(pathCards.get(1));
@@ -151,6 +153,7 @@ public class GamePanel extends JPanel {
         bp.setBounds(Rel.X(1700), Rel.Y(420), bp.getWidth(), bp.getHeight());
         mp.setBounds(Rel.X(20), Rel.Y(0), mp.getWidth(), mp.getHeight());
         dp.setBounds(Rel.X(1380), Rel.Y(0), dp.getWidth(), dp.getHeight());
+        sp.setBounds(Rel.X(1420), Rel.Y(0), sp.getWidth(), sp.getHeight());
         for (int i = 0; i < 4; i++) {
             handPanels[i].setBounds(Rel.X(10), Rel.Y(10), handPanels[i].getWidth(), handPanels[i].getHeight());
         }
@@ -162,7 +165,9 @@ public class GamePanel extends JPanel {
             add(mp);
             add(handPanels[0]); 
             add(dp);
-            setComponentZOrder(handPanels[0], 0);
+            add(sp);
+            setComponentZOrder(handPanels[0], 1);
+            setComponentZOrder(sp, 0);
             revalidate();
             repaint();
         });
