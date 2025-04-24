@@ -166,9 +166,9 @@ public class GamePanel extends JPanel {
             add(mp);
             add(handPanels[0]); 
             add(dp);
-            add(sp);
+            //add(sp);
             setComponentZOrder(handPanels[0], 1);
-            setComponentZOrder(sp, 0);
+            //setComponentZOrder(sp, 0);
             revalidate();
             repaint();
         });

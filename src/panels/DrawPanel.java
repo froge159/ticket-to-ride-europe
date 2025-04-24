@@ -34,7 +34,12 @@ public class DrawPanel extends JPanel {
         setOpaque(false);
         //setBorder(new javax.swing.border.LineBorder(Color.YELLOW, Rel.W(3), true));
 
-        
+        //TESTING
+        while (trainDeck.size() > 6) {
+            discard.add(trainDeck.remove(trainDeck.size() - 1));
+        }
+        // TESTING
+    
         setLayout(null);
         updatePanel();
     }
@@ -49,11 +54,6 @@ public class DrawPanel extends JPanel {
         deckButton = new JButton();
         deckButton.setIcon(trainDeck.size() < 1 ? deckPNGBW : deckPNG);
         deckButton.setBounds(Rel.X(80), Rel.Y(5), Rel.W(200), Rel.H(125));
-        if (trainDeck.size() < 1) {
-            deckButton.setEnabled(false);
-        } else {
-            deckButton.setEnabled(true);
-        }
         
         // TESTING
         refillFaceUpDeck();
@@ -102,6 +102,19 @@ public class DrawPanel extends JPanel {
                 trainDeck.remove(trainDeck.size() - 1);
             }
         }
+    }
+    
+    public void setDeckDisabled(boolean disabled){
+        ImageIcon deckPNG = PNGEnum.TRAINBACK.getImage();
+        ImageIcon deckPNGBW = PNGEnum.TRAINBACKBW.getImage();
+        deckButton = new JButton();
+        deckButton.setIcon(disabled ? deckPNGBW : deckPNG);
+        if (disabled) {
+            deckButton.setEnabled(false);
+        }
+        deckButton.setBounds(Rel.X(80), Rel.Y(5), Rel.W(200), Rel.H(125));
+        repaint();
+        revalidate();
     }
 
     public JButton getDeckButton() {

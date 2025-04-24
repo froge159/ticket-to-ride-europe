@@ -13,6 +13,7 @@ import java.awt.Point;
 
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import panels.ButtonPanel;
 import panels.DrawPanel;
@@ -100,19 +101,29 @@ public class GameEngine {
 
     public void deckClick() throws InterruptedException { // deck button clicked
         setDrawCardState(true);
-        TrainCard drawnCard = gamePanel.getTrainCards().pop(); 
+        TrainCard drawnCard = drawPanel.getTrainDeck().getLast();
+        drawPanel.getTrainDeck().removeLast(); // remove card from deck
+
         handPanels[currentPlayer].addTrainCard(drawnCard); 
         drawPanel.showDrawnCard(drawnCard.getScaledFront(Rel.W(200), Rel.H(125))); // show drawn card on deck button
 
-        new Timer(500, e -> {
-            if (gamePanel.getTrainCards().size() < 1) { // if deck is empty, refill it
-                drawPanel.getDeckButton().setEnabled(false);
-                new Timer(500, e -> {
-                    for (int i = 0; i < drawPanel.getDiscard)
-                });
+        new Timer(500, t -> {
+            if (drawPanel.getTrainDeck().size() < 1) { // if deck is empty, refill it
+                System.out.println("deck empty");
+                drawPanel.setDeckDisabled(true);
+                for (int i = 0; i < drawPanel.getDiscard().size(); i++) {
+                    drawPanel.getTrainDeck().add(drawPanel.getDiscard().get(i)); 
+                    drawPanel.getDiscard().remove(i); 
+                }
+                Collections.shuffle(drawPanel.getTrainDeck()); // shuffle deck
             }
         }).start();
 
+        new Timer(500, t2 -> {
+            if (drawPanel.getTrainDeck().size() > 0) { // if deck is not empty, show the top card
+                drawPanel.setDeckDisabled(false);
+            } 
+        }).start();
         
     }
 
