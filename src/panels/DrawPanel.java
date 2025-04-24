@@ -19,13 +19,13 @@ public class DrawPanel extends JPanel {
     private JButton deckButton, ticketButton;
     private JButton[] faceUpButtons;
 
-    private Stack<TrainCard> trainDeck, discard;
+    private ArrayList<TrainCard> trainDeck, discard;
     private TrainCard[] faceUpDeck;
-    private Stack<NormalPathCard> pathCards;
+    private ArrayList<NormalPathCard> pathCards;
 
-    public DrawPanel(Stack<TrainCard> trainCards, Stack<NormalPathCard> pathCards) {
+    public DrawPanel(ArrayList<TrainCard> trainCards, ArrayList<NormalPathCard> pathCards) {
         this.trainDeck = trainCards;
-        this.discard = new Stack<>();
+        this.discard = new ArrayList<>();
         this.faceUpDeck = new TrainCard[5];
         this.pathCards = pathCards;
         faceUpButtons = new JButton[5];
@@ -98,7 +98,8 @@ public class DrawPanel extends JPanel {
     public void refillFaceUpDeck() {
         for (int i = 0; i < 5; i++) {
             if (trainDeck.size() > 0 && faceUpDeck[i] == null) {
-                faceUpDeck[i] = trainDeck.pop();
+                faceUpDeck[i] = trainDeck.getLast();
+                trainDeck.remove(trainDeck.size() - 1);
             }
         }
     }
