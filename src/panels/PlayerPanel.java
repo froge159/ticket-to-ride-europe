@@ -82,4 +82,11 @@ public class PlayerPanel extends JPanel  {
 		g.setColor(Color.YELLOW);
 		g.drawRect(0, 0, getWidth(), getHeight() / 4 + Rel.H(10));
 	}
+
+	public Player[] getPlayerArray() {
+		return playerArray;
+	}
+	public JLabel getBgImage() {
+		return bgImage;
+	}
 }

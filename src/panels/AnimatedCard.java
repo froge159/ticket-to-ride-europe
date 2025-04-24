@@ -42,4 +42,11 @@ public class AnimatedCard extends JPanel {
         super.paintComponent(g);
         front.paintIcon(this, g, 0, 0);
     } 
+
+    public PathCard getCard() {
+        return card;
+    }
+    public ImageIcon getFront() {
+        return front;
+    }
 }

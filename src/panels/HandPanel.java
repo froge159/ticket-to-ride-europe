@@ -146,6 +146,15 @@ public class HandPanel extends JPanel {
             playerTrainButtons[i].setEnabled(state);
         }
     }
+    public JButton[] getPlayerTrainButtons() {
+        return playerTrainButtons;
+    }
+    public String[] getTemp(){
+        return temp;
+    }
+    public Player getPlayer() {
+        return p;
+}
 
     public void addTrainCard(TrainCard drawnCard) {
         String color = drawnCard.getType();
