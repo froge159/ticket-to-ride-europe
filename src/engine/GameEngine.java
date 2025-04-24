@@ -3,6 +3,9 @@ package engine;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
+import models.TrainCard;
+
 import java.awt.Point;
 
 
@@ -12,6 +15,7 @@ import java.util.ArrayList;
 
 import panels.ButtonPanel;
 import panels.DrawPanel;
+import panels.GamePanel;
 import panels.HandPanel;
 import panels.MapPanel;
 import panels.PlayerPanel;
@@ -29,15 +33,17 @@ public class GameEngine {
     private HandPanel[] handPanels;
     private MapPanel mapPanel;
     private PlayerPanel playerPanel;
+    private GamePanel gamePanel;
     private GameEngine engine;
     private int currentPlayer = 0;
 
-    public GameEngine(ButtonPanel b, DrawPanel d, HandPanel[] h, MapPanel m, PlayerPanel p) {
+    public GameEngine(ButtonPanel b, DrawPanel d, HandPanel[] h, MapPanel m, PlayerPanel p, GamePanel gp) {
         buttonPanel = b;
         drawPanel = d;
         handPanels = h;
         mapPanel = m;
         playerPanel = p;
+        gamePanel = gp;
     }
 
     
@@ -91,10 +97,24 @@ public class GameEngine {
         });
     }
 
-    public void deckClick() {
+    public void deckClick() throws InterruptedException { // deck button clicked
         setDrawCardState(true);
-        
+        TrainCard drawnCard = gamePanel.getTrainCards().pop(); 
+        handPanels[currentPlayer].addTrainCard(drawnCard); 
+        drawPanel.showDrawnCard(drawnCard.getFront());
+        Thread.sleep(1000);
+
+        if (gamePanel.getTrainCards().size() < 1) { // if deck is empty, refill it
+            
+        }
     }
+
+
+
+
+
+
+    
 
     public void setDrawCardState(boolean state) {
         buttonPanel.setEnabled(!state);

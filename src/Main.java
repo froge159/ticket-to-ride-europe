@@ -13,7 +13,12 @@ public class Main {
         SwingUtilities.invokeLater(() -> {
             TTRFrame frame = null;
             try {
-                frame = new TTRFrame();
+                try {
+                    frame = new TTRFrame();
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             } 

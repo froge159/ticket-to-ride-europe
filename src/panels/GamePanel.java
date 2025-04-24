@@ -37,7 +37,7 @@ public class GamePanel extends JPanel {
     private BufferedImage gameBG;
     private StartEngine se;
 
-    public GamePanel() throws IOException {
+    public GamePanel() throws IOException, InterruptedException{
         String[] temp = { "black", "blue", "brown", "green", "purple", "red", "white", "yellow", "wild" };
 
         trainCards = new Stack<>();
@@ -145,7 +145,7 @@ public class GamePanel extends JPanel {
         handPanels[0].setWarningText("You do not have enough trains to claim this route!");
         
 
-        GameEngine ge = new GameEngine(bp, dp, handPanels, mp, pp);
+        GameEngine ge = new GameEngine(bp, dp, handPanels, mp, pp, this);
         GameController gc = new GameController(bp, dp, handPanels, mp, pp, this, se, ge);
 
         pp.setBounds(Rel.X(1730), Rel.Y(20), pp.getWidth(), pp.getHeight());
@@ -175,6 +175,10 @@ public class GamePanel extends JPanel {
 
     public void setStartEngine(StartEngine se) {
         this.se = se;
+    }
+
+    public Stack<TrainCard> getTrainCards( ){
+        return trainCards;
     }
 
     @Override

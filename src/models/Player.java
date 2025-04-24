@@ -28,7 +28,7 @@ public class Player {
     }
 
     public void addTrainCard(TrainCard card){
-        trainCards.put(card.getTrainCardType(), trainCards.get(card.getTrainCardType()) + 1);
+        trainCards.put(card.getType(), trainCards.get(card.getType()) + 1);
     }
 
     public void claimRoute(/*GamePanel?*/Path route){
