@@ -37,7 +37,7 @@ public class GamePanel extends JPanel {
     private BufferedImage gameBG;
     private StartEngine se;
 
-    public GamePanel() throws IOException {
+    public GamePanel() throws IOException, InterruptedException{
         String[] temp = { "black", "blue", "brown", "green", "purple", "red", "white", "yellow", "wild" };
 
         trainCards = new ArrayList<>();
@@ -127,6 +127,7 @@ public class GamePanel extends JPanel {
         MapPanel mp = new MapPanel();
         SidePanel sp = new SidePanel(longCards, pathCards, trainCards);
 
+        
         // FOR TESTING
         players[0].addPathCard(pathCards.get(0));
         players[0].addPathCard(pathCards.get(1));
@@ -146,7 +147,7 @@ public class GamePanel extends JPanel {
         handPanels[0].setWarningText("You do not have enough trains to claim this route!");
         
 
-        GameEngine ge = new GameEngine(bp, dp, handPanels, mp, pp);
+        GameEngine ge = new GameEngine(bp, dp, handPanels, mp, pp, this);
         GameController gc = new GameController(bp, dp, handPanels, mp, pp, this, se, ge);
 
         pp.setBounds(Rel.X(1730), Rel.Y(20), pp.getWidth(), pp.getHeight());
@@ -181,6 +182,10 @@ public class GamePanel extends JPanel {
         this.se = se;
     }
 
+    public ArrayList<TrainCard> getTrainCards( ){
+        return trainCards;
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -192,4 +197,44 @@ public class GamePanel extends JPanel {
     public TTRMap getMap() {
         return map;
     }
+    public BufferedImage getGameBG() {
+        return gameBG;
+    }
+    public StartEngine getStartEngine() {
+        return se;
+    }
+    public JButton getConfirmButton() {
+        return confirm;
+    }
+    public JButton getCancelButton() {
+        return cancel;
+    }
+    public JButton getStationButton() {
+        return station;
+    }
+    public JButton getEndGameButton() {
+        return endGame;
+    }
+    public ArrayList<TrainCard> getTrainCards() {
+        return trainCards;
+    }
+    public ArrayList<NormalPathCard> getPathCards() {
+        return pathCards;
+    }
+    public ArrayList<TrainCard> getDiscard() {
+        return discard;
+    }
+    public ArrayList<LongPathCard> getLongCards() {
+        return longCards;
+    }
+    public HandPanel[] getHandPanels() {
+        return handPanels;
+    }
+    public PlayerPanel getPlayerPanel() {
+        return playerPanel;
+    }
+    public int getTurn(){
+        return turn;
+    }
+
 }

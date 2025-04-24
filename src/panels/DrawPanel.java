@@ -104,4 +104,44 @@ public class DrawPanel extends JPanel {
         }
     }
 
+    public JButton getDeckButton() {
+        return deckButton;
+    }
+    public JButton getTicketButton() {
+        return ticketButton;
+    }
+    public JButton[] getFaceUpButtons() {
+        return faceUpButtons;
+    }
+
+    public void showDrawnCard(ImageIcon icon) {
+        deckButton.setIcon(icon);
+    }
+
+    public void setDrawTrainCardsEnabled(boolean enabled) {
+        deckButton.setEnabled(enabled);
+        for (int i = 0; i < faceUpButtons.length; i++) {
+            if (faceUpButtons[i] != null) {
+                faceUpButtons[i].setEnabled(enabled);
+            }
+        }
+    }
+
+    public void setTicketButtonEnabled(boolean enabled) {
+        ticketButton.setEnabled(enabled);
+    }
+
+    public Stack<TrainCard> getTrainDeck() {
+        return trainDeck;
+    }
+    public Stack<NormalPathCard> getPathCards() {
+        return pathCards;
+    }
+    public Stack<TrainCard> getDiscard() {
+        return discard;
+    }
+    public TrainCard[] getFaceUpDeck() {
+        return faceUpDeck;
+    }
+
 }

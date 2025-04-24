@@ -8,8 +8,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-
+import javax.swing.SwingUtilities;
 
 import utils.Dimensions;
 import utils.ImageEnum;
@@ -20,16 +19,24 @@ public class EndPanel extends JPanel {
     // panel for end screen
     private JButton replay;
     private BufferedImage endBG;
+    private JLabel[] playersText;
     private JLabel[] scoreText;
+    //private JLabel greenText, redText, yellowText, blueText;
    // private Player[] players;
 
     public EndPanel() {
         setLayout(null);
         initComponents();
-        add(replay);
-        /*for (JLabel label : scoreText) {
-            add(label);
-        }*/
+        SwingUtilities.invokeLater(() ->{
+            setLayout(null);
+            add(replay);
+            for (JLabel label : scoreText) {
+                add(label);
+            }
+            for (JLabel label : playersText){
+                add(label);
+            }
+        });
     }
 
     public JButton getButton() {
@@ -45,13 +52,20 @@ public class EndPanel extends JPanel {
         replay.setBounds(Rel.X(840), Rel.Y(860), 200, 40);
         
         endBG = ImageEnum.ENDBG.getImage();
-/* 
+        
+        playersText = new JLabel[4];
         scoreText = new JLabel[4];
-        for (int i = 0; i < players.length; i++) {
-            scoreText[i] = new JLabel("Player " + (i + 1) + ": " + (i * 10)); // Placeholder for scores
-            scoreText[i].setBounds(200 + (i*200), 600, 200, 40); // Placeholder for score text
-            
-        }*/
+        for (int i = 0; i < 4; i++) {
+            playersText[i] = new JLabel("yahoo!");
+            playersText[i].setBounds(Rel.X(350) + (i*385), Rel.Y(672), Rel.W(204), Rel.H(53));
+            playersText[i].setForeground(Color.WHITE);
+            //scoreText[i] = new JLabel("Player " + (i + 1) + ": " + (i * 10)); // Placeholder for scores
+            scoreText[i] = new JLabel("" + i*10 + " points");
+            scoreText[i].setBounds(Rel.X(350) + (i*385), Rel.Y(697), Rel.W(204), Rel.H(53)); // Placeholder for score text
+            scoreText[i].setForeground(Color.WHITE);
+            scoreText[i].setFont(new Font("Arial", Font.PLAIN, (int)(Rel.H(20))));
+            playersText[i].setFont(new Font("Arial", Font.PLAIN, (int)(Rel.H(20))));
+        }
 
         /*for (JLabel label : scoreText) {
             add(label);
@@ -93,4 +107,15 @@ public class EndPanel extends JPanel {
     g.setFont(new Font("Arial", Font.PLAIN, (int)(50*Dimensions.HEIGHT/(double)1080)));
     g.drawString("Winner: Player 1", Rel.X(770), Rel.Y(840));
     }
+
+    public BufferedImage getEndBG(){
+        return endBG;
+    }
+    public JLabel[] getPlayersText() {
+        return playersText;
+    }
+    public JLabel[] getScoreText() {
+        return scoreText;
+    }
+
 }

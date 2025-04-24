@@ -65,4 +65,12 @@ public class StartPanel extends JPanel {
             g.drawImage(startBG, 0, 0, this);
         }
     }
+
+    public BufferedImage getStartBG() {
+        return startBG;
+    }
+    public JLabel titleText(){
+        return titleText;
+    }
+    
 }

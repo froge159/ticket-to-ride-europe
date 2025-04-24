@@ -14,6 +14,7 @@ import javax.swing.SwingUtilities;
 
 import models.PathCard;
 import models.Player;
+import models.TrainCard;
 import utils.Rel;
 import utils.CardImages;
 
@@ -24,6 +25,7 @@ public class HandPanel extends JPanel {
     private String[] temp = { "black", "blue", "brown", "green", "purple", "red", "white", "yellow", "wild" };
     private ArrayList<AnimatedCard> animatedPathCards;
     private JButton okButton, cancelButton;
+    private JButton[] playerTrainButtons;
 
     public HandPanel(Player p) {
         this.p = p; 
@@ -44,6 +46,7 @@ public class HandPanel extends JPanel {
         TreeMap<String, Integer> mpSelected = p.getTrainCardsSelected();
         Stack<PathCard> pc = p.getPathCards();
         animatedPathCards = new ArrayList<>();
+        playerTrainButtons = new JButton[temp.length];
 
         final int[] y = { 925 };
         int x = 0;
@@ -67,7 +70,9 @@ public class HandPanel extends JPanel {
 
         int jlabelX = 278; 
         int cardX = 225;
-        for (String color : temp) {
+        for (int i = 0; i < temp.length; i++) {
+            String color = temp[i];
+
             JLabel count = new JLabel(String.valueOf(mp.get(color)));
             count.setFont(new Font("Arial", Font.PLAIN, Rel.W(30)));
             count.setForeground(Color.YELLOW);
@@ -83,6 +88,7 @@ public class HandPanel extends JPanel {
             card.setOpaque(false);
             card.setContentAreaFilled(false);
             card.setBorderPainted(false);
+            playerTrainButtons[i] = card;
             
             jlabelX += 140;
             cardX += 140; 
@@ -125,5 +131,34 @@ public class HandPanel extends JPanel {
             revalidate();
             repaint();
         });
+    }
+
+    public JButton getOkButton() {
+        return okButton;
+    }
+    public JButton getCancelButton() {
+        return cancelButton;
+    }
+    public void setEnabled(boolean state) {
+        okButton.setEnabled(state);
+        cancelButton.setEnabled(state);
+        for (int i = 0; i < playerTrainButtons.length; i++) {
+            playerTrainButtons[i].setEnabled(state);
+        }
+    }
+    public JButton[] getPlayerTrainButtons() {
+        return playerTrainButtons;
+    }
+    public String[] getTemp(){
+        return temp;
+    }
+    public Player getPlayer() {
+        return p;
+}
+
+    public void addTrainCard(TrainCard drawnCard) {
+        String color = drawnCard.getType();
+        TreeMap<String, Integer> mp = p.getTrainCards();
+        mp.put(color, mp.get(color) + 1);
     }
 }

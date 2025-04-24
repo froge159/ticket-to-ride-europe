@@ -45,4 +45,11 @@ public class MapPanel extends JPanel{
             }
         });
     }
+
+    public BufferedImage getMapBG(){
+        return mapBG;
+    }
+    public TTRMap getMap(){
+        return map;
+    }
 }

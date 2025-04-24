@@ -16,7 +16,7 @@ public class TrainCard extends Card {
         type = t;
     }
 
-    public String getTrainCardType() {
+    public String getType() {
         return type;
     }
 
