@@ -108,4 +108,14 @@ public class EndPanel extends JPanel {
     g.drawString("Winner: Player 1", Rel.X(770), Rel.Y(840));
     }
 
+    public BufferedImage getEndBG(){
+        return endBG;
+    }
+    public JLabel[] getPlayersText() {
+        return playersText;
+    }
+    public JLabel[] getScoreText() {
+        return scoreText;
+    }
+
 }

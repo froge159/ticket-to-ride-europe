@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.JButton;
 import utils.ImageEnum;
 import utils.Rel;
@@ -45,6 +44,19 @@ public class RulesPanel extends JPanel {
             g.drawImage(rulesBG, 0, 0, this);
         }
     }
+
+    public BufferedImage getRulesBG() {
+        return rulesBG;
+    }
+
+// hello
+
+
+
+
+
+
+
 
 
 }

@@ -188,7 +188,12 @@ public class GamePanel extends JPanel {
     public TTRMap getMap() {
         return map;
     }
-
+    public BufferedImage getGameBG() {
+        return gameBG;
+    }
+    public StartEngine getStartEngine() {
+        return se;
+    }
     public JButton getConfirmButton() {
         return confirm;
     }
@@ -201,4 +206,26 @@ public class GamePanel extends JPanel {
     public JButton getEndGameButton() {
         return endGame;
     }
+    public Stack<TrainCard> getTrainCards() {
+        return trainCards;
+    }
+    public Stack<NormalPathCard> getPathCards() {
+        return pathCards;
+    }
+    public Stack<TrainCard> getDiscard() {
+        return discard;
+    }
+    public ArrayList<LongPathCard> getLongCards() {
+        return longCards;
+    }
+    public HandPanel[] getHandPanels() {
+        return handPanels;
+    }
+    public PlayerPanel getPlayerPanel() {
+        return playerPanel;
+    }
+    public int getTurn(){
+        return turn;
+    }
+
 }
