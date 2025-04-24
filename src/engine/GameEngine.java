@@ -3,6 +3,7 @@ package engine;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 import models.TrainCard;
 
@@ -101,20 +102,21 @@ public class GameEngine {
         setDrawCardState(true);
         TrainCard drawnCard = gamePanel.getTrainCards().pop(); 
         handPanels[currentPlayer].addTrainCard(drawnCard); 
-        drawPanel.showDrawnCard(drawnCard.getFront());
-        Thread.sleep(1000);
+        drawPanel.showDrawnCard(drawnCard.getScaledFront(Rel.W(200), Rel.H(125))); // show drawn card on deck button
 
-        if (gamePanel.getTrainCards().size() < 1) { // if deck is empty, refill it
-            
-        }
+        new Timer(500, e -> {
+            if (gamePanel.getTrainCards().size() < 1) { // if deck is empty, refill it
+                drawPanel.getDeckButton().setEnabled(false);
+                new Timer(500, e -> {
+                    for (int i = 0; i < drawPanel.getDiscard)
+                });
+            }
+        }).start();
+
+        
     }
 
 
-
-
-
-
-    
 
     public void setDrawCardState(boolean state) {
         buttonPanel.setEnabled(!state);

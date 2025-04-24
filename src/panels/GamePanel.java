@@ -182,9 +182,6 @@ public class GamePanel extends JPanel {
         this.se = se;
     }
 
-    public ArrayList<TrainCard> getTrainCards( ){
-        return trainCards;
-    }
 
     @Override
     public void paintComponent(Graphics g) {

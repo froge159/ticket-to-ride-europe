@@ -131,13 +131,13 @@ public class DrawPanel extends JPanel {
         ticketButton.setEnabled(enabled);
     }
 
-    public Stack<TrainCard> getTrainDeck() {
+    public ArrayList<TrainCard> getTrainDeck() {
         return trainDeck;
     }
-    public Stack<NormalPathCard> getPathCards() {
+    public ArrayList<NormalPathCard> getPathCards() {
         return pathCards;
     }
-    public Stack<TrainCard> getDiscard() {
+    public ArrayList<TrainCard> getDiscard() {
         return discard;
     }
     public TrainCard[] getFaceUpDeck() {
