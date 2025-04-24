@@ -117,9 +117,7 @@ public class HandPanel extends JPanel {
         });
     }
 
-    public ArrayList<AnimatedCard> getAnimatedPathCards() {
-        return animatedPathCards;
-    }
+    
 
     public void setWarningText(String txt) {
         JLabel warning = new JLabel(txt);
@@ -133,12 +131,7 @@ public class HandPanel extends JPanel {
         });
     }
 
-    public JButton getOkButton() {
-        return okButton;
-    }
-    public JButton getCancelButton() {
-        return cancelButton;
-    }
+    
     public void setEnabled(boolean state) {
         okButton.setEnabled(state);
         cancelButton.setEnabled(state);
@@ -151,5 +144,24 @@ public class HandPanel extends JPanel {
         String color = drawnCard.getType();
         TreeMap<String, Integer> mp = p.getTrainCards();
         mp.put(color, mp.get(color) + 1);
+    }
+
+    public JButton getOkButton() {
+        return okButton;
+    }
+    public JButton getCancelButton() {
+        return cancelButton;
+    }
+    public JButton[] getPlayerTrainButtons() {
+        return playerTrainButtons;
+    }
+    public Player getPlayer() {
+        return p;
+    }
+    public String[] getTemp(){
+        return temp;
+    }
+    public ArrayList<AnimatedCard> getAnimatedPathCards() {
+        return animatedPathCards;
     }
 }

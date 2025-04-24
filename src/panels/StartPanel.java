@@ -35,9 +35,14 @@ public class StartPanel extends JPanel {
     public JButton getStartButton() {
         return startButton;
     }
-
     public JButton getInfoButton() {
         return infoButton;
+    }
+    public BufferedImage getStartBG() {
+        return startBG;
+    }
+    public JLabel titleText(){
+        return titleText;
     }
 
     public void initComponents() {
@@ -66,11 +71,4 @@ public class StartPanel extends JPanel {
         }
     }
 
-    public BufferedImage getStartBG() {
-        return startBG;
-    }
-    public JLabel titleText(){
-        return titleText;
-    }
-    
 }

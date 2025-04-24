@@ -103,15 +103,6 @@ public class DrawPanel extends JPanel {
         }
     }
 
-    public JButton getDeckButton() {
-        return deckButton;
-    }
-    public JButton getTicketButton() {
-        return ticketButton;
-    }
-    public JButton[] getFaceUpButtons() {
-        return faceUpButtons;
-    }
 
     public void showDrawnCard(ImageIcon icon) {
         deckButton.setIcon(icon);
@@ -141,6 +132,15 @@ public class DrawPanel extends JPanel {
     }
     public TrainCard[] getFaceUpDeck() {
         return faceUpDeck;
+    }
+    public JButton getDeckButton() {
+        return deckButton;
+    }
+    public JButton getTicketButton() {
+        return ticketButton;
+    }
+    public JButton[] getFaceUpButtons() {
+        return faceUpButtons;
     }
 
 }

@@ -169,16 +169,8 @@ public class GamePanel extends JPanel {
         });
     }
 
-    public Player[] getPlayers() {
-        return players;
-    }
-
     public void setStartEngine(StartEngine se) {
         this.se = se;
-    }
-
-    public Stack<TrainCard> getTrainCards( ){
-        return trainCards;
     }
 
     @Override
@@ -189,6 +181,13 @@ public class GamePanel extends JPanel {
         }
     }
 
+    public Player[] getPlayers() {
+        return players;
+    }
+    public Stack<TrainCard> getTrainCards( ){
+        return trainCards;
+    }
+    
     public TTRMap getMap() {
         return map;
     }
@@ -210,9 +209,7 @@ public class GamePanel extends JPanel {
     public JButton getEndGameButton() {
         return endGame;
     }
-    public Stack<TrainCard> getTrainCards() {
-        return trainCards;
-    }
+    
     public Stack<NormalPathCard> getPathCards() {
         return pathCards;
     }

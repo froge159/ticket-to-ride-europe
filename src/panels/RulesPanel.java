@@ -37,6 +37,10 @@ public class RulesPanel extends JPanel {
         return returnButton;
     }
 
+    public BufferedImage getRulesBG() {
+        return rulesBG;
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -45,18 +49,5 @@ public class RulesPanel extends JPanel {
         }
     }
 
-    public BufferedImage getRulesBG() {
-        return rulesBG;
-    }
-
 // hello
-
-
-
-
-
-
-
-
-
 }
