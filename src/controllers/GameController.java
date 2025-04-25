@@ -49,6 +49,13 @@ public class GameController {
                 startEngine.transitionToRulesPanel(gamePanel);
             }
         });
+
+        buttonPanel.getStationButton().addActionListener(new ActionListener() { // station button clicked
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+        });
         
         mapPanel.addMouseListener(new MouseAdapter() { // testing for map clicks
             @Override
@@ -73,7 +80,7 @@ public class GameController {
             });
         }
 
-        drawPanel.getDeckButton().addActionListener(new ActionListener() {  // deck button clicked
+        /* drawPanel.getDeckButton().addActionListener(new ActionListener() {  // deck button clicked
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -82,7 +89,7 @@ public class GameController {
                     e1.printStackTrace();
                 }
             }
-        });
+        }); */
     }
 
     
