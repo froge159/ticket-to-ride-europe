@@ -59,18 +59,21 @@ public class GameController {
 
         for (int i = 0; i < handPanels.length; i++) {
             final int index = i;
-            handPanels[index].getAnimatedPathCards().get(0).addMouseListener(new MouseAdapter() { // hover event for animated path cards
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                    ge.animatePathCardsEnter(handPanels[index]);
-                    System.out.println("mouse entered");
-                }
-                @Override
-                public void mouseExited(MouseEvent e) {
-                    ge.animatePathCardsLeave(handPanels[index]);
-                    System.out.println("mouse exited");
-                }
-            });
+            if (handPanels[index].getPlayer().getPathCards().size() > 0) {
+                handPanels[index].getAnimatedPathCards().get(0).addMouseListener(new MouseAdapter() { // hover event for animated path cards
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        ge.animatePathCardsEnter(handPanels[index]);
+                        System.out.println("mouse entered");
+                    }
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        ge.animatePathCardsLeave(handPanels[index]);
+                        System.out.println("mouse exited");
+                    }
+                });
+            }
+            
         }
 /* 
         drawPanel.getDeckButton().addActionListener(new ActionListener() {  // deck button clicked

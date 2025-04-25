@@ -47,7 +47,7 @@ public class HandPanel extends JPanel {
         Stack<PathCard> pc = p.getPathCards();
         animatedPathCards = new ArrayList<>();
         playerTrainButtons = new JButton[temp.length];
-
+        
         final int[] y = { 925 };
         int x = 0;
         Iterator<PathCard> it = pc.iterator();

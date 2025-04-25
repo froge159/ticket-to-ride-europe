@@ -95,21 +95,6 @@ public class GamePanel extends JPanel {
                         ImageIO.read(new File("assets/routes/" + city1 + "-" + city2 + ".png")), 200, 125)));            
         }
 
-        /*
-         * File folder = new File("assets/routes/");
-         * File[] files = folder.listFiles((dir, name) ->
-         * name.toLowerCase().endsWith(".png"));
-         * 
-         * if (files != null) {
-         * for (File file : files) {
-         * String l = file.getName();
-         * pathCards.add(new NormalPathCard(ImageIO.read(file)));
-         * // You can load or process the PNG file here
-         * }
-         * } else {
-         * System.out.println("No PNG files found or directory does not exist.");
-         * }
-         */
         Collections.shuffle(trainCards);
         Collections.shuffle(pathCards);
         Collections.shuffle(longCards);
@@ -127,17 +112,12 @@ public class GamePanel extends JPanel {
         MapPanel mp = new MapPanel();
         SidePanel sp = new SidePanel(longCards, pathCards, trainCards, discard, turn);
 
-        
+        for(Player p : players){
+            for(int i = 0; i < 4; i++){
+                p.addTrainCard(trainCards.removeLast());
+            }
+        }
         // FOR TESTING
-        players[0].addPathCard(pathCards.get(0));
-        players[0].addPathCard(pathCards.get(1));
-        players[0].addPathCard(pathCards.get(2));
-        players[1].addPathCard(pathCards.get(0));
-        players[1].addPathCard(pathCards.get(1));
-        players[2].addPathCard(pathCards.get(0));
-        players[2].addPathCard(pathCards.get(1));
-        players[3].addPathCard(pathCards.get(0));
-        players[3].addPathCard(pathCards.get(1));
         // FOR TESTING
         handPanels = new HandPanel[4];
         handPanels[0] = new HandPanel(players[0]);
@@ -145,7 +125,7 @@ public class GamePanel extends JPanel {
         handPanels[2] = new HandPanel(players[2]);
         handPanels[3] = new HandPanel(players[3]);
         handPanels[0].setWarningText("You do not have enough trains to claim this route!");
-        
+
 
         GameEngine ge = new GameEngine(bp, dp, handPanels, mp, pp, this);
         GameController gc = new GameController(bp, dp, handPanels, mp, pp, this, se, ge);
@@ -165,7 +145,7 @@ public class GamePanel extends JPanel {
             add(bp);
             add(mp);
             add(handPanels[0]); 
-            add(dp);
+            //add(dp);
             add(sp);
             setComponentZOrder(handPanels[0], 1);
             setComponentZOrder(sp, 0);
