@@ -97,7 +97,7 @@ public class GameEngine {
             hp.repaint(); hp.revalidate();
         });
     }
-
+/* 
     public void deckClick() throws InterruptedException { // deck button clicked
         setDrawCardState(true);
         TrainCard drawnCard = gamePanel.getTrainCards().pop(); 
@@ -115,7 +115,7 @@ public class GameEngine {
 
         
     }
-
+    */
 
 
     public void setDrawCardState(boolean state) {

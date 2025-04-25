@@ -72,7 +72,7 @@ public class GameController {
                 }
             });
         }
-
+/* 
         drawPanel.getDeckButton().addActionListener(new ActionListener() {  // deck button clicked
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -83,6 +83,7 @@ public class GameController {
                 }
             }
         });
+        */
     }
 
     

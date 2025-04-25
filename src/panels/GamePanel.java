@@ -125,7 +125,7 @@ public class GamePanel extends JPanel {
         ButtonPanel bp = new ButtonPanel();
         DrawPanel dp = new DrawPanel(trainCards, pathCards);
         MapPanel mp = new MapPanel();
-        SidePanel sp = new SidePanel(longCards, pathCards, trainCards);
+        SidePanel sp = new SidePanel(longCards, pathCards, trainCards, discard, turn);
 
         
         // FOR TESTING
