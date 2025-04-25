@@ -26,11 +26,13 @@ public class HandPanel extends JPanel {
     private ArrayList<AnimatedCard> animatedPathCards;
     private JButton okButton, cancelButton;
     private JButton[] playerTrainButtons;
+    private JLabel text;
 
     public HandPanel(Player p) {
         this.p = p; 
         setOpaque(false);
         // setBorder(new javax.swing.border.LineBorder(Color.YELLOW, Rel.W(3), true));
+        
 
         setLayout(null);
         setSize(Rel.W(1700), Rel.H(1080));
@@ -102,6 +104,10 @@ public class HandPanel extends JPanel {
             });
         }
 
+        text = new JLabel();
+        text.setFont(new Font("Arial", Font.BOLD, Rel.W(15)));
+        text.setForeground(Color.RED);
+        text.setBounds(Rel.X(17), Rel.Y(845), Rel.W(1000), Rel.H(50));
 
         okButton = new JButton("OK");
         okButton.setBounds(Rel.X(1495), Rel.Y(910), Rel.W(80), Rel.H(40));
@@ -112,6 +118,7 @@ public class HandPanel extends JPanel {
         SwingUtilities.invokeLater(() -> {
             add(okButton);
             add(cancelButton);
+            add(text);
             revalidate();
             repaint();
         });
@@ -121,16 +128,8 @@ public class HandPanel extends JPanel {
         return animatedPathCards;
     }
 
-    public void setWarningText(String txt) {
-        JLabel warning = new JLabel(txt);
-        warning.setFont(new Font("Arial", Font.BOLD, Rel.W(15)));
-        warning.setForeground(Color.RED);
-        warning.setBounds(Rel.X(17), Rel.Y(845), Rel.W(1000), Rel.H(50));
-        SwingUtilities.invokeLater(() -> {
-            add(warning);
-            revalidate();
-            repaint();
-        });
+    public void setHandText(String txt) {
+        text.setText(txt);
     }
 
     public JButton getOkButton() {

@@ -10,6 +10,7 @@ public class Player {
     private Stack<PathCard> pathCards;
     private LinkedList<City> cities;
     private LinkedList<Path> paths;
+    private boolean drawn = false;
 
     public Player(String c){
         String[] temp = { "black", "blue", "brown", "green", "purple", "red", "white", "yellow", "wild" };
@@ -75,4 +76,7 @@ public class Player {
     public TreeMap<String, Integer> getTrainCardsSelected() {
         return trainCardsSelected;
     }
+
+    public boolean getDrawn() { return drawn; }
+    public void setDrawn(boolean d) { drawn = d; }
 }

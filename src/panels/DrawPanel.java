@@ -105,16 +105,15 @@ public class DrawPanel extends JPanel {
     }
     
     public void setDeckDisabled(boolean disabled){
+        System.out.println("entered");
         ImageIcon deckPNG = PNGEnum.TRAINBACK.getImage();
         ImageIcon deckPNGBW = PNGEnum.TRAINBACKBW.getImage();
         deckButton = new JButton();
         deckButton.setIcon(disabled ? deckPNGBW : deckPNG);
         if (disabled) {
+            System.out.println("disabled");
             deckButton.setEnabled(false);
         }
-        deckButton.setBounds(Rel.X(80), Rel.Y(5), Rel.W(200), Rel.H(125));
-        repaint();
-        revalidate();
     }
 
     public JButton getDeckButton() {

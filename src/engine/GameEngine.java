@@ -21,6 +21,7 @@ import panels.GamePanel;
 import panels.HandPanel;
 import panels.MapPanel;
 import panels.PlayerPanel;
+import utils.PNGEnum;
 import utils.Rel;
 import panels.AnimatedCard;
 
@@ -105,26 +106,25 @@ public class GameEngine {
         drawPanel.getTrainDeck().removeLast(); // remove card from deck
 
         handPanels[currentPlayer].addTrainCard(drawnCard); 
-        drawPanel.showDrawnCard(drawnCard.getScaledFront(Rel.W(200), Rel.H(125))); // show drawn card on deck button
+        //drawPanel.showDrawnCard(drawnCard.getScaledFront(Rel.W(200), Rel.H(125))); // show drawn card on deck button
+        handPanels[currentPlayer].setHandText("Player " + (currentPlayer + 1) + " drew a " + drawnCard.getType() + " card.");
 
-        new Timer(500, t -> {
-            if (drawPanel.getTrainDeck().size() < 1) { // if deck is empty, refill it
-                System.out.println("deck empty");
-                drawPanel.setDeckDisabled(true);
-                for (int i = 0; i < drawPanel.getDiscard().size(); i++) {
-                    drawPanel.getTrainDeck().add(drawPanel.getDiscard().get(i)); 
-                    drawPanel.getDiscard().remove(i); 
-                }
-                Collections.shuffle(drawPanel.getTrainDeck()); // shuffle deck
+        if (drawPanel.getTrainDeck().size() < 1) { // if deck is empty, refill it
+            for (int i = 0; i < drawPanel.getDiscard().size(); i++) {
+                drawPanel.getTrainDeck().add(drawPanel.getDiscard().get(i));
+                drawPanel.getDiscard().remove(i); 
             }
-        }).start();
+            Collections.shuffle(drawPanel.getTrainDeck()); // shuffle deck
+            handPanels[currentPlayer].setHandText("Discard reshuffled into Deck");
+        }
 
-        new Timer(500, t2 -> {
-            if (drawPanel.getTrainDeck().size() > 0) { // if deck is not empty, show the top card
-                drawPanel.setDeckDisabled(false);
-            } 
-        }).start();
-        
+        if (drawPanel.getTrainDeck().size() < 1) {
+            drawPanel.remove(drawPanel.getDeckButton());
+        }
+
+        if (handPanels[currentPlayer].getPlayer().getDrawn()) {
+            
+        }
     }
 
 
@@ -133,6 +133,11 @@ public class GameEngine {
         buttonPanel.setEnabled(!state);
         handPanels[currentPlayer].setEnabled(!state);
         // disable mapPanel
+    }
+
+    public void nextPlayer() {
+        if (currentPlayer == 3) currentPlayer = 0;
+        else currentPlayer++;
     }
 
 }

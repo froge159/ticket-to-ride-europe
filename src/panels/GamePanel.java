@@ -144,7 +144,6 @@ public class GamePanel extends JPanel {
         handPanels[1] = new HandPanel(players[1]);
         handPanels[2] = new HandPanel(players[2]);
         handPanels[3] = new HandPanel(players[3]);
-        handPanels[0].setWarningText("You do not have enough trains to claim this route!");
         
 
         GameEngine ge = new GameEngine(bp, dp, handPanels, mp, pp, this);
