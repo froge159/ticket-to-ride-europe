@@ -72,20 +72,27 @@ public class GameController {
                 }
             });
         }
-/* 
+
         drawPanel.getDeckButton().addActionListener(new ActionListener() {  // deck button clicked
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    ge.deckClick();
-                } catch (InterruptedException e1) {
-                    e1.printStackTrace();
-                }
+                ge.deckClick();
             }
         });
-        */
+
+        for (int i = 0; i < drawPanel.getFaceUpButtons().length; i++) {
+            final int ind = i;
+            drawPanel.getFaceUpButtons()[i].addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    ge.faceUpClick(ind);
+                }
+            });
+        }
+        
     }
 
     
 
 }
+          
