@@ -20,17 +20,21 @@ import utils.Rel;
 
 public class SidePanel extends JPanel{
     private JButton confirm, cancel;
-    private JLabel label;
+    private JLabel label, bottom;
     private String state;
     private ArrayList<LongPathCard> longCards;
     private ArrayList<NormalPathCard> pathCards;
-    private ArrayList<TrainCard> deck;
+    private ArrayList<TrainCard> deck, discard;
+    private int turn;
 
-    public SidePanel(ArrayList<LongPathCard> lng, ArrayList<NormalPathCard> path, ArrayList<TrainCard> deck) {
+    public SidePanel(ArrayList<LongPathCard> lng, ArrayList<NormalPathCard> path, ArrayList<TrainCard> deck, ArrayList<TrainCard> discard, int t) {
+        this.discard = discard;
         label = new JLabel();
+        bottom = new JLabel();
         longCards = lng;
         pathCards = path;
         this.deck = deck;
+        turn = t;
 
         setLayout(null);
         setSize(Rel.W(500), Rel.H(1080));
@@ -42,6 +46,10 @@ public class SidePanel extends JPanel{
     }
 
     public void updatePanel(){
+
+        SwingUtilities.invokeLater(() -> {
+            removeAll();
+        });
         
         confirm = new JButton("Confirm");
         cancel = new JButton("Cancel");
@@ -52,33 +60,47 @@ public class SidePanel extends JPanel{
         confirm.setBounds(Rel.X(290), Rel.Y(850), Rel.W(120), Rel.H(50));
         cancel.setBounds(Rel.X(90), Rel.Y(850), Rel.W(120), Rel.H(50));
 
-        int y = 133;
+        int y = 200;
 
         for (int i = 0; i < 3; i++) {
             JButton btn = new JButton();
             ImageIcon icon = new ImageIcon();
             btn.setBounds(Rel.X(150), Rel.Y(y), Rel.W(200), Rel.H(125));
-            if(state.equals("begin")){
-                icon = pathCards.get(pathCards.size() - 1).getFront();
+            
+            if(state.equals("begin") || state.equals("path")){
+                //System.out.println(pathCards.getLast());
+                icon = pathCards.getLast().getFront();
                 pathCards.add(0, pathCards.remove(pathCards.size() - 1));
             }else if(state.equals("mountain")){
                 icon = deck.get(deck.size() - 1).getScaledFront(Rel.W(200), Rel.H(125));
                 deck.add(0, deck.remove(deck.size() - 1));
             }
-
             btn.setIcon(icon);
-            y += 130;
+            btn.setBounds(Rel.X(150), Rel.Y(y), Rel.W(200), Rel.H(125));
+            y += 150;
+           // System.out.println(btn.getBounds());
             SwingUtilities.invokeLater(() -> {
                 add(btn);
-                setComponentZOrder(btn, 0); // Set the button to the top layer
+                //setComponentZOrder(btn, 0); 
+            });
+        }
+
+        if(state.equals("begin")){
+            JButton btn = new JButton();
+            btn.setIcon(longCards.getLast().getFront());
+            btn.setBounds(Rel.X(150), Rel.Y(y), Rel.W(200), Rel.H(125));
+            longCards.add(0, longCards.remove(longCards.size() - 1));
+            SwingUtilities.invokeLater(() -> {
+                add(btn);
+                //setComponentZOrder(btn, 0); 
             });
         }
 
         SwingUtilities.invokeLater(() -> {
-            removeAll();
             add(confirm);
             add(cancel);
             add(label);
+            add(bottom);
             revalidate();
             repaint();
         });
@@ -88,17 +110,22 @@ public class SidePanel extends JPanel{
         this.state = state;
         if(state.equals("path")){
             label.setText("Select at least one ticket");
+            bottom.setText("Player " + (turn + 1));
         }else if(state.equals("begin")){
             label.setText("Select at least two tickets");
+            bottom.setText("Player " + (turn + 1));
         }else if(state.equals("mountain")){
             label.setText("Drawing for mountain route");
+            bottom.setText("Pay +X [color] cards to claim route");
         }
 
         
         label.setFont(new Font("Arial", Font.PLAIN, Rel.W(30)));
+        bottom.setFont(new Font("Arial", Font.PLAIN, Rel.W(30)));
         label.setForeground(Color.WHITE);
-        System.out.println(label.getText().length());
+        bottom.setForeground(Color.WHITE);
         label.setBounds(Rel.X(250) - Rel.W(6) * label.getText().length(), Rel.Y(100), 400, Rel.H(50));
+        bottom.setBounds(Rel.X(250) - Rel.W(6) * bottom.getText().length(), Rel.Y(950), 400, Rel.H(50));
         //label.setBorder(new javax.swing.border.LineBorder(Color.YELLOW, Rel.W(3), true));
         System.out.println("added label: " + label.getText());
         System.out.println("Label bounds: " + label.getBounds());

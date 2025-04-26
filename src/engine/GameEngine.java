@@ -102,7 +102,7 @@ public class GameEngine {
         });
     }
 
-    public void deckClick()  { // deck button clicked
+    public void deckClick() throws InterruptedException { // deck button clicked
         setDrawCardState(true);
         ArrayList<TrainCard> deck = drawPanel.getTrainDeck();
         HandPanel currPlayer = handPanels[currentPlayer];   
@@ -171,7 +171,7 @@ public class GameEngine {
         }
         drawStateTransition(hp);
     }
-
+   
 
     public void drawStateTransition(HandPanel p) { // transitions to next player or second draw 
         if (p.getPlayer().getDrawn()) {
