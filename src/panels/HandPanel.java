@@ -26,11 +26,15 @@ public class HandPanel extends JPanel {
     private ArrayList<AnimatedCard> animatedPathCards;
     private JButton okButton, cancelButton;
     private JButton[] playerTrainButtons;
+    private TreeMap<String, JLabel> trainCardCounts;
+    private TreeMap<String, JLabel> selectedCounts;
+    private JLabel text;
 
     public HandPanel(Player p) {
         this.p = p; 
         setOpaque(false);
         // setBorder(new javax.swing.border.LineBorder(Color.YELLOW, Rel.W(3), true));
+        
 
         setLayout(null);
         setSize(Rel.W(1700), Rel.H(1080));
@@ -47,7 +51,10 @@ public class HandPanel extends JPanel {
         Stack<PathCard> pc = p.getPathCards();
         animatedPathCards = new ArrayList<>();
         playerTrainButtons = new JButton[temp.length];
-        
+        trainCardCounts = new TreeMap<>();
+        selectedCounts = new TreeMap<>();
+    
+
         final int[] y = { 925 };
         int x = 0;
         Iterator<PathCard> it = pc.iterator();
@@ -77,11 +84,13 @@ public class HandPanel extends JPanel {
             count.setFont(new Font("Arial", Font.PLAIN, Rel.W(30)));
             count.setForeground(Color.YELLOW);
             count.setBounds(Rel.X(jlabelX), Rel.Y(945), Rel.W(30), Rel.H(30));
+            trainCardCounts.put(color, count);
 
             JLabel clickCount = new JLabel (String.valueOf(mpSelected.get(color)));
             clickCount.setFont(new Font("Arial", Font.BOLD, Rel.W(15)));
             clickCount.setForeground(Color.RED);
             clickCount.setBounds(Rel.X(jlabelX + 5), Rel.Y(980), Rel.W(25), Rel.H(25));
+            selectedCounts.put(color, clickCount);
 
             JButton card = new JButton(CardImages.getImg(color + "-train")); // 125 /200
             card.setBounds(Rel.X(cardX), Rel.Y(880), Rel.W(125), Rel.H(200));
@@ -102,6 +111,10 @@ public class HandPanel extends JPanel {
             });
         }
 
+        text = new JLabel();
+        text.setFont(new Font("Arial", Font.BOLD, Rel.W(15)));
+        text.setForeground(Color.RED);
+        text.setBounds(Rel.X(17), Rel.Y(845), Rel.W(1000), Rel.H(50));
 
         okButton = new JButton("OK");
         okButton.setBounds(Rel.X(1495), Rel.Y(910), Rel.W(80), Rel.H(40));
@@ -112,25 +125,28 @@ public class HandPanel extends JPanel {
         SwingUtilities.invokeLater(() -> {
             add(okButton);
             add(cancelButton);
+            add(text);
             revalidate();
             repaint();
         });
+    }
+
+    public void updateTrainCardCounts() {
+        for (String i: temp) {
+            trainCardCounts.get(i).setText(String.valueOf(p.getTrainCards().get(i)));
+        }
     }
 
     public ArrayList<AnimatedCard> getAnimatedPathCards() {
         return animatedPathCards;
     }
 
-    public void setWarningText(String txt) {
-        JLabel warning = new JLabel(txt);
-        warning.setFont(new Font("Arial", Font.BOLD, Rel.W(15)));
-        warning.setForeground(Color.RED);
-        warning.setBounds(Rel.X(17), Rel.Y(845), Rel.W(1000), Rel.H(50));
-        SwingUtilities.invokeLater(() -> {
-            add(warning);
-            revalidate();
-            repaint();
-        });
+    public void setHandText(String txt) {
+        text.setText(txt);
+    }
+
+    public String getHandText() {
+        return text.getText();
     }
 
     public JButton getOkButton() {

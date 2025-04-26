@@ -16,6 +16,7 @@ public class PlayerPanel extends JPanel  {
 
 	private Player[] playerArray;
 	private JLabel bgImage;
+	private int rectangleY;
 
 	public PlayerPanel(Player[] pa) {
 		playerArray = pa;
@@ -38,6 +39,7 @@ public class PlayerPanel extends JPanel  {
 		SwingUtilities.invokeLater(() -> {
 			removeAll();
 		});
+		rectangleY = 0;
 		for (int i = 0; i < playerArray.length; i++) {
 			final int index = i; // Create a final copy of i
 			JLabel trainLabel = new JLabel(
@@ -80,7 +82,7 @@ public class PlayerPanel extends JPanel  {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.setColor(Color.YELLOW);
-		g.drawRect(0, 0, getWidth(), getHeight() / 4 + Rel.H(10));
+		g.drawRect(0, Rel.Y(rectangleY), getWidth(), getHeight() / 4 + Rel.H(10));
 	}
 
 	public Player[] getPlayerArray() {
@@ -88,5 +90,10 @@ public class PlayerPanel extends JPanel  {
 	}
 	public JLabel getBgImage() {
 		return bgImage;
+	}
+
+	public void setNextPlayer(int player) {
+		rectangleY = player * 100;
+		repaint();
 	}
 }
