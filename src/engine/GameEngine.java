@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import models.Player;
 import models.TrainCard;
 
 import java.awt.Point;
@@ -13,6 +14,7 @@ import java.awt.Point;
 
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 import panels.ButtonPanel;
@@ -100,34 +102,109 @@ public class GameEngine {
         });
     }
 
-    public void deckClick() throws InterruptedException { // deck button clicked
+    public void deckClick()  { // deck button clicked
         setDrawCardState(true);
-        TrainCard drawnCard = drawPanel.getTrainDeck().getLast();
-        drawPanel.getTrainDeck().removeLast(); // remove card from deck
-
-        handPanels[currentPlayer].addTrainCard(drawnCard); 
-        //drawPanel.showDrawnCard(drawnCard.getScaledFront(Rel.W(200), Rel.H(125))); // show drawn card on deck button
-        handPanels[currentPlayer].setHandText("Player " + (currentPlayer + 1) + " drew a " + drawnCard.getType() + " card.");
+        ArrayList<TrainCard> deck = drawPanel.getTrainDeck();
+        HandPanel currPlayer = handPanels[currentPlayer];   
+        
+        TrainCard drawnCard = deck.remove(deck.size() - 1);  // remove drawn card
+        currPlayer.addTrainCard(drawnCard);  // add drawn card to player inventory
+        currPlayer.setHandText("Player " + (currentPlayer + 1) + " drew a " + drawnCard.getType() + " card.");
+        currPlayer.updateTrainCardCounts();
 
         if (drawPanel.getTrainDeck().size() < 1) { // if deck is empty, refill it
-            for (int i = 0; i < drawPanel.getDiscard().size(); i++) {
-                drawPanel.getTrainDeck().add(drawPanel.getDiscard().get(i));
-                drawPanel.getDiscard().remove(i); 
+            refillDrawDeck(deck, currPlayer);
+        }
+
+        drawStateTransition(currPlayer);
+    }
+
+    public void faceUpClick(int index) {
+        setDrawCardState(true);
+        ArrayList<TrainCard> deck = drawPanel.getTrainDeck();
+        Player p = playerPanel.getPlayerArray()[currentPlayer];
+        HandPanel hp = handPanels[currentPlayer];
+        TrainCard[] faceUpDeck = drawPanel.getFaceUpDeck();
+
+        TrainCard drawnCard = faceUpDeck[index];
+        int wildCount = 0;
+
+        p.addTrainCard(drawnCard);
+        hp.updateTrainCardCounts();
+        hp.setHandText("Player " + (currentPlayer + 1) + " drew a " + drawnCard.getType() + " card."); // add card to player inventory
+
+        faceUpDeck[index] = null;
+        for (int i = 0; i < 5; i++) { // refill face up cards
+            if (deck.size() > 0) {
+                if (faceUpDeck[i] == null) {
+                    faceUpDeck[i] = deck.remove(deck.size() - 1);
+                    drawPanel.updateFaceUpButton(i, false);
+                }
             }
-            Collections.shuffle(drawPanel.getTrainDeck()); // shuffle deck
-            handPanels[currentPlayer].setHandText("Discard reshuffled into Deck");
+            else drawPanel.updateFaceUpButton(index, true);
+            if (faceUpDeck[i].getType().equals("wild")) wildCount++; // increment count for wild cards
+        }
+        if (deck.size() < 1) { // if deck is empty, refill it
+            refillDrawDeck(deck, hp);
+        }
+        if (wildCount >= 3) { // if at least 3 wild cards shown
+            Timer timer = new Timer(1000, e -> {
+                for (int i = 0; i < 5; i++) {
+                    drawPanel.getDiscard().add(faceUpDeck[i]);
+                    faceUpDeck[i] = null; 
+                }
+                refillDrawDeck(deck, hp);
+                for (int i = 0; i < 5; i++) { // refill face up cards
+                    if (deck.size() > 0) {
+                        faceUpDeck[i] = deck.remove(deck.size() - 1);
+                        drawPanel.updateFaceUpButton(i, false);
+                    }
+                    else drawPanel.updateFaceUpButton(index, true);
+                }
+            });
+            timer.setRepeats(false);
+            timer.start();
         }
 
-        if (drawPanel.getTrainDeck().size() < 1) {
-            drawPanel.remove(drawPanel.getDeckButton());
+        if (drawnCard.getType().equals("wild")) { // if drew wild card, transition to next player
+            p.setDrawn(true);
         }
-
-        if (handPanels[currentPlayer].getPlayer().getDrawn()) {
-            
-        }
+        drawStateTransition(hp);
     }
 
 
+    public void drawStateTransition(HandPanel p) { // transitions to next player or second draw 
+        if (p.getPlayer().getDrawn()) {
+            Timer timer = new Timer(1000, e -> {
+                p.getPlayer().setDrawn(false);
+                setDrawCardState(false);
+                nextPlayer();
+            });
+            timer.setRepeats(false);
+            timer.start();
+        }
+        else {
+            p.getPlayer().setDrawn(true);
+            p.setHandText(p.getHandText() + " Please draw again.");
+        }
+    }
+
+    public void refillDrawDeck(ArrayList<TrainCard> deck, HandPanel hp) {
+        Timer timer = new Timer(1000, e -> {
+            for (int i = 0; i < drawPanel.getDiscard().size(); i++) {
+                deck.add(drawPanel.getDiscard().get(i));
+                drawPanel.getDiscard().remove(i); 
+            }
+            Collections.shuffle(drawPanel.getTrainDeck()); // shuffle deck
+            hp.setHandText(hp.getHandText() + " Discard reshuffled into Deck.");
+            if (drawPanel.getTrainDeck().size() < 1) { // if deck empty after refilling faceup cards
+                drawPanel.getDeckButton().setVisible(false);
+            }
+            else drawPanel.getDeckButton().setVisible(true);
+        });
+        timer.setRepeats(false);
+        timer.start();
+    }
 
     public void setDrawCardState(boolean state) {
         buttonPanel.setEnabled(!state);
@@ -136,8 +213,18 @@ public class GameEngine {
     }
 
     public void nextPlayer() {
+        handPanels[currentPlayer].setVisible(false);
+        handPanels[currentPlayer].setHandText("");
+
         if (currentPlayer == 3) currentPlayer = 0;
         else currentPlayer++;
+        playerPanel.setNextPlayer(currentPlayer);
+
+        if (!Arrays.asList(gamePanel.getComponents()).contains(handPanels[currentPlayer])) {
+            gamePanel.add(handPanels[currentPlayer]);
+            gamePanel.setComponentZOrder(handPanels[currentPlayer], 0);
+        }
+        handPanels[currentPlayer].setVisible(true);
     }
 
 }

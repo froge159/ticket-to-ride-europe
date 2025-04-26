@@ -35,9 +35,7 @@ public class DrawPanel extends JPanel {
         //setBorder(new javax.swing.border.LineBorder(Color.YELLOW, Rel.W(3), true));
 
         //TESTING
-        while (trainDeck.size() > 6) {
-            discard.add(trainDeck.remove(trainDeck.size() - 1));
-        }
+        
         // TESTING
     
         setLayout(null);
@@ -95,10 +93,20 @@ public class DrawPanel extends JPanel {
         });
     }
 
+    public void updateFaceUpButton(int index, boolean hide) {
+        if (hide) {
+            faceUpButtons[index].setVisible(false);
+        }
+        else {
+            faceUpButtons[index].setIcon(faceUpDeck[index].getScaledFront(200, 125));
+            faceUpButtons[index].setVisible(true);
+        }
+    }
+
     public void refillFaceUpDeck() {
         for (int i = 0; i < 5; i++) {
             if (trainDeck.size() > 0 && faceUpDeck[i] == null) {
-                faceUpDeck[i] = trainDeck.getLast();
+                faceUpDeck[i] = trainDeck.get(trainDeck.size() - 1);
                 trainDeck.remove(trainDeck.size() - 1);
             }
         }
@@ -154,6 +162,10 @@ public class DrawPanel extends JPanel {
     }
     public TrainCard[] getFaceUpDeck() {
         return faceUpDeck;
+    }
+
+    public void setTrainDeck(ArrayList<TrainCard> x) {
+        this.trainDeck = x;
     }
 
 }

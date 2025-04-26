@@ -59,10 +59,10 @@ public class SidePanel extends JPanel{
             ImageIcon icon = new ImageIcon();
             btn.setBounds(Rel.X(150), Rel.Y(y), Rel.W(200), Rel.H(125));
             if(state.equals("begin")){
-                icon = pathCards.getLast().getFront();
+                icon = pathCards.get(pathCards.size() - 1).getFront();
                 pathCards.add(0, pathCards.remove(pathCards.size() - 1));
             }else if(state.equals("mountain")){
-                icon = deck.getLast().getScaledFront(Rel.W(200), Rel.H(125));
+                icon = deck.get(deck.size() - 1).getScaledFront(Rel.W(200), Rel.H(125));
                 deck.add(0, deck.remove(deck.size() - 1));
             }
 

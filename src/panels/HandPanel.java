@@ -26,6 +26,8 @@ public class HandPanel extends JPanel {
     private ArrayList<AnimatedCard> animatedPathCards;
     private JButton okButton, cancelButton;
     private JButton[] playerTrainButtons;
+    private TreeMap<String, JLabel> trainCardCounts;
+    private TreeMap<String, JLabel> selectedCounts;
     private JLabel text;
 
     public HandPanel(Player p) {
@@ -49,6 +51,9 @@ public class HandPanel extends JPanel {
         Stack<PathCard> pc = p.getPathCards();
         animatedPathCards = new ArrayList<>();
         playerTrainButtons = new JButton[temp.length];
+        trainCardCounts = new TreeMap<>();
+        selectedCounts = new TreeMap<>();
+    
 
         final int[] y = { 925 };
         int x = 0;
@@ -79,11 +84,13 @@ public class HandPanel extends JPanel {
             count.setFont(new Font("Arial", Font.PLAIN, Rel.W(30)));
             count.setForeground(Color.YELLOW);
             count.setBounds(Rel.X(jlabelX), Rel.Y(945), Rel.W(30), Rel.H(30));
+            trainCardCounts.put(color, count);
 
             JLabel clickCount = new JLabel (String.valueOf(mpSelected.get(color)));
             clickCount.setFont(new Font("Arial", Font.BOLD, Rel.W(15)));
             clickCount.setForeground(Color.RED);
             clickCount.setBounds(Rel.X(jlabelX + 5), Rel.Y(980), Rel.W(25), Rel.H(25));
+            selectedCounts.put(color, clickCount);
 
             JButton card = new JButton(CardImages.getImg(color + "-train")); // 125 /200
             card.setBounds(Rel.X(cardX), Rel.Y(880), Rel.W(125), Rel.H(200));
@@ -124,12 +131,22 @@ public class HandPanel extends JPanel {
         });
     }
 
+    public void updateTrainCardCounts() {
+        for (String i: temp) {
+            trainCardCounts.get(i).setText(String.valueOf(p.getTrainCards().get(i)));
+        }
+    }
+
     public ArrayList<AnimatedCard> getAnimatedPathCards() {
         return animatedPathCards;
     }
 
     public void setHandText(String txt) {
         text.setText(txt);
+    }
+
+    public String getHandText() {
+        return text.getText();
     }
 
     public JButton getOkButton() {
