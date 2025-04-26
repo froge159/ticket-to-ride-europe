@@ -102,7 +102,7 @@ public class GameEngine {
         });
     }
 
-    public void deckClick() throws InterruptedException { // deck button clicked
+    public void deckClick()  { // deck button clicked
         setDrawCardState(true);
         ArrayList<TrainCard> deck = drawPanel.getTrainDeck();
         HandPanel currPlayer = handPanels[currentPlayer];   

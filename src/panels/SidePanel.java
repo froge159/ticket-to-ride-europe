@@ -69,7 +69,7 @@ public class SidePanel extends JPanel{
             
             if(state.equals("begin") || state.equals("path")){
                 //System.out.println(pathCards.getLast());
-                icon = pathCards.getLast().getFront();
+                icon = pathCards.get(pathCards.size() - 1).getFront();
                 pathCards.add(0, pathCards.remove(pathCards.size() - 1));
             }else if(state.equals("mountain")){
                 icon = deck.get(deck.size() - 1).getScaledFront(Rel.W(200), Rel.H(125));
@@ -87,7 +87,7 @@ public class SidePanel extends JPanel{
 
         if(state.equals("begin")){
             JButton btn = new JButton();
-            btn.setIcon(longCards.getLast().getFront());
+            btn.setIcon(longCards.get(longCards.size() - 1).getFront());
             btn.setBounds(Rel.X(150), Rel.Y(y), Rel.W(200), Rel.H(125));
             longCards.add(0, longCards.remove(longCards.size() - 1));
             SwingUtilities.invokeLater(() -> {
