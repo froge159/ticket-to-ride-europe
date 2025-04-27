@@ -1,6 +1,5 @@
 package controllers;
 
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -9,15 +8,13 @@ import java.awt.event.MouseEvent;
 
 import engine.GameEngine;
 import engine.StartEngine;
-import models.Path;
-import models.PathBlock;
-import models.TTRMap;
 import panels.ButtonPanel;
 import panels.DrawPanel;
 import panels.GamePanel;
 import panels.HandPanel;
 import panels.MapPanel;
 import panels.PlayerPanel;
+import panels.SetupPanel;
 
 public class GameController {
     private ButtonPanel buttonPanel;
@@ -28,8 +25,9 @@ public class GameController {
     private GamePanel gamePanel;
     private StartEngine startEngine;
     private GameEngine ge;
+    private SetupPanel setupPanel;
 
-    public GameController(ButtonPanel b, DrawPanel d, HandPanel[] h, MapPanel m, PlayerPanel p, GamePanel gp, StartEngine se, GameEngine ge) {
+    public GameController(ButtonPanel b, DrawPanel d, HandPanel[] h, MapPanel m, PlayerPanel p, SetupPanel s, GamePanel gp, StartEngine se, GameEngine ge) {
         buttonPanel = b;
         drawPanel = d;
         handPanels = h;
@@ -37,6 +35,7 @@ public class GameController {
         playerPanel = p;
         gamePanel = gp;
         startEngine = se;
+        setupPanel = s;
         this.ge = ge;
         initListeners();
     }
@@ -55,8 +54,46 @@ public class GameController {
             public void mouseClicked(MouseEvent e) {
                 ge.handleMouseClick(e);
             }
+            ;
         });
 
+        drawPanel.getDeckButton().addActionListener(new ActionListener() {  // deck button clicked
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ge.deckClick();
+            }
+        });
+
+        for (int i = 0; i < drawPanel.getFaceUpButtons().length; i++) {
+            final int ind = i;
+            drawPanel.getFaceUpButtons()[i].addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    ge.faceUpClick(ind);
+                }
+            });
+        }
+
+        for (int i = 0; i < setupPanel.getTicketButtons().length; i++) {
+            final int ind = i;
+            setupPanel.getTicketButtons()[ind].addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    ge.setupTicketClick(ind);
+                }
+            });
+        }
+
+        setupPanel.getConfirmButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ge.setupPlayerTransition(); 
+            }
+        });
+        
+    }
+
+    public void initPathCardListeners() {
         for (int i = 0; i < handPanels.length; i++) {
             final int index = i;
             if (handPanels[index].getPlayer().getPathCards().size() > 0) {
@@ -75,24 +112,6 @@ public class GameController {
             }
             
         }
-
-        drawPanel.getDeckButton().addActionListener(new ActionListener() {  // deck button clicked
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ge.deckClick();
-            }
-        });
-
-        for (int i = 0; i < drawPanel.getFaceUpButtons().length; i++) {
-            final int ind = i;
-            drawPanel.getFaceUpButtons()[i].addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    ge.faceUpClick(ind);
-                }
-            });
-        }
-        
     }
 
     

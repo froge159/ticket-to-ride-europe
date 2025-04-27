@@ -2,7 +2,7 @@ package models;
 import java.util.*;
 
 public class Player {
-    private String color;
+    private int number;
     private int trains = 45, stations = 4, points = 0;
     private LongPathCard longPath = null;
     private TreeMap<String, Integer> trainCards;
@@ -12,7 +12,7 @@ public class Player {
     private LinkedList<Path> paths;
     private boolean drawn = false;
 
-    public Player(String c){
+    public Player(int c){
         String[] temp = { "black", "blue", "brown", "green", "purple", "red", "white", "yellow", "wild" };
 
         trainCards = new TreeMap<>();
@@ -20,7 +20,7 @@ public class Player {
         pathCards = new Stack<>();
         cities = new LinkedList<>();
         paths = new LinkedList<>();
-        color = c;
+        number = c;
 
         for (String color: temp) {
             trainCards.put(color, 0);
@@ -47,6 +47,11 @@ public class Player {
         pathCards.add(card);
     }
 
+    public void setLongPathCard(LongPathCard card){
+        longPath = card;
+        pathCards.add(card);
+    }
+
     public void buildStation(City city){
         if(stations > 0){
             city.buildStation(this);
@@ -63,7 +68,7 @@ public class Player {
         return 0;
     }
 
-    public String getColor(){return color;}
+    public int getNumber(){return number;}
     public int getTrains(){return trains;}
     public int getStations(){return stations;}
     public TreeMap<String, Integer> getTrainCards(){return trainCards;}
