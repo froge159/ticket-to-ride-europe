@@ -14,7 +14,6 @@ import engine.GameEngine;
 import engine.StartEngine;
 import models.LongPathCard;
 import models.NormalPathCard;
-import models.Path;
 import models.Player;
 import models.TTRMap;
 import models.TrainCard;
@@ -53,10 +52,10 @@ public class GamePanel extends JPanel {
         endGame = new JButton();
 
         players = new Player[4]; 
-        players[0] = new Player("red");
-        players[1] = new Player("yellow");
-        players[2] = new Player("green");
-        players[3] = new Player("blue");
+        players[0] = new Player(0);
+        players[1] = new Player(1);
+        players[2] = new Player(2);
+        players[3] = new Player(3);
 
 
         // load train cards
@@ -95,21 +94,6 @@ public class GamePanel extends JPanel {
                         ImageIO.read(new File("assets/routes/" + city1 + "-" + city2 + ".png")), 200, 125)));            
         }
 
-        /*
-         * File folder = new File("assets/routes/");
-         * File[] files = folder.listFiles((dir, name) ->
-         * name.toLowerCase().endsWith(".png"));
-         * 
-         * if (files != null) {
-         * for (File file : files) {
-         * String l = file.getName();
-         * pathCards.add(new NormalPathCard(ImageIO.read(file)));
-         * // You can load or process the PNG file here
-         * }
-         * } else {
-         * System.out.println("No PNG files found or directory does not exist.");
-         * }
-         */
         Collections.shuffle(trainCards);
         Collections.shuffle(pathCards);
         Collections.shuffle(longCards);
@@ -125,29 +109,23 @@ public class GamePanel extends JPanel {
         ButtonPanel bp = new ButtonPanel();
         DrawPanel dp = new DrawPanel(trainCards, pathCards);
         MapPanel mp = new MapPanel();
-        SidePanel sp = new SidePanel(longCards, pathCards, trainCards, discard, turn);
+        SetupPanel sp = new SetupPanel(longCards, pathCards, players[0]);
 
+        for(Player p : players){
+            for(int i = 0; i < 4; i++){
+                p.addTrainCard(trainCards.remove(trainCards.size() - 1));
+            }
+        }
         
-        // FOR TESTING
-        players[0].addPathCard(pathCards.get(0));
-        players[0].addPathCard(pathCards.get(1));
-        players[0].addPathCard(pathCards.get(2));
-        players[1].addPathCard(pathCards.get(0));
-        players[1].addPathCard(pathCards.get(1));
-        players[2].addPathCard(pathCards.get(0));
-        players[2].addPathCard(pathCards.get(1));
-        players[3].addPathCard(pathCards.get(0));
-        players[3].addPathCard(pathCards.get(1));
-        // FOR TESTING
         handPanels = new HandPanel[4];
         handPanels[0] = new HandPanel(players[0]);
         handPanels[1] = new HandPanel(players[1]);
         handPanels[2] = new HandPanel(players[2]);
         handPanels[3] = new HandPanel(players[3]);
-        
 
-        GameEngine ge = new GameEngine(bp, dp, handPanels, mp, pp, this);
-        GameController gc = new GameController(bp, dp, handPanels, mp, pp, this, se, ge);
+        GameEngine ge = new GameEngine(bp, dp, handPanels, mp, pp, sp, this);
+        GameController gc = new GameController(bp, dp, handPanels, mp, pp, sp, this, se, ge);
+        ge.setGameController(gc);
 
         pp.setBounds(Rel.X(1730), Rel.Y(20), pp.getWidth(), pp.getHeight());
         bp.setBounds(Rel.X(1700), Rel.Y(420), bp.getWidth(), bp.getHeight());
@@ -161,16 +139,17 @@ public class GamePanel extends JPanel {
         SwingUtilities.invokeLater(() -> {
             setLayout(null);
             add(pp);
-            add(bp);
             add(mp);
             add(handPanels[0]); 
+            add(sp);
+            add(bp);
             add(dp);
-            //add(sp);
+            dp.setVisible(false);
             setComponentZOrder(handPanels[0], 1);
-            //setComponentZOrder(sp, 0);
             revalidate();
             repaint();
         });
+        ge.setSetupState(true);
     }
 
     public Player[] getPlayers() {

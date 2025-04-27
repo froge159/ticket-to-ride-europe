@@ -48,38 +48,18 @@ public class HandPanel extends JPanel {
         
         TreeMap<String, Integer> mp = p.getTrainCards();
         TreeMap<String, Integer> mpSelected = p.getTrainCardsSelected();
-        Stack<PathCard> pc = p.getPathCards();
         animatedPathCards = new ArrayList<>();
         playerTrainButtons = new JButton[temp.length];
         trainCardCounts = new TreeMap<>();
         selectedCounts = new TreeMap<>();
-    
 
-        final int[] y = { 925 };
-        int x = 0;
-        Iterator<PathCard> it = pc.iterator();
-        while (it.hasNext()) {
-            PathCard currentCard = it.next();
-            AnimatedCard animatedCard = new AnimatedCard(currentCard, Rel.W(200), Rel.H(125), Rel.X(17), Rel.Y(y[0]));
-            animatedPathCards.add(animatedCard);
-
-            if (x < 2) { // only add first 2 cards
-                SwingUtilities.invokeLater(() -> {
-                    add(animatedCard);
-                    setComponentZOrder(animatedCard, 0); 
-                    //revalidate(); 
-                    //repaint();
-                });
-            }
-            x++;
-            y[0] -= 40; 
-        }
+        
 
         int jlabelX = 278; 
         int cardX = 225;
         for (int i = 0; i < temp.length; i++) {
             String color = temp[i];
-
+            
             JLabel count = new JLabel(String.valueOf(mp.get(color)));
             count.setFont(new Font("Arial", Font.PLAIN, Rel.W(30)));
             count.setForeground(Color.YELLOW);
@@ -117,9 +97,11 @@ public class HandPanel extends JPanel {
         text.setBounds(Rel.X(17), Rel.Y(845), Rel.W(1000), Rel.H(50));
 
         okButton = new JButton("OK");
+        okButton.setFont(new Font("Arial", Font.PLAIN, Rel.W(15)));
         okButton.setBounds(Rel.X(1495), Rel.Y(910), Rel.W(80), Rel.H(40));
 
         cancelButton = new JButton("Cancel");
+        cancelButton.setFont(new Font("Arial", Font.PLAIN, Rel.W(15)));
         cancelButton.setBounds(Rel.X(1495), Rel.Y(980), Rel.W(80), Rel.H(40));
 
         SwingUtilities.invokeLater(() -> {
@@ -129,6 +111,29 @@ public class HandPanel extends JPanel {
             revalidate();
             repaint();
         });
+    }
+
+    public void updatePathCards() {
+        Stack<PathCard> pc = p.getPathCards();
+        final int[] y = { 925 };
+        int x = 0;
+        Iterator<PathCard> it = pc.iterator();
+        while (it.hasNext()) {
+            PathCard currentCard = it.next();
+            AnimatedCard animatedCard = new AnimatedCard(currentCard, Rel.W(200), Rel.H(125), Rel.X(17), Rel.Y(y[0]));
+            animatedPathCards.add(animatedCard);
+
+            if (x < 2) { // only add first 2 cards
+                SwingUtilities.invokeLater(() -> {
+                    add(animatedCard);
+                    setComponentZOrder(animatedCard, 0); 
+                    revalidate(); 
+                    repaint();
+                });
+            }
+            x++;
+            y[0] -= 40; 
+        }
     }
 
     public void updateTrainCardCounts() {

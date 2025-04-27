@@ -1,13 +1,15 @@
 package engine;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import javax.swing.border.LineBorder;
 
+import controllers.GameController;
 import models.Player;
 import models.TrainCard;
 
+import java.awt.Color;
 import java.awt.Point;
 
 
@@ -23,7 +25,7 @@ import panels.GamePanel;
 import panels.HandPanel;
 import panels.MapPanel;
 import panels.PlayerPanel;
-import utils.PNGEnum;
+import panels.SetupPanel;
 import utils.Rel;
 import panels.AnimatedCard;
 
@@ -38,17 +40,19 @@ public class GameEngine {
     private HandPanel[] handPanels;
     private MapPanel mapPanel;
     private PlayerPanel playerPanel;
+    private SetupPanel setupPanel;
     private GamePanel gamePanel;
-    private GameEngine engine;
     private int currentPlayer = 0;
+    private GameController gc;
 
-    public GameEngine(ButtonPanel b, DrawPanel d, HandPanel[] h, MapPanel m, PlayerPanel p, GamePanel gp) {
+    public GameEngine(ButtonPanel b, DrawPanel d, HandPanel[] h, MapPanel m, PlayerPanel p, SetupPanel s, GamePanel gp) {
         buttonPanel = b;
         drawPanel = d;
         handPanels = h;
         mapPanel = m;
         playerPanel = p;
         gamePanel = gp;
+        setupPanel  = s;
     }
 
     
@@ -171,6 +175,37 @@ public class GameEngine {
         }
         drawStateTransition(hp);
     }
+
+    public void setupTicketClick(int ind) { // if setup ticket card clicked
+        boolean[] clickedArray = setupPanel.getClickedArray();
+        clickedArray[ind] = !clickedArray[ind]; // change boolean value
+        setupPanel.getTicketButtons()[ind].setBorder(clickedArray[ind] ? new LineBorder(Color.YELLOW, Rel.W(3), true) : null); // set border if necessary
+    }
+
+    public void setupPlayerTransition() {
+        int clickedCount = 0;
+        for (int i = 0; i < 4; i++) { // count number of clicked cards
+            if (setupPanel.getClickedArray()[i]) clickedCount++;
+        }
+
+        if (clickedCount >= 2) { // add tickets if at least 2 clicked
+            for (int i = 0; i < 4; i++) {
+                if (setupPanel.getClickedArray()[i]) { 
+                    if (i < 3) {
+                        setupPanel.getPlayer().addPathCard(setupPanel.getTicketArray()[i]);
+                    }
+                    else setupPanel.getPlayer().setLongPathCard(setupPanel.getLongTicket()); 
+                }
+            }
+            handPanels[setupPanel.getPlayer().getNumber()].updatePathCards(); // update path cards in hand panel and add listeners
+        }
+        else return;
+
+        if (setupPanel.getPlayer().getNumber() == 3) { // if last player
+            setSetupState(false);
+        }
+        else setupPanel.updateForNextPlayer(handPanels[setupPanel.getPlayer().getNumber() + 1].getPlayer()); // switch to next player if not last
+    }
    
 
     public void drawStateTransition(HandPanel p) { // transitions to next player or second draw 
@@ -209,7 +244,23 @@ public class GameEngine {
     public void setDrawCardState(boolean state) {
         buttonPanel.setEnabled(!state);
         handPanels[currentPlayer].setEnabled(!state);
-        // disable mapPanel
+        mapPanel.setEnabled(!state);
+    }
+
+    public void setSetupState(boolean state) {
+        mapPanel.setEnabled(!state);
+        handPanels[0].setVisible(!state);
+        playerPanel.setVisible(!state);
+        buttonPanel.setVisible(!state);
+        drawPanel.setVisible(!state);
+        if (!state) {
+            SwingUtilities.invokeLater(() -> {
+                gamePanel.remove(setupPanel);
+                gamePanel.revalidate();
+                gamePanel.repaint();
+            });
+            gc.initPathCardListeners();
+        }
     }
 
     public void nextPlayer() {
@@ -226,5 +277,9 @@ public class GameEngine {
         }
         handPanels[currentPlayer].setVisible(true);
     }
+
+    public void setGameController(GameController gc) {
+        this.gc = gc;
+    }   
 
 }
