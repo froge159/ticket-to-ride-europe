@@ -1,5 +1,4 @@
 package models;
-import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,27 +13,38 @@ public class TTRMap {
         cities = new LinkedList<>();
         paths = new LinkedList<>();
 
-        //paths.add(new Path(new PathBlock[]{new PathBlock(Color.BLACK, "default", 0, 938, 810), new PathBlock(Color.BLACK, "default", 25, 988, 821)}, new City("A", 0, 0), new City(("B"), 0, 0)));
-
-        //BufferedReader br = new BufferedReader(new FileReader("assets/data/mapRoutes.txt"));
-        /* 
+        BufferedReader br = new BufferedReader(new FileReader("assets/data/pathBlocks.txt"));
         String line;
-        while((line = br.readLine()) != null){
-            StringTokenizer st2 = new StringTokenizer(line);
-            String city1 = st2.nextToken();
-            String city2 = st2.nextToken();
-            int length = Integer.parseInt(st2.nextToken());
-            //paths.add(new Path(new PathBlock[length], new City(city1), new City(city2)));
-        //    st2 = new StringTokenizer(br.readLine());
-        }*/
+        while ((line = br.readLine()) != null) {
+            StringTokenizer st = new StringTokenizer(line);
+            String city1 = st.nextToken();
+            String city2 = st.nextToken();
+            int blockCount = Integer.parseInt(st.nextToken());
+            
+                  
+            for (int i = 0; i < blockCount; i++) {
+                line = br.readLine();
+                st = new StringTokenizer(line);
+                
+            }
+        }
     }
+
+
 
     public void addPath(Path path){
         paths.add(path);
     }
 
-    public void addCity(City city){
-        cities.add(city);
+    public void addEdge(City c1, City c2){
+        if (!cities.contains(c1)) {
+            cities.add(c1);
+        }
+        if (!cities.contains(c2)) {
+            cities.add(c2);
+        }
+        c1.getNeighbors().add(c2);
+        c2.getNeighbors().add(c1);
     }
     
     public boolean adjacent(City c1, City c2){
