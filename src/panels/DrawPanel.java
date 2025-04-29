@@ -19,13 +19,13 @@ public class DrawPanel extends JPanel {
     private JButton deckButton, ticketButton;
     private JButton[] faceUpButtons;
 
-    private Stack<TrainCard> trainDeck, discard;
+    private ArrayList<TrainCard> trainDeck, discard;
     private TrainCard[] faceUpDeck;
-    private Stack<NormalPathCard> pathCards;
+    private ArrayList<NormalPathCard> pathCards;
 
-    public DrawPanel(Stack<TrainCard> trainCards, Stack<NormalPathCard> pathCards) {
+    public DrawPanel(ArrayList<TrainCard> trainCards, ArrayList<NormalPathCard> pathCards) {
         this.trainDeck = trainCards;
-        this.discard = new Stack<>();
+        this.discard = new ArrayList<>();
         this.faceUpDeck = new TrainCard[5];
         this.pathCards = pathCards;
         faceUpButtons = new JButton[5];
@@ -34,7 +34,10 @@ public class DrawPanel extends JPanel {
         setOpaque(false);
         //setBorder(new javax.swing.border.LineBorder(Color.YELLOW, Rel.W(3), true));
 
+        //TESTING
         
+        // TESTING
+    
         setLayout(null);
         updatePanel();
     }
@@ -49,11 +52,6 @@ public class DrawPanel extends JPanel {
         deckButton = new JButton();
         deckButton.setIcon(trainDeck.size() < 1 ? deckPNGBW : deckPNG);
         deckButton.setBounds(Rel.X(80), Rel.Y(5), Rel.W(200), Rel.H(125));
-        if (trainDeck.size() < 1) {
-            deckButton.setEnabled(false);
-        } else {
-            deckButton.setEnabled(true);
-        }
         
         // TESTING
         refillFaceUpDeck();
@@ -95,11 +93,34 @@ public class DrawPanel extends JPanel {
         });
     }
 
+    public void updateFaceUpButton(int index, boolean hide) {
+        if (hide) {
+            faceUpButtons[index].setVisible(false);
+        }
+        else {
+            faceUpButtons[index].setIcon(faceUpDeck[index].getScaledFront(200, 125));
+            faceUpButtons[index].setVisible(true);
+        }
+    }
+
     public void refillFaceUpDeck() {
         for (int i = 0; i < 5; i++) {
             if (trainDeck.size() > 0 && faceUpDeck[i] == null) {
-                faceUpDeck[i] = trainDeck.pop();
+                faceUpDeck[i] = trainDeck.get(trainDeck.size() - 1);
+                trainDeck.remove(trainDeck.size() - 1);
             }
+        }
+    }
+    
+    public void setDeckDisabled(boolean disabled){
+        System.out.println("entered");
+        ImageIcon deckPNG = PNGEnum.TRAINBACK.getImage();
+        ImageIcon deckPNGBW = PNGEnum.TRAINBACKBW.getImage();
+        deckButton = new JButton();
+        deckButton.setIcon(disabled ? deckPNGBW : deckPNG);
+        if (disabled) {
+            System.out.println("disabled");
+            deckButton.setEnabled(false);
         }
     }
 
@@ -121,13 +142,13 @@ public class DrawPanel extends JPanel {
         ticketButton.setEnabled(enabled);
     }
 
-    public Stack<TrainCard> getTrainDeck() {
+    public ArrayList<TrainCard> getTrainDeck() {
         return trainDeck;
     }
-    public Stack<NormalPathCard> getPathCards() {
+    public ArrayList<NormalPathCard> getPathCards() {
         return pathCards;
     }
-    public Stack<TrainCard> getDiscard() {
+    public ArrayList<TrainCard> getDiscard() {
         return discard;
     }
     public TrainCard[] getFaceUpDeck() {
@@ -141,6 +162,10 @@ public class DrawPanel extends JPanel {
     }
     public JButton[] getFaceUpButtons() {
         return faceUpButtons;
+    }
+
+    public void setTrainDeck(ArrayList<TrainCard> x) {
+        this.trainDeck = x;
     }
 
 }

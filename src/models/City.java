@@ -1,5 +1,10 @@
 package models;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Point;
 import java.util.*;
+
+import utils.Rel;
 
 public class City {
     //graph node class implementation
@@ -29,4 +34,16 @@ public class City {
     }
 
     public ArrayList<City> getNeighbors(){return neighbors;}
+
+    public void draw(Graphics g) {
+        g.setColor(Color.RED);
+        g.fillOval(Rel.X(x - 10), Rel.Y(y - 10), Rel.W(20), Rel.H(20));
+    }
+
+    public boolean contains(Point p) {
+        if(p.x >= Rel.X(x - 10) && p.x <= Rel.X(x + 10) && p.y >= Rel.Y(y - 10) && p.y <= Rel.Y(y + 10)){
+            return true;
+        }
+        return false;
+    }
 }

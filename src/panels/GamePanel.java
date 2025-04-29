@@ -14,7 +14,6 @@ import engine.GameEngine;
 import engine.StartEngine;
 import models.LongPathCard;
 import models.NormalPathCard;
-import models.Path;
 import models.Player;
 import models.TTRMap;
 import models.TrainCard;
@@ -25,8 +24,8 @@ import java.io.*;
 
 public class GamePanel extends JPanel {
 
-    private Stack<TrainCard> trainCards, discard;
-    private Stack<NormalPathCard> pathCards;
+    private ArrayList<TrainCard> trainCards, discard;
+    private ArrayList<NormalPathCard> pathCards;
     private ArrayList<LongPathCard> longCards;
     private Player[] players;
     private HandPanel[] handPanels;
@@ -40,9 +39,9 @@ public class GamePanel extends JPanel {
     public GamePanel() throws IOException, InterruptedException{
         String[] temp = { "black", "blue", "brown", "green", "purple", "red", "white", "yellow", "wild" };
 
-        trainCards = new Stack<>();
-        discard = new Stack<>();
-        pathCards = new Stack<>();
+        trainCards = new ArrayList<>();
+        discard = new ArrayList<>();
+        pathCards = new ArrayList<>();
         longCards = new ArrayList<>();
         players = new Player[4];
         turn = 0;
@@ -53,10 +52,10 @@ public class GamePanel extends JPanel {
         endGame = new JButton();
 
         players = new Player[4]; 
-        players[0] = new Player("red");
-        players[1] = new Player("yellow");
-        players[2] = new Player("green");
-        players[3] = new Player("blue");
+        players[0] = new Player(0);
+        players[1] = new Player(1);
+        players[2] = new Player(2);
+        players[3] = new Player(3);
 
 
         // load train cards
@@ -95,21 +94,6 @@ public class GamePanel extends JPanel {
                         ImageIO.read(new File("assets/routes/" + city1 + "-" + city2 + ".png")), 200, 125)));            
         }
 
-        /*
-         * File folder = new File("assets/routes/");
-         * File[] files = folder.listFiles((dir, name) ->
-         * name.toLowerCase().endsWith(".png"));
-         * 
-         * if (files != null) {
-         * for (File file : files) {
-         * String l = file.getName();
-         * pathCards.add(new NormalPathCard(ImageIO.read(file)));
-         * // You can load or process the PNG file here
-         * }
-         * } else {
-         * System.out.println("No PNG files found or directory does not exist.");
-         * }
-         */
         Collections.shuffle(trainCards);
         Collections.shuffle(pathCards);
         Collections.shuffle(longCards);
@@ -125,33 +109,31 @@ public class GamePanel extends JPanel {
         ButtonPanel bp = new ButtonPanel();
         DrawPanel dp = new DrawPanel(trainCards, pathCards);
         MapPanel mp = new MapPanel();
+        SetupPanel sp = new SetupPanel(longCards, pathCards, players[0]);
+        TicketPanel tp = new TicketPanel(pathCards);
+
+        for(Player p : players){
+            for(int i = 0; i < 4; i++){
+                p.addTrainCard(trainCards.remove(trainCards.size() - 1));
+            }
+        }
         
-        // FOR TESTING
-        players[0].addPathCard(pathCards.get(0));
-        players[0].addPathCard(pathCards.get(1));
-        players[0].addPathCard(pathCards.get(2));
-        players[1].addPathCard(pathCards.get(0));
-        players[1].addPathCard(pathCards.get(1));
-        players[2].addPathCard(pathCards.get(0));
-        players[2].addPathCard(pathCards.get(1));
-        players[3].addPathCard(pathCards.get(0));
-        players[3].addPathCard(pathCards.get(1));
-        // FOR TESTING
         handPanels = new HandPanel[4];
         handPanels[0] = new HandPanel(players[0]);
         handPanels[1] = new HandPanel(players[1]);
         handPanels[2] = new HandPanel(players[2]);
         handPanels[3] = new HandPanel(players[3]);
-        handPanels[0].setWarningText("You do not have enough trains to claim this route!");
-        
 
-        GameEngine ge = new GameEngine(bp, dp, handPanels, mp, pp, this);
-        GameController gc = new GameController(bp, dp, handPanels, mp, pp, this, se, ge);
+        GameEngine ge = new GameEngine(bp, dp, handPanels, mp, pp, sp, this, tp);
+        GameController gc = new GameController(bp, dp, handPanels, mp, pp, sp, this, se, ge, tp);
+        ge.setGameController(gc);
 
         pp.setBounds(Rel.X(1730), Rel.Y(20), pp.getWidth(), pp.getHeight());
         bp.setBounds(Rel.X(1700), Rel.Y(420), bp.getWidth(), bp.getHeight());
         mp.setBounds(Rel.X(20), Rel.Y(0), mp.getWidth(), mp.getHeight());
         dp.setBounds(Rel.X(1380), Rel.Y(0), dp.getWidth(), dp.getHeight());
+        sp.setBounds(Rel.X(1420), Rel.Y(0), sp.getWidth(), sp.getHeight());
+        tp.setBounds(Rel.X(1420), Rel.Y(0), tp.getWidth(), tp.getHeight());
         for (int i = 0; i < 4; i++) {
             handPanels[i].setBounds(Rel.X(10), Rel.Y(10), handPanels[i].getWidth(), handPanels[i].getHeight());
         }
@@ -159,19 +141,29 @@ public class GamePanel extends JPanel {
         SwingUtilities.invokeLater(() -> {
             setLayout(null);
             add(pp);
-            add(bp);
             add(mp);
             add(handPanels[0]); 
+            add(sp);
+            add(bp);
             add(dp);
-            setComponentZOrder(handPanels[0], 0);
+            add(tp);
+            dp.setVisible(false);
+            tp.setVisible(false);
+            setComponentZOrder(handPanels[0], 1);
             revalidate();
             repaint();
         });
+        ge.setSetupState(true);
+    }
+
+    public Player[] getPlayers() {
+        return players;
     }
 
     public void setStartEngine(StartEngine se) {
         this.se = se;
     }
+
 
     @Override
     public void paintComponent(Graphics g) {
@@ -179,13 +171,6 @@ public class GamePanel extends JPanel {
         if (gameBG != null) {
             g.drawImage(gameBG, 0, 0, this);
         }
-    }
-
-    public Player[] getPlayers() {
-        return players;
-    }
-    public Stack<TrainCard> getTrainCards( ){
-        return trainCards;
     }
     
     public TTRMap getMap() {
@@ -209,11 +194,13 @@ public class GamePanel extends JPanel {
     public JButton getEndGameButton() {
         return endGame;
     }
-    
-    public Stack<NormalPathCard> getPathCards() {
+    public ArrayList<TrainCard> getTrainCards() {
+        return trainCards;
+    }
+    public ArrayList<NormalPathCard> getPathCards() {
         return pathCards;
     }
-    public Stack<TrainCard> getDiscard() {
+    public ArrayList<TrainCard> getDiscard() {
         return discard;
     }
     public ArrayList<LongPathCard> getLongCards() {
