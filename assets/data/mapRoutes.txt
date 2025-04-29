@@ -63,7 +63,7 @@ Barcelona Pamplona 2
 gray mountain
 gray mountain
 
-Berlin Danzic 4
+Berlin Danzig 4
 gray default
 gray default
 gray default
@@ -214,12 +214,12 @@ blue default
 blue default
 blue default
 
-Danzic Rica 3
+Danzig Rica 3
 black default
 black default
 black default
 
-Danzic Warszawa 2
+Danzig Warszawa 2
 white default
 white default
 

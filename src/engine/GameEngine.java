@@ -6,6 +6,8 @@ import javax.swing.Timer;
 import javax.swing.border.LineBorder;
 
 import controllers.GameController;
+import models.City;
+import models.Path;
 import models.Player;
 import models.TrainCard;
 
@@ -182,6 +184,14 @@ public class GameEngine {
         setupPanel.getTicketButtons()[ind].setBorder(clickedArray[ind] ? new LineBorder(Color.YELLOW, Rel.W(3), true) : null); // set border if necessary
     }
 
+    public void pathClick(Path path ) {
+        if (mapPanel.pathIsDisabled()) return; // if map is disabled, do nothing)
+    }
+
+    public void cityClick(City city) {
+        if (mapPanel.cityIsDisabled()) return; // if map is disabled, do nothing
+    }
+
     public void setupPlayerTransition() {
         int clickedCount = 0;
         for (int i = 0; i < 4; i++) { // count number of clicked cards
@@ -244,11 +254,13 @@ public class GameEngine {
     public void setDrawCardState(boolean state) {
         buttonPanel.setEnabled(!state);
         handPanels[currentPlayer].setEnabled(!state);
-        mapPanel.setEnabled(!state);
+        mapPanel.setPathDisabled(state);
+        mapPanel.setCityDisabled(state);
     }
 
     public void setSetupState(boolean state) {
-        mapPanel.setEnabled(!state);
+        mapPanel.setPathDisabled(state);
+        mapPanel.setCityDisabled(state);
         handPanels[0].setVisible(!state);
         playerPanel.setVisible(!state);
         buttonPanel.setVisible(!state);
