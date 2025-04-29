@@ -19,6 +19,7 @@ import panels.HandPanel;
 import panels.MapPanel;
 import panels.PlayerPanel;
 import panels.SetupPanel;
+import panels.TicketPanel;
 
 public class GameController {
     private ButtonPanel buttonPanel;
@@ -30,8 +31,9 @@ public class GameController {
     private StartEngine startEngine;
     private GameEngine ge;
     private SetupPanel setupPanel;
+    private TicketPanel ticketPanel;
 
-    public GameController(ButtonPanel b, DrawPanel d, HandPanel[] h, MapPanel m, PlayerPanel p, SetupPanel s, GamePanel gp, StartEngine se, GameEngine ge) {
+    public GameController(ButtonPanel b, DrawPanel d, HandPanel[] h, MapPanel m, PlayerPanel p, SetupPanel s, GamePanel gp, StartEngine se, GameEngine ge, TicketPanel tp) {
         buttonPanel = b;
         drawPanel = d;
         handPanels = h;
@@ -40,6 +42,7 @@ public class GameController {
         gamePanel = gp;
         startEngine = se;
         setupPanel = s;
+        ticketPanel = tp;
         this.ge = ge;
         initListeners();
     }
@@ -84,6 +87,20 @@ public class GameController {
             }
         });
 
+        drawPanel.getTicketButton().addActionListener(new ActionListener() {  // deck button clicked
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ge.ticketDeckClick();
+            }
+        });
+
+        drawPanel.getTicketButton().addActionListener(new ActionListener() {  // deck button clicked
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ge.ticketDeckClick();
+            }
+        });
+
         for (int i = 0; i < drawPanel.getFaceUpButtons().length; i++) { // face up draw clicked
             final int ind = i;
             drawPanel.getFaceUpButtons()[i].addActionListener(new ActionListener() {
@@ -104,14 +121,41 @@ public class GameController {
             });
         }
 
+        for (int i = 0; i < ticketPanel.getTicketButtons().length; i++) {
+            final int ind = i;
+            ticketPanel.getTicketButtons()[ind].addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    ge.ticketClick(ind);
+                    System.out.println("Ticket button " + ind + " clicked");
+                }
+            });
+        }
+
+        for (int i = 0; i < ticketPanel.getTicketButtons().length; i++) {
+            final int ind = i;
+            ticketPanel.getTicketButtons()[ind].addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    ge.ticketClick(ind);
+                    System.out.println("Ticket button " + ind + " clicked");
+                }
+            });
+        }
+
         setupPanel.getConfirmButton().addActionListener(new ActionListener() { // transitiont to next setup player
             @Override
             public void actionPerformed(ActionEvent e) {
                 ge.setupPlayerTransition(); 
             }
         });
-
         
+        ticketPanel.getConfirmButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ge.ticketClick();
+            }
+        });
     }
 
     public void initPathCardListeners() {

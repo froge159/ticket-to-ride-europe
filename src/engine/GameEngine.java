@@ -28,6 +28,7 @@ import panels.HandPanel;
 import panels.MapPanel;
 import panels.PlayerPanel;
 import panels.SetupPanel;
+import panels.TicketPanel;
 import utils.Rel;
 import panels.AnimatedCard;
 
@@ -44,10 +45,11 @@ public class GameEngine {
     private PlayerPanel playerPanel;
     private SetupPanel setupPanel;
     private GamePanel gamePanel;
+    private TicketPanel ticketPanel;
     private int currentPlayer = 0;
     private GameController gc;
 
-    public GameEngine(ButtonPanel b, DrawPanel d, HandPanel[] h, MapPanel m, PlayerPanel p, SetupPanel s, GamePanel gp) {
+    public GameEngine(ButtonPanel b, DrawPanel d, HandPanel[] h, MapPanel m, PlayerPanel p, SetupPanel s, GamePanel gp, TicketPanel tp) {
         buttonPanel = b;
         drawPanel = d;
         handPanels = h;
@@ -55,6 +57,7 @@ public class GameEngine {
         playerPanel = p;
         gamePanel = gp;
         setupPanel  = s;
+        ticketPanel = tp;
     }
 
     
@@ -125,6 +128,10 @@ public class GameEngine {
         drawStateTransition(currPlayer);
     }
 
+    public void ticketDeckClick(){
+        setTicketState(true);
+    }
+
     public void faceUpClick(int index) {
         setDrawCardState(true);
         ArrayList<TrainCard> deck = drawPanel.getTrainDeck();
@@ -182,6 +189,11 @@ public class GameEngine {
         boolean[] clickedArray = setupPanel.getClickedArray();
         clickedArray[ind] = !clickedArray[ind]; // change boolean value
         setupPanel.getTicketButtons()[ind].setBorder(clickedArray[ind] ? new LineBorder(Color.YELLOW, Rel.W(3), true) : null); // set border if necessary
+    }
+    public void ticketClick(int ind) { // if setup ticket card clicked
+        boolean[] clickedArray = ticketPanel.getClickedArray();
+        clickedArray[ind] = !clickedArray[ind]; // change boolean value
+        ticketPanel.getTicketButtons()[ind].setBorder(clickedArray[ind] ? new LineBorder(Color.YELLOW, Rel.W(3), true) : null); // set border if necessary
     }
 
     public void pathClick(Path path ) {
@@ -251,6 +263,16 @@ public class GameEngine {
         timer.start();
     }
 
+    public void setTicketState(boolean state) {
+        //mapPanel.setPathDisabled(state);
+        //mapPanel.setCityDisabled(state);
+        playerPanel.setVisible(!state);
+        buttonPanel.setVisible(!state);
+        drawPanel.setVisible(!state);
+        ticketPanel.setVisible(true);
+        ticketPanel.updateForNextPlayer(handPanels[currentPlayer].getPlayer()); // update ticket panel for current player
+    }
+
     public void setDrawCardState(boolean state) {
         buttonPanel.setEnabled(!state);
         handPanels[currentPlayer].setEnabled(!state);
@@ -273,6 +295,35 @@ public class GameEngine {
             });
             gc.initPathCardListeners();
         }
+    }
+
+    public void ticketClick() { // ticket button clicked
+        int clickedCount = 0;
+        for (int i = 0; i < 3; i++) { // count number of clicked cards
+            if (ticketPanel.getClickedArray()[i]) clickedCount++;
+        }
+
+        if (clickedCount >= 1) { // add tickets if at least 2 clicked
+            for (int i = 0; i < 3; i++) {
+                if (ticketPanel.getClickedArray()[i]) { 
+                    ticketPanel.getPlayer().addPathCard(ticketPanel.getTicketArray()[i]);
+                }
+            }
+            handPanels[ticketPanel.getPlayer().getNumber()].updatePathCards(); // update path cards in hand panel and add listeners
+        }
+        else return;
+
+        mapPanel.setEnabled(true);
+        playerPanel.setVisible(true);
+        buttonPanel.setVisible(true);
+        drawPanel.setVisible(true);
+        ticketPanel.setVisible(false);
+        SwingUtilities.invokeLater(() -> {
+            gamePanel.revalidate();
+            gamePanel.repaint();
+        });
+        gc.initPathCardListeners();
+        nextPlayer();
     }
 
     public void nextPlayer() {
