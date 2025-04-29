@@ -11,8 +11,10 @@ import utils.Rel;
 public class ButtonPanel extends JPanel { // panel for Station and Info buttons
 
     private JButton stationButton, infoButton;
+    private boolean on;
 
     public ButtonPanel() {
+        on = false;
 
         ImageIcon stationPNG = PNGEnum.STATIONBUTTON.getImage();
         stationButton = new JButton();
@@ -48,7 +50,13 @@ public class ButtonPanel extends JPanel { // panel for Station and Info buttons
 
     public JButton getInfoButton() { return infoButton; }
 
+    public boolean isOn() { return on; }
+
     public void setEnabled(boolean enabled) {
         stationButton.setEnabled(enabled);
+    }
+
+    public void clicked(){
+        on = !on;
     }
 }
