@@ -132,17 +132,6 @@ public class GameController {
             });
         }
 
-        for (int i = 0; i < ticketPanel.getTicketButtons().length; i++) {
-            final int ind = i;
-            ticketPanel.getTicketButtons()[ind].addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    ge.ticketClick(ind);
-                    System.out.println("Ticket button " + ind + " clicked");
-                }
-            });
-        }
-
         setupPanel.getConfirmButton().addActionListener(new ActionListener() { // transitiont to next setup player
             @Override
             public void actionPerformed(ActionEvent e) {
