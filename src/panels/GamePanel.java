@@ -110,7 +110,7 @@ public class GamePanel extends JPanel {
         DrawPanel dp = new DrawPanel(trainCards, pathCards);
         MapPanel mp = new MapPanel();
         SetupPanel sp = new SetupPanel(longCards, pathCards, players[0]);
-        TicketPanel tp = new TicketPanel(pathCards, players[0]);
+        TicketPanel tp = new TicketPanel(pathCards);
 
         for(Player p : players){
             for(int i = 0; i < 4; i++){

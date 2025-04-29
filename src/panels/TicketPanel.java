@@ -25,7 +25,7 @@ public class TicketPanel extends JPanel {
     private ArrayList<NormalPathCard> normalPaths;
     private Player player;
 
-    public TicketPanel(ArrayList<NormalPathCard> normalPath, Player play) {
+    public TicketPanel(ArrayList<NormalPathCard> normalPath) {
         this.normalPaths = normalPath;
         ticketArray = new NormalPathCard[3];
         ticketButtons = new JButton[3];
@@ -36,21 +36,17 @@ public class TicketPanel extends JPanel {
         //setBorder(new javax.swing.border.LineBorder(Color.YELLOW, Rel.W(3), true));
         setBackground(Color.YELLOW);
         setOpaque(true);
-        setPlayer(play);
+        setupPanel();
     }
 
     public void setupPanel(){ 
-
-        SwingUtilities.invokeLater(() -> {
-            removeAll();
-        });
         
         confirm = new JButton("Confirm");
         confirm.setFont(new Font("Arial", Font.PLAIN, Rel.W(15)));
         confirm.setBounds(Rel.X(190), Rel.Y(750), Rel.W(120), Rel.H(50));
 
         infoLabel = new JLabel("Select at least 1 ticket");
-        bottom = new JLabel("Player " + (player.getNumber() + 1));
+        bottom = new JLabel();
         infoLabel.setFont(new Font("Arial", Font.PLAIN, Rel.W(30)));
         bottom.setFont(new Font("Arial", Font.PLAIN, Rel.W(30)));
         infoLabel.setForeground(Color.WHITE);
@@ -62,7 +58,6 @@ public class TicketPanel extends JPanel {
         // x is at 150
         int y = 200;
         clicked = new boolean[3];
-        bottom.setText("Player " + (player.getNumber() + 1));
         
         for (int i = 0; i < 3; i++) {
             final int ind = i; 
@@ -121,10 +116,21 @@ public class TicketPanel extends JPanel {
         setBackground(new Color(44, 25, 17)); // Set the background color to yellow
     }
 
-    public void setPlayer(Player player) {
+    public void updateForNextPlayer(Player player) {
         this.player = player;
         
-        setupPanel();
+        int y = 200;
+        clicked = new boolean[3];
+        bottom.setText("Player " + (player.getNumber() + 1));
+        
+        for (int i = 0; i < 3; i++) {
+            final int ind = i; 
+            NormalPathCard card = normalPaths.remove(normalPaths.size() - 1);
+            ticketButtons[ind].setIcon(card.getFront());
+            ticketButtons[ind].setBorder(null);
+            ticketArray[ind] = card;
+            y += 150;
+        }
     }
 
     public JButton getConfirmButton() {

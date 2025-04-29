@@ -127,16 +127,7 @@ public class GameEngine {
     }
 
     public void ticketDeckClick(){
-        ticketPanel.setPlayer(handPanels[currentPlayer].getPlayer()); // set player for ticket panel
-        mapPanel.setEnabled(true);
-        playerPanel.setVisible(false);
-        buttonPanel.setVisible(false);
-        drawPanel.setVisible(false);
-        ticketPanel.setVisible(true);
-        SwingUtilities.invokeLater(() -> {
-            gamePanel.revalidate();
-            gamePanel.repaint();
-        });
+        setTicketState(true);
     }
 
     public void faceUpClick(int index) {
@@ -261,6 +252,16 @@ public class GameEngine {
         });
         timer.setRepeats(false);
         timer.start();
+    }
+
+    public void setTicketState(boolean state) {
+        //mapPanel.setPathDisabled(state);
+        //mapPanel.setCityDisabled(state);
+        playerPanel.setVisible(!state);
+        buttonPanel.setVisible(!state);
+        drawPanel.setVisible(!state);
+        ticketPanel.setVisible(true);
+        ticketPanel.updateForNextPlayer(handPanels[currentPlayer].getPlayer()); // update ticket panel for current player
     }
 
     public void setDrawCardState(boolean state) {
