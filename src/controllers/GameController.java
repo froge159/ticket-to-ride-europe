@@ -59,6 +59,7 @@ public class GameController {
         mapPanel.addMouseListener(new MouseAdapter() { // test for clicking on path blocks and cities
             @Override
             public void mouseClicked(MouseEvent e) {
+                System.out.println(e.getPoint());
                 LinkedList<Path> x = mapPanel.getMap().getPaths();
                 for (int i = 0; i < x.size(); i++) {
                     Path path = x.get(i);
@@ -142,7 +143,7 @@ public class GameController {
         ticketPanel.getConfirmButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ge.ticketClick();
+                ge.ticketConfirmClick();
             }
         });
     }

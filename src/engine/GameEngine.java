@@ -219,7 +219,7 @@ public class GameEngine {
                     else setupPanel.getPlayer().setLongPathCard(setupPanel.getLongTicket()); 
                 }
             }
-            handPanels[setupPanel.getPlayer().getNumber()].updatePathCards(); // update path cards in hand panel and add listeners
+            handPanels[setupPanel.getPlayer().getNumber()].updatePathCards(true); // update path cards in hand panel and add listeners
         }
         else return;
 
@@ -297,7 +297,7 @@ public class GameEngine {
         }
     }
 
-    public void ticketClick() { // ticket button clicked
+    public void ticketConfirmClick() { // ticket button clicked
         int clickedCount = 0;
         for (int i = 0; i < 3; i++) { // count number of clicked cards
             if (ticketPanel.getClickedArray()[i]) clickedCount++;
@@ -309,7 +309,7 @@ public class GameEngine {
                     ticketPanel.getPlayer().addPathCard(ticketPanel.getTicketArray()[i]);
                 }
             }
-            handPanels[ticketPanel.getPlayer().getNumber()].updatePathCards(); // update path cards in hand panel and add listeners
+            handPanels[ticketPanel.getPlayer().getNumber()].updatePathCards(false); // update path cards in hand panel and add listeners
         }
         else return;
 

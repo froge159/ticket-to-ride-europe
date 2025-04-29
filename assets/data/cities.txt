@@ -31,7 +31,7 @@ Paris 339 428
 Petrograd 1164 43
 Riga 931 51
 Roma 620 672
-Rostov 1231 487
+Rostov 1330 487
 Sarajevo 841 645
 Sevastopol 1202 589
 Smolensk 1177 242

@@ -107,14 +107,17 @@ public class HandPanel extends JPanel {
         SwingUtilities.invokeLater(() -> {
             add(okButton);
             add(cancelButton);
+            okButton.setVisible(false);
+            cancelButton.setVisible(false);
             add(text);
             revalidate();
             repaint();
         });
     }
 
-    public void updatePathCards() {
+    public void updatePathCards(boolean setup) {
         Stack<PathCard> pc = p.getPathCards();
+        animatedPathCards = new ArrayList<>();
         final int[] y = { 925 };
         int x = 0;
         Iterator<PathCard> it = pc.iterator();
@@ -123,7 +126,7 @@ public class HandPanel extends JPanel {
             AnimatedCard animatedCard = new AnimatedCard(currentCard, Rel.W(200), Rel.H(125), Rel.X(17), Rel.Y(y[0]));
             animatedPathCards.add(animatedCard);
 
-            if (x < 2) { // only add first 2 cards
+            if (x < 2 && setup) { // only add first 2 cards
                 SwingUtilities.invokeLater(() -> {
                     add(animatedCard);
                     setComponentZOrder(animatedCard, 0); 

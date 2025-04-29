@@ -113,3 +113,8 @@ yellow default 697 285 19.3
 yellow default 748 273 5
 yellow default 798 270 2.5
 yellow default 847 274 -8.3
+
+
+Frankfurt Munchen 2
+pink default 520 392 -74.1
+pink default 546 418 13.2
