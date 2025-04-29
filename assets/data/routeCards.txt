@@ -17,7 +17,7 @@ Berlin Moskva 12
 Berlin Roma 9
 Brest Marseille 7
 Brest Venezia 8
-Bruxelles Danzic 9
+Bruxelles Danzig 9
 Budapest Sofia 5
 Edinburgh Paris 7
 Erzurum Rostov 5

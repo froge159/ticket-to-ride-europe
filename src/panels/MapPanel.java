@@ -3,14 +3,10 @@ package panels;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 import models.PathBlock;
 import models.TTRMap;
@@ -22,16 +18,14 @@ public class MapPanel extends JPanel{
 
     private BufferedImage mapBG;
     private TTRMap map;
+    private boolean pathDisabled, cityDisabled;
 
     public MapPanel() throws IOException {
         map = new TTRMap();
-        
         mapBG = ImageEnum.MAPBG.getImage();
 
-        //SwingUtilities.invokeLater(() -> {
-            setLayout(null);
-            setSize(mapBG.getWidth(), mapBG.getHeight());
-        //});
+        setLayout(null);
+        setSize(mapBG.getWidth(), mapBG.getHeight());
     }
 
     @Override
@@ -44,6 +38,7 @@ public class MapPanel extends JPanel{
                 block.draw(g2d);
             }
         });
+        map.getCities().forEach(city -> city.draw(g2d));
     }
 
     public BufferedImage getMapBG(){
@@ -51,5 +46,21 @@ public class MapPanel extends JPanel{
     }
     public TTRMap getMap(){
         return map;
+    }
+    
+    public void setPathDisabled(boolean disabled) {
+        this.pathDisabled = disabled;
+    }
+
+    public boolean pathIsDisabled() {
+        return pathDisabled;
+    }
+
+    public void setCityDisabled(boolean disabled) {
+        this.cityDisabled = disabled;
+    }
+
+    public boolean cityIsDisabled() {
+        return cityDisabled;
     }
 }

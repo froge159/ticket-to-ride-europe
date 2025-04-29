@@ -5,9 +5,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 import engine.GameEngine;
 import engine.StartEngine;
+import models.City;
+import models.Path;
 import panels.ButtonPanel;
 import panels.DrawPanel;
 import panels.GamePanel;
@@ -52,13 +56,29 @@ public class GameController {
             }
         });
         
-        mapPanel.addMouseListener(new MouseAdapter() { // testing for map clicks
+        mapPanel.addMouseListener(new MouseAdapter() { // test for clicking on path blocks and cities
             @Override
             public void mouseClicked(MouseEvent e) {
-                ge.handleMouseClick(e);
+                LinkedList<Path> x = mapPanel.getMap().getPaths();
+                for (int i = 0; i < x.size(); i++) {
+                    Path path = x.get(i);
+                    for (int j = 0; j < path.getPath().length; j++) {
+                        if (path.getPath()[j].contains(e.getPoint())) {
+                            System.out.println("clicked a path block");
+                            ge.pathClick(path);
+                        }
+                    }
+                }
+                ArrayList<City> cities = mapPanel.getMap().getCities();
+                for (int i = 0; i < cities.size(); i++) {
+                    if (cities.get(i).contains(e.getPoint())) {
+                        System.out.println("clicked a " + cities.get(i).getName() + " city");
+                        ge.cityClick(cities.get(i));
+                    }
+                }
             }
-            ;
         });
+
 
         drawPanel.getDeckButton().addActionListener(new ActionListener() {  // deck button clicked
             @Override
@@ -74,7 +94,14 @@ public class GameController {
             }
         });
 
-        for (int i = 0; i < drawPanel.getFaceUpButtons().length; i++) {
+        drawPanel.getTicketButton().addActionListener(new ActionListener() {  // deck button clicked
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ge.ticketDeckClick();
+            }
+        });
+
+        for (int i = 0; i < drawPanel.getFaceUpButtons().length; i++) { // face up draw clicked
             final int ind = i;
             drawPanel.getFaceUpButtons()[i].addActionListener(new ActionListener() {
                 @Override
@@ -84,7 +111,7 @@ public class GameController {
             });
         }
 
-        for (int i = 0; i < setupPanel.getTicketButtons().length; i++) {
+        for (int i = 0; i < setupPanel.getTicketButtons().length; i++) { // setup ticket clicked
             final int ind = i;
             setupPanel.getTicketButtons()[ind].addActionListener(new ActionListener() {
                 @Override
@@ -105,7 +132,18 @@ public class GameController {
             });
         }
 
-        setupPanel.getConfirmButton().addActionListener(new ActionListener() {
+        for (int i = 0; i < ticketPanel.getTicketButtons().length; i++) {
+            final int ind = i;
+            ticketPanel.getTicketButtons()[ind].addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    ge.ticketClick(ind);
+                    System.out.println("Ticket button " + ind + " clicked");
+                }
+            });
+        }
+
+        setupPanel.getConfirmButton().addActionListener(new ActionListener() { // transitiont to next setup player
             @Override
             public void actionPerformed(ActionEvent e) {
                 ge.setupPlayerTransition(); 
