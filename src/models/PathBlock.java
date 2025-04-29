@@ -13,7 +13,7 @@ public class PathBlock {
     private double centerX = x + 48/2.0;
     private double centerY = y + 14/2.0;
 
-    public PathBlock(Color col, String ty, int d, int x, int y){
+    public PathBlock(Color col, String ty, int x, int y, double d){
         color = col;
         type = ty;
         deg = d;
@@ -40,7 +40,7 @@ public class PathBlock {
     
     public void draw(Graphics2D g2d) {
         AffineTransform oldTransform = g2d.getTransform();
-        g2d.rotate(Math.toRadians(deg), x + 48/2.0, y + 14/2.0);
+        g2d.rotate(Math.toRadians(-deg), x + 48/2.0, y + 14/2.0);
         g2d.setColor(color);
         g2d.fillRect((int)x, (int)y, 48, 14);
         g2d.setTransform(oldTransform);

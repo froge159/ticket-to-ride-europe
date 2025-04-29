@@ -1,4 +1,4 @@
-﻿Amsterdam Bruxelles 1
+Amsterdam Bruxelles 1
 black default 402 280 -116.6
 
 
@@ -77,7 +77,7 @@ gray mountain 261 726 95
 gray mountain 254 677 95
 
 
-Berlin Danzic 4
+Berlin Danzig 4
 gray default 669 235 82.9
 gray default 688 191 52.5
 gray default 732 159 10.2
@@ -112,4 +112,4 @@ Berlin Warszawa 4
 yellow default 697 285 19.3
 yellow default 748 273 5
 yellow default 798 270 2.5
-yellow default 847 274  -8.3
+yellow default 847 274 -8.3
