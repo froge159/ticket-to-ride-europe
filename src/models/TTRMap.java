@@ -68,7 +68,14 @@ public class TTRMap {
         }
     }
 
-
+    public Path getParallelPath(Path p) {
+        for (Path path : paths) {
+            if (path.getCity1().equals(p.getCity1()) && path.getCity2().equals(p.getCity2()) && path != p) {
+                return path;
+            }
+        }
+        return null;
+    }
 
     public void addPath(Path path){
         paths.add(path);

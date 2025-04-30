@@ -168,4 +168,14 @@ public class DrawPanel extends JPanel {
         this.trainDeck = x;
     }
 
+    public void setDisabled(boolean disabled) {
+        deckButton.setEnabled(!disabled);
+        ticketButton.setEnabled(!disabled);
+        for (int i = 0; i < faceUpButtons.length; i++) {
+            if (faceUpButtons[i] != null) {
+                faceUpButtons[i].setEnabled(!disabled);
+            }
+        }
+    }
+
 }

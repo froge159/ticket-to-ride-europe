@@ -31,7 +31,8 @@ public class Path {
 
     public PathBlock[] getPath(){return path;}
     public int getPoints(){return points;}
-    public City[] getCities(){return new City[]{city1, city2};}
+    public City getCity1(){return city1;}   
+    public City getCity2(){return city2;}
     public boolean isBought(){return bought;}
     public Player getBuyer(){return buyer;}
     public int getLength(){return length;}

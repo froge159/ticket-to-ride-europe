@@ -197,9 +197,21 @@ public class GameEngine {
         ticketPanel.getTicketButtons()[ind].setBorder(clickedArray[ind] ? new LineBorder(Color.YELLOW, Rel.W(3), true) : null); // set border if necessary
     }
 
-    public void pathClick(Path path ) {
-        if (mapPanel.pathIsDisabled()) return; // if map is disabled, do nothing)
+    public void pathClick(Path path) {
+        if (mapPanel.pathIsDisabled()) return; // if map is disabled, do nothing
+        if (path.isBought()) { // if path is already bought, do nothing
+            handPanels[currentPlayer].setHandText("Path already bought.");
+            return;
+        }
+        if (mapPanel.getMap().getParallel(path) != null && mapPanel.getMap().getParallel(path).get) { // if path is parallel to another path that is already bought, do nothing
+            handPanels[currentPlayer].setHandText("Path already bought. This is a parallel path.");
+        }
+
+        setUseCardState(true);
+        handPanels[currentPlayer].setHandText("Click on the train cards you want to use");
     }
+
+
 
     public void stationClick(){
         setStationState(true);
@@ -283,9 +295,16 @@ public class GameEngine {
         timer.start();
     }
 
+    public void setUseCardState(boolean state) {
+        mapPanel.setPathDisabled(state);
+        mapPanel.setCityDisabled(state);
+        buttonPanel.setEnabled(!state);
+        handPanels[currentPlayer].setEnabled(state);
+        drawPanel.setEnabled(!state);
+    }
     public void setTicketState(boolean state) {
-        //mapPanel.setPathDisabled(state);
-        //mapPanel.setCityDisabled(state);
+        mapPanel.setPathDisabled(state);
+        mapPanel.setCityDisabled(state);
         playerPanel.setVisible(!state);
         buttonPanel.setVisible(!state);
         drawPanel.setVisible(!state);
@@ -294,6 +313,7 @@ public class GameEngine {
     }
 
     public void setDrawCardState(boolean state) {
+        drawPanel.setDisabled(!state);
         buttonPanel.setEnabled(!state);
         handPanels[currentPlayer].setEnabled(!state);
         mapPanel.setPathDisabled(state);
@@ -322,6 +342,7 @@ public class GameEngine {
         buttonPanel.setEnabled(!state);
         mapPanel.setPathDisabled(!state);
         mapPanel.setCityDisabled(!state);
+        drawPanel.setDisabled(state);
     }
 
     public void ticketClick() { // ticket button clicked
