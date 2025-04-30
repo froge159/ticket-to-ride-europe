@@ -50,4 +50,5 @@ public class RulesPanel extends JPanel {
     }
 
 // hello
+// HELLO
 }
