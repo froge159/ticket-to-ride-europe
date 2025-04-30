@@ -204,21 +204,24 @@ public class GameEngine {
     public void stationClick(){
         setStationState(true);
         handPanels[currentPlayer].setHandText("Click on a city to place your station");
-        gamePanel.repaint();
-        gamePanel.revalidate();
     }
 
     public void cityClick(City city) {
-        if (mapPanel.cityIsDisabled()) return; // if map is disabled, do nothing
+        if (mapPanel.cityIsDisabled()) return;
         if (handPanels[currentPlayer].getPlayer().getStations() > 0) { // if player has stations left
             //handPanels[currentPlayer].getPlayer().setStationCity(city); // set city for station placement
             handPanels[currentPlayer].setHandText("Built station on " + city.getName() + "!");
-            nextPlayer();
+            Timer timer = new Timer(1000, e -> {
+                nextPlayer();
+                setStationState(false); // disable map after placing station
+            });
+            timer.setRepeats(false);
+            timer.start();
         }
         else {
             handPanels[currentPlayer].setHandText("You have no stations left.");
+            setStationState(false); // disable map after placing station
         }
-        setStationState(false); // disable map after placing station
     }
 
     public void setupPlayerTransition() {
@@ -316,9 +319,9 @@ public class GameEngine {
 
     public void setStationState(boolean state) {
         handPanels[currentPlayer].setEnabled(!state);
-        buttonPanel.setEnabled(state);
+        buttonPanel.setEnabled(!state);
         mapPanel.setPathDisabled(!state);
-        mapPanel.setCityDisabled(state);
+        mapPanel.setCityDisabled(!state);
     }
 
     public void ticketClick() { // ticket button clicked
