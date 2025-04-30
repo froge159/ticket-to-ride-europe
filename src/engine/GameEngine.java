@@ -191,7 +191,7 @@ public class GameEngine {
         clickedArray[ind] = !clickedArray[ind]; // change boolean value
         setupPanel.getTicketButtons()[ind].setBorder(clickedArray[ind] ? new LineBorder(Color.YELLOW, Rel.W(3), true) : null); // set border if necessary
     }
-    public void ticketClick(int ind) { // if setup ticket card clicked
+    public void ticketConfirmClick(int ind) { // if setup ticket card clicked
         boolean[] clickedArray = ticketPanel.getClickedArray();
         clickedArray[ind] = !clickedArray[ind]; // change boolean value
         ticketPanel.getTicketButtons()[ind].setBorder(clickedArray[ind] ? new LineBorder(Color.YELLOW, Rel.W(3), true) : null); // set border if necessary

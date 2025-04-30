@@ -126,7 +126,7 @@ public class GameController {
             ticketPanel.getTicketButtons()[ind].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    ge.ticketClick(ind);
+                    ge.ticketConfirmClick(ind);
                     System.out.println("Ticket button " + ind + " clicked");
                 }
             });
