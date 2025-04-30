@@ -39,10 +39,6 @@ public class EndPanel extends JPanel {
         });
     }
 
-    public JButton getButton() {
-        return replay;
-    }
-
     public void initComponents(){
         
 
@@ -108,6 +104,9 @@ public class EndPanel extends JPanel {
     g.drawString("Winner: Player 1", Rel.X(770), Rel.Y(840));
     }
 
+    public JButton getButton() {
+        return replay;
+    }
     public BufferedImage getEndBG(){
         return endBG;
     }

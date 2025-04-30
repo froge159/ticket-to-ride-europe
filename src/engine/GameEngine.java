@@ -131,6 +131,7 @@ public class GameEngine {
     public void ticketDeckClick(){
         setTicketState(true);
     }
+    
 
     public void faceUpClick(int index) {
         setDrawCardState(true);
@@ -190,7 +191,7 @@ public class GameEngine {
         clickedArray[ind] = !clickedArray[ind]; // change boolean value
         setupPanel.getTicketButtons()[ind].setBorder(clickedArray[ind] ? new LineBorder(Color.YELLOW, Rel.W(3), true) : null); // set border if necessary
     }
-    public void ticketClick(int ind) { // if setup ticket card clicked
+    public void ticketConfirmClick(int ind) { // if setup ticket card clicked
         boolean[] clickedArray = ticketPanel.getClickedArray();
         clickedArray[ind] = !clickedArray[ind]; // change boolean value
         ticketPanel.getTicketButtons()[ind].setBorder(clickedArray[ind] ? new LineBorder(Color.YELLOW, Rel.W(3), true) : null); // set border if necessary
@@ -200,8 +201,27 @@ public class GameEngine {
         if (mapPanel.pathIsDisabled()) return; // if map is disabled, do nothing)
     }
 
+    public void stationClick(){
+        setStationState(true);
+        handPanels[currentPlayer].setHandText("Click on a city to place your station");
+    }
+
     public void cityClick(City city) {
-        if (mapPanel.cityIsDisabled()) return; // if map is disabled, do nothing
+        if (mapPanel.cityIsDisabled()) return;
+        if (handPanels[currentPlayer].getPlayer().getStations() > 0) { // if player has stations left
+            //handPanels[currentPlayer].getPlayer().setStationCity(city); // set city for station placement
+            handPanels[currentPlayer].setHandText("Built station on " + city.getName() + "!");
+            Timer timer = new Timer(1000, e -> {
+                nextPlayer();
+                setStationState(false); // disable map after placing station
+            });
+            timer.setRepeats(false);
+            timer.start();
+        }
+        else {
+            handPanels[currentPlayer].setHandText("You have no stations left.");
+            setStationState(false); // disable map after placing station
+        }
     }
 
     public void setupPlayerTransition() {
@@ -295,6 +315,13 @@ public class GameEngine {
             });
             gc.initPathCardListeners();
         }
+    }
+
+    public void setStationState(boolean state) {
+        handPanels[currentPlayer].setEnabled(!state);
+        buttonPanel.setEnabled(!state);
+        mapPanel.setPathDisabled(!state);
+        mapPanel.setCityDisabled(!state);
     }
 
     public void ticketConfirmClick() { // ticket button clicked
