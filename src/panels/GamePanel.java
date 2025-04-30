@@ -172,7 +172,7 @@ public class GamePanel extends JPanel {
             g.drawImage(gameBG, 0, 0, this);
         }
     }
-
+    
     public TTRMap getMap() {
         return map;
     }

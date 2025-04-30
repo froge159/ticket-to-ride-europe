@@ -170,12 +170,12 @@ public class HandPanel extends JPanel {
     public JButton[] getPlayerTrainButtons() {
         return playerTrainButtons;
     }
+    public Player getPlayer() {
+        return p;
+    }
     public String[] getTemp(){
         return temp;
     }
-    public Player getPlayer() {
-        return p;
-}
 
     public void addTrainCard(TrainCard drawnCard) {
         String color = drawnCard.getType();

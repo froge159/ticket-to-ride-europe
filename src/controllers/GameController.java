@@ -145,6 +145,13 @@ public class GameController {
                 ge.ticketClick();
             }
         });
+
+        buttonPanel.getStationButton().addActionListener(new ActionListener() { // station button clicked
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ge.stationClick();
+            }
+        });
     }
 
     public void initPathCardListeners() {
