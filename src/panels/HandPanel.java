@@ -111,6 +111,8 @@ public class HandPanel extends JPanel {
             revalidate();
             repaint();
         });
+        okButton.setVisible(false);
+        cancelButton.setVisible(false);
     }
 
     public void updatePathCards() {
@@ -136,10 +138,19 @@ public class HandPanel extends JPanel {
         }
     }
 
+    public String getColor(int i) {
+        return temp[i];
+    }
+
     public void updateTrainCardCounts() {
         for (String i: temp) {
             trainCardCounts.get(i).setText(String.valueOf(p.getTrainCards().get(i)));
         }
+    }
+
+    public void updateSelectedCounts(String i) {
+        selectedCounts.get(i).setText(String.valueOf(p.getTrainCardsSelected().get(i)));
+
     }
 
     public ArrayList<AnimatedCard> getAnimatedPathCards() {
@@ -181,5 +192,10 @@ public class HandPanel extends JPanel {
         String color = drawnCard.getType();
         TreeMap<String, Integer> mp = p.getTrainCards();
         mp.put(color, mp.get(color) + 1);
+    }
+
+    public void showButtons(boolean state) {
+        okButton.setVisible(state);
+        cancelButton.setVisible(state);
     }
 }

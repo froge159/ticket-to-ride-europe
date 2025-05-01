@@ -7,13 +7,14 @@ public class Path {
     private City city1, city2;
     private boolean bought = false;
     private Player buyer;
+    private String type;
 
     public Path(PathBlock[] path, City c1, City c2){
         this.path = path;
         length = path.length;
         city1 = c1;
         city2 = c2;
-
+        type = path[0].getType();
         switch(length){
             case 1: points = 1; break;
             case 2: points = 2; break;
@@ -36,4 +37,6 @@ public class Path {
     public boolean isBought(){return bought;}
     public Player getBuyer(){return buyer;}
     public int getLength(){return length;}
+
+    public String getType(){return type;}
 }

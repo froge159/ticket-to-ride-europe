@@ -111,18 +111,14 @@ public class DrawPanel extends JPanel {
             }
         }
     }
-    
-    public void setDeckDisabled(boolean disabled){
-        System.out.println("entered");
-        ImageIcon deckPNG = PNGEnum.TRAINBACK.getImage();
-        ImageIcon deckPNGBW = PNGEnum.TRAINBACKBW.getImage();
-        deckButton = new JButton();
-        deckButton.setIcon(disabled ? deckPNGBW : deckPNG);
-        if (disabled) {
-            System.out.println("disabled");
-            deckButton.setEnabled(false);
-        }
+
+    public void setAllEnabled(boolean enabled) {
+        setTicketButtonEnabled(enabled);
+        setDrawTrainCardsEnabled(enabled);
+        deckButton.setEnabled(enabled);
     }
+    
+    
 
 
     public void showDrawnCard(ImageIcon icon) {

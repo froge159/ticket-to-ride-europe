@@ -52,6 +52,7 @@ public class ButtonPanel extends JPanel { // panel for Station and Info buttons
 
     public boolean isOn() { return on; }
 
+    @Override
     public void setEnabled(boolean enabled) {
         stationButton.setEnabled(enabled);
     }

@@ -79,6 +79,26 @@ public class GameController {
             }
         });
 
+        for(int i = 0; i < handPanels.length; i++) {
+            final int ind1 = i;
+            for (int j = 0; j < handPanels[ind1].getPlayerTrainButtons().length; j++) { // train card clicked
+                final int ind2 = j;
+                handPanels[i].getPlayerTrainButtons()[ind2].addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        ge.trainCardClick(handPanels[ind1].getColor(ind2));
+                    }
+                });
+            }
+            handPanels[i].getCancelButton().addActionListener(new ActionListener() { // cancel button clicked
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    ge.cancelClick();
+                }
+            });
+        }
+
+
 
         drawPanel.getDeckButton().addActionListener(new ActionListener() {  // deck button clicked
             @Override

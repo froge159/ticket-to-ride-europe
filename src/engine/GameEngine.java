@@ -9,6 +9,7 @@ import controllers.GameController;
 import models.City;
 import models.Path;
 import models.Player;
+import models.TTRMap;
 import models.TrainCard;
 
 import java.awt.Color;
@@ -203,14 +204,35 @@ public class GameEngine {
             handPanels[currentPlayer].setHandText("Path already bought.");
             return;
         }
-        if (mapPanel.getMap().getParallel(path) != null && mapPanel.getMap().getParallel(path).get) { // if path is parallel to another path that is already bought, do nothing
-            handPanels[currentPlayer].setHandText("Path already bought. This is a parallel path.");
+        TTRMap map = mapPanel.getMap(); 
+        Player p = handPanels[currentPlayer].getPlayer();
+        if (map.getParallelPath(path) != null && map.getParallelPath(path).getBuyer()!= null && map.getParallelPath(path).getBuyer().equals(p)) { // if path is parallel to another path that is already bought, do nothing
+            handPanels[currentPlayer].setHandText("Cannot buy both parallel paths.");
+            return;
         }
-
         setUseCardState(true);
-        handPanels[currentPlayer].setHandText("Click on the train cards you want to use");
+        p.setSelectedPath(path); // set selected path for player
+        if (p.getSelectedPath().getType().equals("default") || p.getSelectedPath().getType().equals("ferry")) { //
+            handPanels[currentPlayer].setHandText("Click on the train cards you want to use");
+        }
+        else handPanels[currentPlayer].setHandText("Click on the train cards you want to use before possible extra cards"); // if path is a tunnel or ferry, ask for wild cards
     }
 
+    public void trainCardClick(String color){
+        if (!mapPanel.pathIsDisabled()) return; // if not in use card state, do nothing
+        Player p = handPanels[currentPlayer].getPlayer();
+        p.getTrainCardsSelected().put(color, p.getTrainCardsSelected().get(color) + 1); // increment selected card count
+        handPanels[currentPlayer].updateSelectedCounts(color); // update jlabel
+    }
+
+    public void cancelClick() {
+        Player p = handPanels[currentPlayer].getPlayer();
+        for (String key : p.getTrainCardsSelected().keySet()) {
+            p.getTrainCardsSelected().put(key, 0); // reset the count for each selected card
+            handPanels[currentPlayer].updateSelectedCounts(key); // update the UI to reflect the reset
+        }
+        handPanels[currentPlayer].setHandText("Selection canceled.");
+    }
 
 
     public void stationClick(){
@@ -300,8 +322,10 @@ public class GameEngine {
         mapPanel.setCityDisabled(state);
         buttonPanel.setEnabled(!state);
         handPanels[currentPlayer].setEnabled(state);
-        drawPanel.setEnabled(!state);
+        handPanels[currentPlayer].showButtons(state);
+        drawPanel.setAllEnabled(!state);
     }
+
     public void setTicketState(boolean state) {
         mapPanel.setPathDisabled(state);
         mapPanel.setCityDisabled(state);
@@ -313,7 +337,7 @@ public class GameEngine {
     }
 
     public void setDrawCardState(boolean state) {
-        drawPanel.setDisabled(!state);
+        drawPanel.setTicketButtonEnabled(!state);
         buttonPanel.setEnabled(!state);
         handPanels[currentPlayer].setEnabled(!state);
         mapPanel.setPathDisabled(state);

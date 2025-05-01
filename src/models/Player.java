@@ -11,6 +11,7 @@ public class Player {
     private LinkedList<City> cities;
     private LinkedList<Path> paths;
     private boolean drawn = false;
+    private Path selectedPath = null;
 
     public Player(int c){
         String[] temp = { "black", "blue", "brown", "green", "purple", "red", "white", "yellow", "wild" };
@@ -34,10 +35,10 @@ public class Player {
 
     public void claimRoute(/*GamePanel?*/Path route){
         if(trains > route.getLength()){
-            City[] temp = route.getCities();
-            for(City i : temp){
-                if(!cities.contains(i)) cities.add(i);
-            }
+            City c1 = route.getCity1();
+            City c2 = route.getCity2();
+            if(!cities.contains(c1)) cities.add(c1);
+            if(!cities.contains(c2)) cities.add(c2);
             paths.add(route);
             trains -= route.getLength();
         }
@@ -84,4 +85,7 @@ public class Player {
 
     public boolean getDrawn() { return drawn; }
     public void setDrawn(boolean d) { drawn = d; }
+
+    public void setSelectedPath(Path p) { selectedPath = p; }
+    public Path getSelectedPath() { return selectedPath; }
 }
