@@ -96,6 +96,12 @@ public class GameController {
                     ge.cancelClick();
                 }
             });
+            handPanels[i].getOkButton().addActionListener(new ActionListener () {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    ge.okClick();
+                }
+            });
         }
 
 

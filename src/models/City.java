@@ -24,6 +24,7 @@ public class City {
     public void buildStation(Player player){
         hasStation = true;
         stationOwner = player;
+        player.setStationCount(player.getStations() - 1);
     }
 
     public String getName(){return name;}

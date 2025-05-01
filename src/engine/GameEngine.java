@@ -234,6 +234,10 @@ public class GameEngine {
         handPanels[currentPlayer].setHandText("Selection canceled.");
     }
 
+    public void okClick() {
+        
+    }
+
 
     public void stationClick(){
         setStationState(true);
@@ -245,6 +249,8 @@ public class GameEngine {
         if (handPanels[currentPlayer].getPlayer().getStations() > 0) { // if player has stations left
             //handPanels[currentPlayer].getPlayer().setStationCity(city); // set city for station placement
             handPanels[currentPlayer].setHandText("Built station on " + city.getName() + "!");
+            city.buildStation(handPanels[currentPlayer].getPlayer());
+            playerPanel.updatePanel();
             Timer timer = new Timer(1000, e -> {
                 nextPlayer();
                 setStationState(false); // disable map after placing station

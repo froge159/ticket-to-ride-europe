@@ -60,6 +60,10 @@ public class Player {
         }
     }
 
+    public void setStationCount(int c) {
+        stations = c;
+    }
+
     public boolean connected(PathCard card){
         //if two cities are connected by the player's owned routes
         return false;
