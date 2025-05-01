@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -12,6 +13,7 @@ import engine.GameEngine;
 import engine.StartEngine;
 import models.City;
 import models.Path;
+import panels.AnimatedCard;
 import panels.ButtonPanel;
 import panels.DrawPanel;
 import panels.GamePanel;
@@ -155,28 +157,41 @@ public class GameController {
         });
     }
 
-    public void initPathCardListeners() {
-        for (int i = 0; i < handPanels.length; i++) {
-            final int index = i;
-            if (handPanels[index].getPlayer().getPathCards().size() > 0) {
-                handPanels[index].getAnimatedPathCards().get(0).addMouseListener(new MouseAdapter() { // hover event for animated path cards
-                    @Override
-                    public void mouseEntered(MouseEvent e) {
-                        ge.animatePathCardsEnter(handPanels[index]);
-                        System.out.println("mouse entered");
-                    }
-                    @Override
-                    public void mouseExited(MouseEvent e) {
-                        ge.animatePathCardsLeave(handPanels[index]);
-                        System.out.println("mouse exited");
-                    }
-                });
+    public void initPathCardListener(int index, boolean setup) { // add mouse listener to path cards
+
+        if(!setup) { // if not setup, remove previous listeners to avoid duplicates
+            if(index > 0) {
+                AnimatedCard ac = handPanels[index - 1].getAnimatedPathCards().get(0);
+                MouseListener[] listeners = ac.getMouseListeners();
+                System.out.println(listeners.length);
+                ac.removeMouseListener(listeners[0]);
             }
-            
+            else
+            handPanels[3].getAnimatedPathCards().get(0).removeMouseListener(handPanels[3].getAnimatedPathCards().get(0).getMouseListeners()[0]);
+        }
+        if (handPanels[index].getPlayer().getPathCards().size() > 0) {
+            handPanels[index].getAnimatedPathCards().get(0).addMouseListener(new MouseAdapter() { // hover event for animated path cards
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    ge.animatePathCardsEnter(handPanels[index]);
+                    System.out.println("mouse entered player" + index);
+                }
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    ge.animatePathCardsLeave(handPanels[index]);
+                    System.out.println("mouse exited");
+                }
+            });
+        }
+    }/*
+    public void removeMouseListener() {
+        for (int i = 0; i < handPanels.length; i++) {
+            if (handPanels[i].getPlayer().getPathCards().size() > 0) {
+                handPanels[i].getAnimatedPathCards().get(0).removeMouseListener(handPanels[i].getAnimatedPathCards().get(0).getMouseListeners()[0]);
+            }
         }
     }
-
-    
+    */
 
 }
           

@@ -77,9 +77,11 @@ public class GameEngine {
         System.out.println(currentPlayer + " " + animatedPathCards.size());
         for (int i = 1; i < animatedPathCards.size(); i++) {
             final int index = i; 
+            System.out.println(index);
             AnimatedCard c = animatedPathCards.get(index);
             System.out.println(c.getX() + " " + c.getY());
             animatedPathCards.get(index).setCorner(new Point(c.getX(), c.getY() - Rel.Y(90) * index)); // move cards up
+            System.out.println(Rel.Y(90) * index);
             System.out.println(c.getY() - Rel.Y(90) * index);
             SwingUtilities.invokeLater(() -> {
                 animatedPathCards.get(index).repaint();
@@ -248,6 +250,7 @@ public class GameEngine {
 
         if (setupPanel.getPlayer().getNumber() == 3) { // if last player
             setSetupState(false);
+            gc.initPathCardListener(currentPlayer, true);
         }
         else setupPanel.updateForNextPlayer(handPanels[setupPanel.getPlayer().getNumber() + 1].getPlayer()); // switch to next player if not last
     }
@@ -316,7 +319,6 @@ public class GameEngine {
                 gamePanel.revalidate();
                 gamePanel.repaint();
             });
-            gc.initPathCardListeners();
         }
     }
 
@@ -352,7 +354,6 @@ public class GameEngine {
             gamePanel.revalidate();
             gamePanel.repaint();
         });
-        gc.initPathCardListeners();
         nextPlayer();
     }
 
@@ -369,6 +370,8 @@ public class GameEngine {
             gamePanel.setComponentZOrder(handPanels[currentPlayer], 0);
         }
         handPanels[currentPlayer].setVisible(true);
+        
+        gc.initPathCardListener(currentPlayer, false);
     }
 
     public void setGameController(GameController gc) {
