@@ -29,6 +29,8 @@ public class HandPanel extends JPanel {
     private TreeMap<String, JLabel> trainCardCounts;
     private TreeMap<String, JLabel> selectedCounts;
     private JLabel text;
+    private boolean preJudgement = false;
+    private boolean postJudgement = false;  
 
     public HandPanel(Player p) {
         this.p = p; 
@@ -113,6 +115,7 @@ public class HandPanel extends JPanel {
         });
         okButton.setVisible(false);
         cancelButton.setVisible(false);
+        showSelectedCounts(false);
     }
 
     public void updatePathCards() {
@@ -137,6 +140,25 @@ public class HandPanel extends JPanel {
             y[0] -= 40; 
         }
     }
+
+    public boolean isPreJudgement() {
+        return preJudgement;
+    }
+    public void setPreJudgement(boolean preJudgement) {
+        this.preJudgement = preJudgement;
+    }
+    public boolean isPostJudgement() {
+        return postJudgement;
+    }
+    public void setPostJudgement(boolean postJudgement) {
+        this.postJudgement = postJudgement;
+    }
+
+    public void showSelectedCounts(boolean state) {
+        for (String i: temp) {
+            selectedCounts.get(i).setVisible(state);
+        }
+    }   
 
     public String getColor(int i) {
         return temp[i];

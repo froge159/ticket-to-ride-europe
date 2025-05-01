@@ -8,6 +8,7 @@ import javax.swing.border.LineBorder;
 import controllers.GameController;
 import models.City;
 import models.Path;
+import models.PathBlock;
 import models.Player;
 import models.TTRMap;
 import models.TrainCard;
@@ -21,6 +22,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.TreeMap;
 
 import panels.ButtonPanel;
 import panels.DrawPanel;
@@ -221,7 +223,9 @@ public class GameEngine {
     public void trainCardClick(String color){
         if (!mapPanel.pathIsDisabled()) return; // if not in use card state, do nothing
         Player p = handPanels[currentPlayer].getPlayer();
-        p.getTrainCardsSelected().put(color, p.getTrainCardsSelected().get(color) + 1); // increment selected card count
+        TreeMap<String, Integer> mp = p.getTrainCardsSelected();
+        if (mp.get(color) >= p.getTrainCards().get(color)) return; // if count exceeds available cards, do nothing
+        mp.put(color, mp.get(color) + 1); // increment selected card count
         handPanels[currentPlayer].updateSelectedCounts(color); // update jlabel
     }
 
@@ -235,6 +239,17 @@ public class GameEngine {
     }
 
     public void okClick() {
+        Player p = handPanels[currentPlayer].getPlayer();
+        TreeMap<String, Integer> mp = p.getTrainCardsSelected();
+        if (mp.entrySet().stream().filter(entry -> !entry.getKey().equals("wild") && entry.getValue() > 0).count() > 1 &&  // disallow multiple card counts for gray routes
+            p.getSelectedPath().getPath()[0].getColor().equals(Color.GRAY)) {
+            handPanels[currentPlayer].setHandText("You cannot select more than one card of the same color.");
+            return;
+        }
+
+        TreeMap<String, Integer> selectedCards = handPanels[currentPlayer].getPlayer().getTrainCardsSelected();
+        PathBlock[] pathBlocks = handPanels[currentPlayer].getPlayer().getSelectedPath().getPath(); 
+        if (p.getSelectedPath().getType().equals("default") || 
         
     }
 
@@ -329,6 +344,7 @@ public class GameEngine {
         buttonPanel.setEnabled(!state);
         handPanels[currentPlayer].setEnabled(state);
         handPanels[currentPlayer].showButtons(state);
+        handPanels[currentPlayer].showSelectedCounts(state);
         drawPanel.setAllEnabled(!state);
     }
 

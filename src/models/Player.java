@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Player {
     private int number;
-    private int trains = 45, stations = 4, points = 0;
+    private int trains = 45, stations = 3, points = 0;
     private LongPathCard longPath = null;
     private TreeMap<String, Integer> trainCards;
     private TreeMap<String, Integer> trainCardsSelected;
