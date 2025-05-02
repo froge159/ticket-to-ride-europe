@@ -29,19 +29,27 @@ public class Player {
         }
     }
 
+    
+
     public void addTrainCard(TrainCard card){
         trainCards.put(card.getType(), trainCards.get(card.getType()) + 1);
     }
 
     public void claimRoute(/*GamePanel?*/Path route){
-        if(trains > route.getLength()){
-            City c1 = route.getCity1();
-            City c2 = route.getCity2();
-            if(!cities.contains(c1)) cities.add(c1);
-            if(!cities.contains(c2)) cities.add(c2);
-            paths.add(route);
-            trains -= route.getLength();
+        City c1 = route.getCity1();
+        City c2 = route.getCity2();
+        if(!cities.contains(c1)) cities.add(c1);
+        if(!cities.contains(c2)) cities.add(c2);
+        try {
+            c1.getNeighbors().add(c2);
+            c1.getNeighbors().add(c2);
         }
+        catch (Exception e){
+            System.out.println("Error adding edge: " + c1 + " " + c2);
+        }
+        paths.add(route);
+        trains -= route.getLength();
+        points += route.getPoints();
     }
 
     public void addPathCard(NormalPathCard card){

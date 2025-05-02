@@ -37,8 +37,6 @@ public class TTRMap {
             String city1 = st.nextToken();
             String city2 = st.nextToken();
             int blockCount = Integer.parseInt(st.nextToken());
-            addEdge(city1, city2);
-
 
             PathBlock[] pathBlocks = new PathBlock[blockCount];
             for (int i = 0; i < blockCount; i++) {
@@ -70,17 +68,7 @@ public class TTRMap {
         paths.add(path);
     }
 
-    public void addEdge(String c1, String c2){
-        City city1 = getCity(c1);
-        City city2 = getCity(c2);
-        try {
-            city1.getNeighbors().add(city2);
-            city2.getNeighbors().add(city1);
-        }
-        catch (Exception e){
-            System.out.println("Error adding edge: " + c1 + " " + c2);
-        }
-    }
+    
 
     public City getCity(String name){
         for(City i : cities){

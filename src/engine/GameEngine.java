@@ -215,6 +215,10 @@ public class GameEngine {
             handPanels[currentPlayer].setHandText("Cannot buy both parallel paths.");
             return;
         }
+        if (p.getTrains() < path.getLength()) { // if player does not have enough trains, do nothing
+            handPanels[currentPlayer].setHandText("Not enough trains to claim path.");
+            return;
+        }
 
         Map<String, Integer> trainCards = new HashMap<>(handPanels[currentPlayer].getPlayer().getTrainCards()); // check if player can claim path
         PathBlock[] pathBlocks = path.getPath(); 
@@ -274,9 +278,33 @@ public class GameEngine {
             return;
         }
 
+        TreeMap<String, Integer> trainCards = p.getTrainCards();
+        PathBlock[] pathBlocks = p.getSelectedPath().getPath();
         
+        for (int i = 0; i < pathBlocks.length; i++) {
+            boolean claimed = false;
+            if (!pathBlocks[i].getType().equals("ferry")) {
+                for (String key: trainCards.keySet()) {
+                    if ((pathBlocks[i].getColor().equals(Color.GRAY) || pathBlocks[i].getColor().equals(ColorEnum.getColor(key))) && trainCards.get(key) > 0) { // if matches color and selected cards > 0
+                        trainCards.put(key, trainCards.get(key) - 1); // decrement selected cards
+                        claimed = true;
+                    }
+                }
+            }
+            if ((!claimed || pathBlocks[i].getType().equals("ferry")) && trainCards.get("wild") > 0) { // if wild cards available or ferry pathblock
+                trainCards.put("wild", trainCards.get("wild") - 1); // decrement selected cards
+                claimed = true;
+            }
+        }
 
-
+        if (!pathBlocks[0].getType().equals("mountain")) {
+            p.claimRoute(p.getSelectedPath()); // claim route
+            p.setSelectedPath(null); // reset selected path
+            p.getSelectedPath().buy(p);
+            playerPanel.updatePanel();
+            handPanels[currentPlayer].updateTrainCardCounts();
+            setUseCardState(false); // disable use card state
+        }
     }
 
 
@@ -372,6 +400,7 @@ public class GameEngine {
         handPanels[currentPlayer].showButtons(state);
         handPanels[currentPlayer].showSelectedCounts(state);
         drawPanel.setAllEnabled(!state);
+        if (!state) nextPlayer();
     }
 
     public void setTicketState(boolean state) {
