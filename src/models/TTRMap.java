@@ -54,7 +54,6 @@ public class TTRMap {
             }
             paths.add(new Path(pathBlocks, getCity(city1), getCity(city2)));
             br.readLine();
-            br.readLine();
         }
     }
 
@@ -74,8 +73,13 @@ public class TTRMap {
     public void addEdge(String c1, String c2){
         City city1 = getCity(c1);
         City city2 = getCity(c2);
-        city1.getNeighbors().add(city2);
-        city2.getNeighbors().add(city1);
+        try {
+            city1.getNeighbors().add(city2);
+            city2.getNeighbors().add(city1);
+        }
+        catch (Exception e){
+            System.out.println("Error adding edge: " + c1 + " " + c2);
+        }
     }
 
     public City getCity(String name){
