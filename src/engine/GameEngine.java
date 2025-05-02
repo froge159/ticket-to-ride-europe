@@ -22,6 +22,8 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeMap;
 
 import panels.ButtonPanel;
@@ -32,6 +34,7 @@ import panels.MapPanel;
 import panels.PlayerPanel;
 import panels.SetupPanel;
 import panels.TicketPanel;
+import utils.ColorEnum;
 import utils.Rel;
 import panels.AnimatedCard;
 
@@ -212,7 +215,31 @@ public class GameEngine {
             handPanels[currentPlayer].setHandText("Cannot buy both parallel paths.");
             return;
         }
-        setUseCardState(true);
+
+        Map<String, Integer> trainCards = new HashMap<>(handPanels[currentPlayer].getPlayer().getTrainCards()); // check if player can claim path
+        PathBlock[] pathBlocks = path.getPath(); 
+        for (int i = 0; i < pathBlocks.length; i++) {
+            boolean claimed = false;
+            if (!pathBlocks[i].getType().equals("ferry")) {
+                for (String key: trainCards.keySet()) {
+                    if ((pathBlocks[i].getColor().equals(Color.GRAY) || pathBlocks[i].getColor().equals(ColorEnum.getColor(key)))&& trainCards.get(key) > 0) { // if matches color and selected cards > 0
+                        trainCards.put(key, trainCards.get(key) - 1); // decrement selected cards
+                        claimed = true;
+                    }
+                }
+            }
+            if ((!claimed || pathBlocks[i].getType().equals("ferry")) && trainCards.get("wild") > 0) { // if wild cards available or ferry pathblock
+                trainCards.put("wild", trainCards.get("wild") - 1); // decrement selected cards
+                claimed = true;
+            }
+            if (!claimed) { // if no cards claimed, break
+                handPanels[currentPlayer].setHandText("Not enough cards to claim path.");
+                return;
+            }
+        }
+    
+
+        setUseCardState(true); // if all conditions met, set use card state to true
         p.setSelectedPath(path); // set selected path for player
         if (p.getSelectedPath().getType().equals("default") || p.getSelectedPath().getType().equals("ferry")) { //
             handPanels[currentPlayer].setHandText("Click on the train cards you want to use");
@@ -247,10 +274,6 @@ public class GameEngine {
             return;
         }
 
-        TreeMap<String, Integer> selectedCards = handPanels[currentPlayer].getPlayer().getTrainCardsSelected();
-        PathBlock[] pathBlocks = handPanels[currentPlayer].getPlayer().getSelectedPath().getPath(); 
-        if (p.getSelectedPath().getType().equals("default") || 
-        
     }
 
 

@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
+import utils.ColorEnum;
+
 public class TTRMap {
     //graph class implementation
     private LinkedList<City> adjList;
@@ -15,18 +17,6 @@ public class TTRMap {
         adjList = new LinkedList<>();
         paths = new LinkedList<>();
         cities = new ArrayList<>();
-        Map<String, Integer> colorMap = new HashMap<>();
-        colorMap.put("black", Color.BLACK.getRGB());
-        colorMap.put("blue", Color.BLUE.getRGB());
-        colorMap.put("brown", new Color(139, 69, 19).getRGB());
-        colorMap.put("green", Color.GREEN.getRGB());
-        colorMap.put("purple", new Color(128, 0, 128).getRGB());
-        colorMap.put("red", Color.RED.getRGB());
-        colorMap.put("white", Color.WHITE.getRGB());
-        colorMap.put("yellow", Color.YELLOW.getRGB());
-        colorMap.put("gray", new Color(128, 128, 128).getRGB());
-        colorMap.put("orange", new Color(255, 165, 0).getRGB());
-        colorMap.put("pink", new Color(255, 192, 203).getRGB());
 
         BufferedReader br = new BufferedReader(new FileReader("assets/data/cities.txt"));
         String line;
@@ -55,7 +45,7 @@ public class TTRMap {
                 line = br.readLine();
                 st = new StringTokenizer(line);
                 pathBlocks[i] = new PathBlock(
-                    new Color(colorMap.get(st.nextToken())),
+                    ColorEnum.getColor(st.nextToken()),
                     st.nextToken(),
                     Integer.parseInt(st.nextToken()),
                     Integer.parseInt(st.nextToken()),
