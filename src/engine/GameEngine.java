@@ -74,15 +74,10 @@ public class GameEngine {
 
     public void animatePathCardsEnter(HandPanel hp) {
         ArrayList<AnimatedCard> animatedPathCards = hp.getAnimatedPathCards();
-        System.out.println(currentPlayer + " " + animatedPathCards.size());
         for (int i = 1; i < animatedPathCards.size(); i++) {
             final int index = i; 
-            System.out.println(index);
             AnimatedCard c = animatedPathCards.get(index);
-            System.out.println(c.getX() + " " + c.getY());
             animatedPathCards.get(index).setCorner(new Point(c.getX(), c.getY() - Rel.Y(90) * index)); // move cards up
-            System.out.println(Rel.Y(90) * index);
-            System.out.println(c.getY() - Rel.Y(90) * index);
             SwingUtilities.invokeLater(() -> {
                 animatedPathCards.get(index).repaint();
                 hp.repaint(); hp.revalidate();

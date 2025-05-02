@@ -161,14 +161,18 @@ public class GameController {
 
         if(!setup) { // if not setup, remove previous listeners to avoid duplicates
             if(index > 0) {
-                AnimatedCard ac = handPanels[index - 1].getAnimatedPathCards().get(0);
-                MouseListener[] listeners = ac.getMouseListeners();
-                System.out.println(listeners.length);
-                ac.removeMouseListener(listeners[0]);
+                handPanels[index - 1].getAnimatedPathCards().get(0).setVisible(false);
+                handPanels[index - 1].getAnimatedPathCards().get(0).setEnabled(false);
+                System.out.println("removed path card listener for player " + (index - 1));
             }
-            else
-            handPanels[3].getAnimatedPathCards().get(0).removeMouseListener(handPanels[3].getAnimatedPathCards().get(0).getMouseListeners()[0]);
+            else{
+                handPanels[3].getAnimatedPathCards().get(0).setVisible(false);
+                handPanels[3].getAnimatedPathCards().get(0).setEnabled(false);
+                System.out.println("removed path card listener for player 3");
+            }
         }
+        handPanels[index].getAnimatedPathCards().get(0).setVisible(true); // show the path card for the current player
+        handPanels[index].getAnimatedPathCards().get(0).setEnabled(true); // enable the path card for the current player
         if (handPanels[index].getPlayer().getPathCards().size() > 0) {
             handPanels[index].getAnimatedPathCards().get(0).addMouseListener(new MouseAdapter() { // hover event for animated path cards
                 @Override
@@ -183,15 +187,6 @@ public class GameController {
                 }
             });
         }
-    }/*
-    public void removeMouseListener() {
-        for (int i = 0; i < handPanels.length; i++) {
-            if (handPanels[i].getPlayer().getPathCards().size() > 0) {
-                handPanels[i].getAnimatedPathCards().get(0).removeMouseListener(handPanels[i].getAnimatedPathCards().get(0).getMouseListeners()[0]);
-            }
-        }
     }
-    */
-
 }
           
