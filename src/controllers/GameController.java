@@ -20,6 +20,7 @@ import panels.MapPanel;
 import panels.PlayerPanel;
 import panels.SetupPanel;
 import panels.TicketPanel;
+import panels.TunnelPanel;
 
 public class GameController {
     private ButtonPanel buttonPanel;
@@ -32,8 +33,9 @@ public class GameController {
     private GameEngine ge;
     private SetupPanel setupPanel;
     private TicketPanel ticketPanel;
+    private TunnelPanel tunnelPanel;
 
-    public GameController(ButtonPanel b, DrawPanel d, HandPanel[] h, MapPanel m, PlayerPanel p, SetupPanel s, GamePanel gp, StartEngine se, GameEngine ge, TicketPanel tp) {
+    public GameController(ButtonPanel b, DrawPanel d, HandPanel[] h, MapPanel m, PlayerPanel p, SetupPanel s, GamePanel gp, StartEngine se, GameEngine ge, TicketPanel tp, TunnelPanel tup) {
         buttonPanel = b;
         drawPanel = d;
         handPanels = h;
@@ -44,6 +46,7 @@ public class GameController {
         setupPanel = s;
         ticketPanel = tp;
         this.ge = ge;
+        tunnelPanel = tup;
         initListeners();
     }
 

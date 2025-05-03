@@ -34,6 +34,7 @@ import panels.MapPanel;
 import panels.PlayerPanel;
 import panels.SetupPanel;
 import panels.TicketPanel;
+import panels.TunnelPanel;
 import utils.ColorEnum;
 import utils.Rel;
 import panels.AnimatedCard;
@@ -54,8 +55,9 @@ public class GameEngine {
     private TicketPanel ticketPanel;
     private int currentPlayer = 0;
     private GameController gc;
+    private TunnelPanel tunnelPanel;
 
-    public GameEngine(ButtonPanel b, DrawPanel d, HandPanel[] h, MapPanel m, PlayerPanel p, SetupPanel s, GamePanel gp, TicketPanel tp) {
+    public GameEngine(ButtonPanel b, DrawPanel d, HandPanel[] h, MapPanel m, PlayerPanel p, SetupPanel s, GamePanel gp, TicketPanel tp, TunnelPanel tup) {
         buttonPanel = b;
         drawPanel = d;
         handPanels = h;
@@ -64,6 +66,7 @@ public class GameEngine {
         gamePanel = gp;
         setupPanel  = s;
         ticketPanel = tp;
+        tunnelPanel = tup;
     }
 
     
@@ -262,12 +265,13 @@ public class GameEngine {
     }
 
     public void trainCardClick(String color){
-        if (!mapPanel.pathIsDisabled()) return; // if not in use card state, do nothing
+        if (!mapPanel.pathIsDisabled() || handPanels[currentPlayer].getJudgementState()) return; // if not in use card state, do nothing
         Player p = handPanels[currentPlayer].getPlayer();
         TreeMap<String, Integer> mp = p.getTrainCardsSelected();
-        if (mp.get(color) >= p.getTrainCards().get(color)) return; // if count exceeds available cards, do nothing
+        if (mp.get(color) >= p.getTrainCards().get(color) || p.getSelected() == p.getSelectedPath().getLength()) return; // if count exceeds available cards or click too much, do nothing
         mp.put(color, mp.get(color) + 1); // increment selected card count
         handPanels[currentPlayer].updateSelectedCounts(color); // update jlabel
+        p.setSelected(p.getSelected() + 1); // increment selected count
     }
 
     public void cancelClick() {
@@ -276,13 +280,14 @@ public class GameEngine {
             p.getTrainCardsSelected().put(key, 0); // reset the count for each selected card
             handPanels[currentPlayer].updateSelectedCounts(key); // update the UI to reflect the reset
         }
+        p.setSelected(0); // reset selected count
         handPanels[currentPlayer].setHandText("Selection canceled.");
     }
 
     public void okClick() {
         Player p = handPanels[currentPlayer].getPlayer();
-        TreeMap<String, Integer> mp = p.getTrainCardsSelected();
-        if (mp.entrySet().stream().filter(entry -> !entry.getKey().equals("wild") && entry.getValue() > 0).count() > 1 &&  // disallow multiple card counts for gray routes
+        TreeMap<String, Integer> selectedMap = p.getTrainCardsSelected();
+        if (selectedMap.entrySet().stream().filter(entry -> !entry.getKey().equals("wild") && entry.getValue() > 0).count() > 1 &&  // disallow multiple card counts for gray routes
             p.getSelectedPath().getPath()[0].getColor().equals(Color.GRAY)) {
             handPanels[currentPlayer].setHandText("You cannot select more than one card of the same color.");
             return;
@@ -320,6 +325,7 @@ public class GameEngine {
             p.claimRoute(p.getSelectedPath()); // claim route
             p.getSelectedPath().buy(p);
             p.setSelectedPath(null); // reset selected path
+            p.setSelected(0);
             playerPanel.updatePlayer(currentPlayer); // update player panel
             handPanels[currentPlayer].updateTrainCardCounts();
             handPanels[currentPlayer].setHandText("Path claimed!"); 
@@ -331,7 +337,77 @@ public class GameEngine {
             timer.start(); 
         }
         else {
+            ArrayList<TrainCard> deck = drawPanel.getTrainDeck();
+            if (deck.size() < 3) {
+                refillDrawDeck(deck, handPanels[currentPlayer]);
+            }
+            if (deck.size() == 0) { // if deck is empty, do nothing
+                p.claimRoute(p.getSelectedPath()); // claim route
+                p.getSelectedPath().buy(p);
+                p.setSelectedPath(null); // reset selected path
+                p.setSelected(0);
+                playerPanel.updatePlayer(currentPlayer); // update player panel
+                handPanels[currentPlayer].updateTrainCardCounts();
+                handPanels[currentPlayer].setHandText("Path claimed. Draw deck was empty"); 
+                Timer timer = new Timer (1000, e -> {
+                    setUseCardState(false); // disable use card state
+                    nextPlayer(); //
+                });
+                timer.setRepeats(false);
+                timer.start(); 
+            }
+            else {
+                String color = ""; int needed = 0;
+                int maxValue = 0;
+                for (Map.Entry<String, Integer> entry : selectedMap.entrySet()) { // calculate color
+                    if (entry.getValue() > maxValue) {
+                        color = entry.getKey();
+                        maxValue = entry.getValue();
+                    }
+                }
+                ArrayList<TrainCard> lastThreeCards = new ArrayList<>(); // calculate needed cards
+                int cardsToTake = Math.min(3, deck.size());
+                for (int i = 0; i < cardsToTake; i++) {
+                    lastThreeCards.add(deck.remove(deck.size() - 1));
+                }
+                for (int i = 0; i < lastThreeCards.size(); i++) {
+                    if (color.equals("wild") && lastThreeCards.get(i).getType().equals("wild")) { // if wild card drawn, do nothing
+                        needed++;
+                    }
+                    else if (!color.equals("wild") && (lastThreeCards.get(i).getType().equals(color) || lastThreeCards.get(i).getType().equals("wild"))) { // if color matches or wild card drawn, do nothing
+                        needed++;
+                    }
+                }
+                TreeMap<String, Integer> differenceMap = new TreeMap<>();
+                for (Map.Entry<String, Integer> entry : selectedMap.entrySet()) {
+                    String key = entry.getKey();
+                    int selectedValue = entry.getValue();
+                    int trainCardValue = trainCards.get(key);
+                    differenceMap.put(key, trainCardValue - selectedValue);
+                }
 
+                // if equals color or wild, needed--
+                for (int i = 0; i < lastThreeCards.size(); i++) {
+                    for (String key: differenceMap.keySet()) {
+                        if (lastThreeCards.get(i).getType().equals(key) || key.equals("wild")) {
+                            needed--;
+                            break;
+                        }
+                    }
+                }
+                if (needed > 0) {
+                    setTunnelState(true);
+                    tunnelPanel.setText("You do not have enough cards to claim the path.");
+                }
+                else {
+                    setTunnelState(true);
+                    tunnelPanel.setText("You need to pay " + needed + " more " + color + " cards to claim the path.");
+                }
+                tunnelPanel.updatePanel(lastThreeCards);
+                for (int i = 0; i < lastThreeCards.size(); i++) {
+                    drawPanel.getDiscard().add(lastThreeCards.get(i)); // add drawn cards to discard pile
+                }
+            }
         }
         
         
@@ -429,9 +505,16 @@ public class GameEngine {
         mapPanel.setCityDisabled(state);
         buttonPanel.setEnabled(!state);
         handPanels[currentPlayer].setEnabled(state);
-        handPanels[currentPlayer].showButtons(state);
         handPanels[currentPlayer].showSelectedCounts(state);
         drawPanel.setAllEnabled(!state);
+    }
+
+    public void setTunnelState(boolean state) {
+        tunnelPanel.setVisible(state);
+        playerPanel.setVisible(!state);
+        buttonPanel.setVisible(!state);
+        drawPanel.setVisible(!state);
+        handPanels[currentPlayer].setJudgementState(state);
     }
 
     public void setTicketState(boolean state) {

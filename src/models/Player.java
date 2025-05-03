@@ -12,6 +12,7 @@ public class Player {
     private LinkedList<Path> paths;
     private boolean drawn = false;
     private Path selectedPath = null;
+    private int selected = 0;
 
     public Player(int c){
         String[] temp = { "black", "blue", "orange", "green", "purple", "red", "white", "yellow", "wild" };
@@ -66,6 +67,13 @@ public class Player {
             city.buildStation(this);
             stations -= 1;
         }
+    }
+
+    public void setSelected(int s) {
+        selected = s;
+    }
+    public int getSelected() {
+        return selected;
     }
 
     public void setStationCount(int c) {

@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.Stack;
 import java.util.TreeMap;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -31,6 +32,7 @@ public class HandPanel extends JPanel {
     private JLabel text;
     private boolean preJudgement = false;
     private boolean postJudgement = false;  
+    private boolean judgementState = false;
 
     public HandPanel(Player p) {
         this.p = p; 
@@ -141,6 +143,7 @@ public class HandPanel extends JPanel {
         }
     }
 
+    /* 
     public boolean isPreJudgement() {
         return preJudgement;
     }
@@ -152,6 +155,14 @@ public class HandPanel extends JPanel {
     }
     public void setPostJudgement(boolean postJudgement) {
         this.postJudgement = postJudgement;
+    }
+    */
+
+    public void setJudgementState(boolean state) {
+        judgementState = state;
+    }
+    public boolean getJudgementState() {
+        return judgementState;
     }
 
     public void showSelectedCounts(boolean state) {
@@ -196,9 +207,7 @@ public class HandPanel extends JPanel {
     public void setEnabled(boolean state) {
         okButton.setEnabled(state);
         cancelButton.setEnabled(state);
-        for (int i = 0; i < playerTrainButtons.length; i++) {
-            playerTrainButtons[i].setEnabled(state);
-        }
+        showButtons(state);
     }
     public JButton[] getPlayerTrainButtons() {
         return playerTrainButtons;
