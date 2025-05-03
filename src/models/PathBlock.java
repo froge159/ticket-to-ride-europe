@@ -6,6 +6,8 @@ import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
+import utils.Rel;
+
 public class PathBlock {
     private Color color;
     String type;
@@ -19,8 +21,8 @@ public class PathBlock {
         deg = d;
         centerX = x;
         centerY = y;
-        this.x = centerX - 48/2.0;
-        this.y = centerY - 14/2.0;
+        this.x = Rel.X((int) (centerX - 48/2.0));
+        this.y = Rel.Y((int) (centerY - 14/2.0));
     }
 
     public boolean contains(Point p) {
@@ -33,16 +35,16 @@ public class PathBlock {
         
         // Check if un-rotated point is inside original rectangle
         return transformedPoint.x >= x && 
-               transformedPoint.x <= x + 48 &&
+               transformedPoint.x <= x + Rel.X(48) &&
                transformedPoint.y >= y && 
-               transformedPoint.y <= y + 14;
+               transformedPoint.y <= y + Rel.Y(14);
     }
     
     public void draw(Graphics2D g2d) {
         AffineTransform oldTransform = g2d.getTransform();
         g2d.rotate(Math.toRadians(-deg), x + 48/2.0, y + 14/2.0);
         g2d.setColor(color);
-        g2d.fillRect((int)x, (int)y, 48, 14);
+        g2d.fillRect((int)x, (int)y, Rel.W(48), Rel.H(14));
         g2d.setTransform(oldTransform);
     }
 

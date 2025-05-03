@@ -6,7 +6,6 @@ public enum ColorEnum {
 
     BLACK(0, 0, 0, "black"),
     BLUE(0, 0, 255, "blue"),
-    BROWN(139, 69, 19, "brown"),
     GREEN(0, 255, 0, "green"),
     PURPLE(128, 0, 128, "purple"),
     RED(255, 0, 0, "red"),

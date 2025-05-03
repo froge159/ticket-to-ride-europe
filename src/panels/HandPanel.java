@@ -22,7 +22,7 @@ public class HandPanel extends JPanel {
     // panel for whoever is playing rn
 
     private Player p;
-    private String[] temp = { "black", "blue", "brown", "green", "purple", "red", "white", "yellow", "wild" };
+    private String[] temp = { "black", "blue", "orange", "green", "purple", "red", "white", "yellow", "wild" };
     private ArrayList<AnimatedCard> animatedPathCards;
     private JButton okButton, cancelButton;
     private JButton[] playerTrainButtons;

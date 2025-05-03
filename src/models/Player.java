@@ -14,7 +14,7 @@ public class Player {
     private Path selectedPath = null;
 
     public Player(int c){
-        String[] temp = { "black", "blue", "brown", "green", "purple", "red", "white", "yellow", "wild" };
+        String[] temp = { "black", "blue", "orange", "green", "purple", "red", "white", "yellow", "wild" };
 
         trainCards = new TreeMap<>();
         trainCardsSelected = new TreeMap<>();
@@ -98,6 +98,6 @@ public class Player {
     public boolean getDrawn() { return drawn; }
     public void setDrawn(boolean d) { drawn = d; }
 
-    public void setSelectedPath(Path p) { selectedPath = p; }
+    public void setSelectedPath(Path p) { System.out.println("called selected path with " + p);  selectedPath = p; }
     public Path getSelectedPath() { return selectedPath; }
 }

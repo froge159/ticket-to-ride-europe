@@ -222,11 +222,21 @@ public class GameEngine {
 
         Map<String, Integer> trainCards = new HashMap<>(handPanels[currentPlayer].getPlayer().getTrainCards()); // check if player can claim path
         PathBlock[] pathBlocks = path.getPath(); 
+        String maxKey = null;
+        if (pathBlocks[0].getColor().equals(Color.GRAY)) { // if path is gray, find the color with the most cards
+            int maxValue = 0;
+            for (Map.Entry<String, Integer> entry : trainCards.entrySet()) {
+                if (!entry.getKey().equals("wild") && entry.getValue() > maxValue) {
+                    maxKey = entry.getKey();
+                    maxValue = entry.getValue();
+                }
+            }
+        }
         for (int i = 0; i < pathBlocks.length; i++) {
             boolean claimed = false;
             if (!pathBlocks[i].getType().equals("ferry")) {
                 for (String key: trainCards.keySet()) {
-                    if ((pathBlocks[i].getColor().equals(Color.GRAY) || pathBlocks[i].getColor().equals(ColorEnum.getColor(key)))&& trainCards.get(key) > 0) { // if matches color and selected cards > 0
+                    if ((pathBlocks[i].getColor().equals(Color.GRAY) && key.equals(maxKey) || pathBlocks[i].getColor().equals(ColorEnum.getColor(key)))&& trainCards.get(key) > 0) { // if matches color and selected cards > 0
                         trainCards.put(key, trainCards.get(key) - 1); // decrement selected cards
                         claimed = true;
                     }
@@ -280,12 +290,21 @@ public class GameEngine {
 
         TreeMap<String, Integer> trainCards = p.getTrainCards();
         PathBlock[] pathBlocks = p.getSelectedPath().getPath();
-        
+        String maxKey = null;
+        if (pathBlocks[0].getColor().equals(Color.GRAY)) { // if path is gray, find the color with the most cards
+            int maxValue = 0;
+            for (Map.Entry<String, Integer> entry : trainCards.entrySet()) {
+                if (!entry.getKey().equals("wild") && entry.getValue() > maxValue) {
+                    maxKey = entry.getKey();
+                    maxValue = entry.getValue();
+                }
+            }
+        }
         for (int i = 0; i < pathBlocks.length; i++) {
             boolean claimed = false;
             if (!pathBlocks[i].getType().equals("ferry")) {
                 for (String key: trainCards.keySet()) {
-                    if ((pathBlocks[i].getColor().equals(Color.GRAY) || pathBlocks[i].getColor().equals(ColorEnum.getColor(key))) && trainCards.get(key) > 0) { // if matches color and selected cards > 0
+                    if ((pathBlocks[i].getColor().equals(Color.GRAY) && key.equals(maxKey) || pathBlocks[i].getColor().equals(ColorEnum.getColor(key))) && trainCards.get(key) > 0) { // if matches color and selected cards > 0
                         trainCards.put(key, trainCards.get(key) - 1); // decrement selected cards
                         claimed = true;
                     }
@@ -299,12 +318,25 @@ public class GameEngine {
 
         if (!pathBlocks[0].getType().equals("mountain")) {
             p.claimRoute(p.getSelectedPath()); // claim route
-            p.setSelectedPath(null); // reset selected path
             p.getSelectedPath().buy(p);
-            playerPanel.updatePanel();
+            p.setSelectedPath(null); // reset selected path
+            playerPanel.updatePlayer(currentPlayer); // update player panel
             handPanels[currentPlayer].updateTrainCardCounts();
-            setUseCardState(false); // disable use card state
+            handPanels[currentPlayer].setHandText("Path claimed!"); 
+            Timer timer = new Timer (1000, e -> {
+                setUseCardState(false); // disable use card state
+                nextPlayer(); //
+            });
+            timer.setRepeats(false);
+            timer.start(); 
         }
+        else {
+
+        }
+        
+        
+        
+        
     }
 
 
@@ -319,7 +351,7 @@ public class GameEngine {
             //handPanels[currentPlayer].getPlayer().setStationCity(city); // set city for station placement
             handPanels[currentPlayer].setHandText("Built station on " + city.getName() + "!");
             city.buildStation(handPanels[currentPlayer].getPlayer());
-            playerPanel.updatePanel();
+            playerPanel.updatePlayer(currentPlayer); // update player panel
             Timer timer = new Timer(1000, e -> {
                 nextPlayer();
                 setStationState(false); // disable map after placing station
@@ -400,7 +432,6 @@ public class GameEngine {
         handPanels[currentPlayer].showButtons(state);
         handPanels[currentPlayer].showSelectedCounts(state);
         drawPanel.setAllEnabled(!state);
-        if (!state) nextPlayer();
     }
 
     public void setTicketState(boolean state) {

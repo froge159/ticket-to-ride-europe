@@ -37,7 +37,7 @@ public class GamePanel extends JPanel {
     private StartEngine se;
 
     public GamePanel() throws IOException, InterruptedException{
-        String[] temp = { "black", "blue", "brown", "green", "purple", "red", "white", "yellow", "wild" };
+        String[] temp = { "black", "blue", "orange", "green", "purple", "red", "white", "yellow", "wild" };
 
         trainCards = new ArrayList<>();
         discard = new ArrayList<>();

@@ -39,4 +39,15 @@ public class Path {
     public int getLength(){return length;}
 
     public String getType(){return type;}
+
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Path: ");
+        for (PathBlock block : path) {
+            sb.append(block.getType()).append(" ");
+        }
+        sb.append("Length: ").append(length).append(", Points: ").append(points);
+        return sb.toString();
+    }
 }

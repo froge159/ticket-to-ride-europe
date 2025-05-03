@@ -64,7 +64,7 @@ public class GameController {
                     Path path = x.get(i);
                     for (int j = 0; j < path.getPath().length; j++) {
                         if (path.getPath()[j].contains(e.getPoint())) {
-                            System.out.println("clicked a path block");
+                            System.out.println(path);
                             ge.pathClick(path);
                         }
                     }
