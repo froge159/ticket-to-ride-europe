@@ -140,6 +140,10 @@ public class GameEngine {
     }
 
     public void ticketDeckClick(){
+        if (ticketPanel.getNormalPaths().size() < 1) { // if no more ticket cards, do nothing
+            handPanels[currentPlayer].setHandText("No more ticket cards left.");
+            return;
+        }
         setTicketState(true);
     }
     
@@ -209,6 +213,27 @@ public class GameEngine {
     }
 
     public void pathClick(Path path) {
+        if (gamePanel.isStationChoose() && gamePanel.getCurrentCity() != null) {
+            City c = gamePanel.getCurrentCity();
+            if ((path.getCity1().equals(c) || path.getCity2().equals(c)) && path.getBuyer() != null && !path.getBuyer().equals(c.getOwner())) {
+                handPanels[currentPlayer].setHandText("Successfully selected path");
+                c.getOwner().claimRoute(path, true); // possible bug
+                Timer timer = new Timer(1000, e -> {
+                    nextCity();
+                });
+                timer.start();
+                timer.setRepeats(false);
+                return;
+            }
+            else {
+                handPanels[currentPlayer].setHandText("Please select a path that is adjacent to your station and owned by another player.");
+                return;
+            }
+        }
+
+
+
+
         if (mapPanel.pathIsDisabled()) return; // if map is disabled, do nothing
         if (path.isBought()) { // if path is already bought, do nothing
             handPanels[currentPlayer].setHandText("Path already bought.");
@@ -267,6 +292,30 @@ public class GameEngine {
     }
 
     public void trainCardClick(String color){
+        if (handPanels[currentPlayer].getHandText().equals("Click on the train cards you want to use to claim the station.")) {
+            Player p =  handPanels[currentPlayer].getPlayer();
+            int needed = p.getStations() == 3 ? 1 : p.getStations() == 2 ? 2 : 3;
+            if (p.getTrainCards().get(color) < needed) { // if player does not have enough cards, do nothing
+                handPanels[currentPlayer].setHandText("Not enough cards to claim station.");
+                return;
+            }
+            else {
+                handPanels[currentPlayer].setHandText("Built station on " + p.getPendingCity().getName() + "!");
+                p.getPendingCity().buildStation(handPanels[currentPlayer].getPlayer());
+                p.getTrainCards().put(color, p.getTrainCards().get(color) - needed); // decrement selected cards
+                handPanels[currentPlayer].updateTrainCardCounts(); // update jlabel
+                playerPanel.updatePlayer(currentPlayer); // update player panel
+                mapPanel.repaint();
+                Timer timer = new Timer(1000, e -> {
+                    nextPlayer();
+                    setStationState(false); // disable map after placing station
+                });
+                timer.setRepeats(false);
+                timer.start();
+                return;
+            }
+        }
+
         if (!mapPanel.pathIsDisabled() || handPanels[currentPlayer].getJudgementState()) return; // if not in use card state, do nothing
         Player p = handPanels[currentPlayer].getPlayer();
         TreeMap<String, Integer> mp = p.getTrainCardsSelected();
@@ -324,7 +373,7 @@ public class GameEngine {
         }
 
         if (!pathBlocks[0].getType().equals("mountain")) {
-            p.claimRoute(p.getSelectedPath()); // claim route
+            p.claimRoute(p.getSelectedPath(), false); // claim route
             p.getSelectedPath().buy(p);
             p.setSelectedPath(null); // reset selected path
             p.setSelected(0);
@@ -355,7 +404,7 @@ public class GameEngine {
                 handPanels[currentPlayer].setHandText("You did not select enough cards to claim the path.");
             }
             else {
-                p.claimRoute(p.getSelectedPath()); // claim route
+                p.claimRoute(p.getSelectedPath(), false); // claim route
                 p.getSelectedPath().buy(p);
                 p.setSelectedPath(null); // reset selected path
                 p.setSelected(0);
@@ -382,7 +431,7 @@ public class GameEngine {
                 refillDrawDeck(deck, handPanels[currentPlayer]);
             }
             if (deck.size() == 0) { // if deck is empty, do nothing
-                p.claimRoute(p.getSelectedPath()); // claim route
+                p.claimRoute(p.getSelectedPath(), false); // claim route
                 p.getSelectedPath().buy(p);
                 p.setSelectedPath(null); // reset selected path
                 p.setSelected(0);
@@ -465,6 +514,7 @@ public class GameEngine {
                 p.setSelected(0); 
             }
         }
+        
     }
 
     public void tunnelReturnClick() {
@@ -490,23 +540,34 @@ public class GameEngine {
 
     public void cityClick(City city) {
         if (mapPanel.cityIsDisabled()) return;
+        System.out.println(mapPanel.cityIsDisabled());
         if (city.hasStation()) { // if city already has a station, do nothing
             handPanels[currentPlayer].setHandText("City already has a station.");
             setStationState(false);
             return;
         }
         if (handPanels[currentPlayer].getPlayer().getStations() > 0) { // if player has stations left
-            //handPanels[currentPlayer].getPlayer().setStationCity(city); // set city for station placement
-            handPanels[currentPlayer].setHandText("Built station on " + city.getName() + "!");
-            city.buildStation(handPanels[currentPlayer].getPlayer());
-            playerPanel.updatePlayer(currentPlayer); // update player panel
-            mapPanel.repaint();
-            Timer timer = new Timer(1000, e -> {
-                nextPlayer();
+            TreeMap<String, Integer> trainCards = handPanels[currentPlayer].getPlayer().getTrainCards(); // get player train cards
+            Player p = handPanels[currentPlayer].getPlayer();
+            boolean canClaim = false;
+            int needed = p.getStations() == 3 ? 1 : p.getStations() == 2 ? 2 : 3;
+            for (String key: trainCards.keySet()) {
+                if (trainCards.get(key) >= needed) { // if player has enough cards to claim station
+                    canClaim = true;
+                    break;
+                }
+            }
+
+            if (!canClaim) { // if player does not have enough cards, do nothing
+                handPanels[currentPlayer].setHandText("Not enough cards to claim station.");
                 setStationState(false); // disable map after placing station
-            });
-            timer.setRepeats(false);
-            timer.start();
+                return;
+            }
+
+            else {
+                p.setPendingCity(city); // set pending city for player
+                handPanels[currentPlayer].setHandText("Click on the train cards you want to use to claim the station.");
+            }
         }
         else {
             handPanels[currentPlayer].setHandText("You have no stations left.");
@@ -610,7 +671,6 @@ public class GameEngine {
 
     public void setSetupState(boolean state) {
         mapPanel.setPathDisabled(state);
-        mapPanel.setCityDisabled(state);
         handPanels[0].setVisible(!state);
         playerPanel.setVisible(!state);
         buttonPanel.setVisible(!state);
@@ -627,9 +687,22 @@ public class GameEngine {
 
     public void setStationState(boolean state) {
         buttonPanel.setEnabled(!state);
-        mapPanel.setPathDisabled(!state);
+        mapPanel.setPathDisabled(state);
         mapPanel.setCityDisabled(!state);
         drawPanel.setDisabled(state);
+    }
+
+    public void setChooseStationState(boolean state) {
+        mapPanel.setCityDisabled(state);
+        drawPanel.setDisabled(state);
+        buttonPanel.setEnabled(!state);
+
+        gamePanel.setEndingGame(false);
+        gamePanel.setStationChoose(true);
+        gamePanel.setFinalTurnCount(0);
+        if (state) {
+            nextCity();
+        }
     }
 
     public void ticketClick() { // ticket button clicked
@@ -662,6 +735,22 @@ public class GameEngine {
     }
 
     public void nextPlayer() {
+        if (handPanels[currentPlayer].getPlayer().getTrains() <= 2 && !gamePanel.isEndingGame()) {
+            System.out.println("initiate endgame process");
+            Timer timer = new Timer(1000, e -> {
+                handPanels[currentPlayer].setHandText("Every player has one final turn.");
+                
+            });
+            timer.start();
+            timer.setRepeats(false);
+            gamePanel.setEndingGame(true);
+        }
+        if (gamePanel.getFinalTurnCount() == 4) {
+            System.out.println("final count reached 4");
+            setChooseStationState(true);
+            return;
+        }
+
         handPanels[currentPlayer].setVisible(false);
         handPanels[currentPlayer].setHandText("");
 
@@ -674,6 +763,35 @@ public class GameEngine {
             gamePanel.setComponentZOrder(handPanels[currentPlayer], 0);
         }
         handPanels[currentPlayer].setVisible(true);
+
+        if (gamePanel.isEndingGame()) {
+            System.out.println("incremented final turn count"); 
+            gamePanel.setFinalTurnCount(gamePanel.getFinalTurnCount() + 1);
+        }
+    }
+
+    public void nextCity() {
+        City city = null;
+        int r = gamePanel.getStationR();
+        boolean selected = false;
+        for (int i = r; i < mapPanel.getCities().size(); i++) {
+            if (mapPanel.getCities().get(i).getOwner() != null && !mapPanel.getCities().get(i).getPaths().stream().noneMatch(path -> path.getBuyer() != null)) {
+                // calculate score) {
+                city = mapPanel.getCities().get(i);
+                selected = true;
+                break;
+            }
+        }
+
+        if (!selected) {
+            // calculate score
+            System.out.println("no occupied cities found");
+        }
+        else {
+            handPanels[currentPlayer].setHandText("Player " + (city.getOwner().getNumber() + 1) + ", choose a path from your station at " + city.getName() + ".");
+            gamePanel.setCurrentCity(city);
+        }
+        gamePanel.setStationR(r + 1);
     }
 
     public void setGameController(GameController gc) {

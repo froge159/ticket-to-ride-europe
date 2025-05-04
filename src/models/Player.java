@@ -4,7 +4,7 @@ import java.util.*;
 public class Player {
     private int number;
     private String color;
-    private int trains = 45, stations = 3, points = 0;
+    private int trains = 4, stations = 3, points = 0;
     private LongPathCard longPath = null;
     private TreeMap<String, Integer> trainCards;
     private TreeMap<String, Integer> trainCardsSelected;
@@ -16,6 +16,7 @@ public class Player {
     private int selected = 0;
     private int extraCardsNeeded = 0;
     private ArrayList<TrainCard> lastThreeCards;
+    private City pendingCity = null;
 
     public Player(int c, String co){
         String[] temp = { "black", "blue", "orange", "green", "purple", "red", "white", "yellow", "wild" };
@@ -43,7 +44,7 @@ public class Player {
         trainCards.put(card.getType(), trainCards.get(card.getType()) + 1);
     }
 
-    public void claimRoute(/*GamePanel?*/Path route){
+    public void claimRoute(/*GamePanel?*/Path route, boolean station){
         City c1 = route.getCity1();
         City c2 = route.getCity2();
         if(!cities.contains(c1)) cities.add(c1);
@@ -59,9 +60,20 @@ public class Player {
         trains -= route.getLength();
         points += route.getPoints();
 
-        for (PathBlock pb: route.getPath()) {
-            pb.setOwnerColor(color);
+        if (!station) {
+            for (PathBlock pb: route.getPath()) {
+                pb.setOwnerColor(color);
+            }
+            route.buy(this);
         }
+    }
+
+    public void setPendingCity(City city){
+        pendingCity = city;
+    }
+
+    public City getPendingCity(){
+        return pendingCity;
     }
 
     public void addPathCard(NormalPathCard card){
@@ -141,4 +153,6 @@ public class Player {
 
     public void setSelectedPath(Path p) { System.out.println("called selected path with " + p);  selectedPath = p; }
     public Path getSelectedPath() { return selectedPath; }
+
+    public LinkedList<City> getCities() { return cities; }
 }

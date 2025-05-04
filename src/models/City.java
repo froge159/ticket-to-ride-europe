@@ -14,9 +14,11 @@ public class City {
     private boolean hasStation = false;
     private Player stationOwner;
     private ArrayList<City> neighbors;
+    private ArrayList<Path> paths;
 
     public City(String name, int x, int y){
         neighbors = new ArrayList<>();
+        paths = new ArrayList<>();
         this.name = name;
         this.x = x;
         this.y = y;
@@ -58,5 +60,13 @@ public class City {
 
     public String toString(){
         return name + " " + x + " " + y;
+    }
+
+    public Player getOwner(){
+        return stationOwner;
+    }
+
+    public ArrayList<Path> getPaths(){
+        return paths;
     }
 }

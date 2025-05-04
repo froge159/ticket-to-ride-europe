@@ -50,7 +50,10 @@ public class TTRMap {
                     Double.parseDouble(st.nextToken())
                 );
             }
-            paths.add(new Path(pathBlocks, getCity(city1), getCity(city2)));
+            Path path = new Path(pathBlocks, getCity(city1), getCity(city2));
+            paths.add(path);
+            getCity(city1).getPaths().add(path);
+            getCity(city2).getPaths().add(path);
             br.readLine();
         }
     }

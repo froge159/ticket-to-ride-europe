@@ -12,6 +12,7 @@ import javax.swing.SwingUtilities;
 import controllers.GameController;
 import engine.GameEngine;
 import engine.StartEngine;
+import models.City;
 import models.LongPathCard;
 import models.NormalPathCard;
 import models.Player;
@@ -35,6 +36,11 @@ public class GamePanel extends JPanel {
     private JButton confirm, cancel, station, endGame;
     private BufferedImage gameBG;
     private StartEngine se;
+    private int finalTurnCount;
+    private boolean isEndingGame = false;
+    private boolean isStationChoose = false;
+    private int stationR = 0;
+    private City currentCity = null;
 
     public GamePanel() throws IOException, InterruptedException{
         String[] temp = { "black", "blue", "orange", "green", "purple", "red", "white", "yellow", "wild" };
@@ -57,7 +63,7 @@ public class GamePanel extends JPanel {
         players[2] = new Player(2, "green");
         players[3] = new Player(3, "blue");
 
-
+        finalTurnCount = 0;
         // load train cards
         for (String i : temp) {
             for (int j = 0; j < 12; j++)
@@ -160,6 +166,13 @@ public class GamePanel extends JPanel {
         ge.setSetupState(true);
     }
 
+
+    public void setEndingGame(boolean isEndingGame) {
+        this.isEndingGame = isEndingGame;
+    }
+    public boolean isEndingGame() {
+        return isEndingGame;
+    }
     public Player[] getPlayers() {
         return players;
     }
@@ -175,6 +188,23 @@ public class GamePanel extends JPanel {
         if (gameBG != null) {
             g.drawImage(gameBG, 0, 0, this);
         }
+    }
+
+    
+
+    public int getFinalTurnCount() {
+        return finalTurnCount;
+    }
+
+    public void setFinalTurnCount(int finalTurnCount) {
+        this.finalTurnCount = finalTurnCount;
+    }
+
+    public void setStationChoose(boolean isStationChoose) {
+        this.isStationChoose = isStationChoose;
+    }
+    public boolean isStationChoose() {
+        return isStationChoose;
     }
     
     public TTRMap getMap() {
@@ -219,5 +249,21 @@ public class GamePanel extends JPanel {
     public int getTurn(){
         return turn;
     }
+
+    public int getStationR() {
+        return stationR;
+    }
+    
+    public void setStationR(int stationR) {
+        this.stationR = stationR;
+    }
+
+    public City getCurrentCity() {
+        return currentCity;
+    }
+    public void setCurrentCity(City currentCity) {
+        this.currentCity = currentCity;
+    }
+    
 
 }

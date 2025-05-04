@@ -1,11 +1,13 @@
 package panels;
 
 
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.swing.JPanel;
 
@@ -20,7 +22,7 @@ public class MapPanel extends JPanel{
 
     private BufferedImage mapBG;
     private TTRMap map;
-    private boolean pathDisabled, cityDisabled;
+    private boolean pathDisabled, cityDisabled = true;
 
     public MapPanel() throws IOException {
         map = new TTRMap();
@@ -64,5 +66,9 @@ public class MapPanel extends JPanel{
 
     public boolean cityIsDisabled() {
         return cityDisabled;
+    }
+
+    public ArrayList<City> getCities() {
+        return map.getCities();
     }
 }
