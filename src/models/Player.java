@@ -3,6 +3,7 @@ import java.util.*;
 
 public class Player {
     private int number;
+    private String color;
     private int trains = 45, stations = 3, points = 0;
     private LongPathCard longPath = null;
     private TreeMap<String, Integer> trainCards;
@@ -13,8 +14,10 @@ public class Player {
     private boolean drawn = false;
     private Path selectedPath = null;
     private int selected = 0;
+    private int extraCardsNeeded = 0;
+    private ArrayList<TrainCard> lastThreeCards;
 
-    public Player(int c){
+    public Player(int c, String co){
         String[] temp = { "black", "blue", "orange", "green", "purple", "red", "white", "yellow", "wild" };
 
         trainCards = new TreeMap<>();
@@ -23,15 +26,19 @@ public class Player {
         cities = new LinkedList<>();
         paths = new LinkedList<>();
         number = c;
+        color = co;
 
-        for (String color: temp) {
-            trainCards.put(color, 0);
-            trainCardsSelected.put(color, 0);
+        for (String skibidi: temp) {
+            trainCards.put(skibidi, 0);
+            trainCardsSelected.put(skibidi, 0);
         }
     }
 
     
 
+    public String getColor(){
+        return color;
+    }
     public void addTrainCard(TrainCard card){
         trainCards.put(card.getType(), trainCards.get(card.getType()) + 1);
     }
@@ -51,6 +58,10 @@ public class Player {
         paths.add(route);
         trains -= route.getLength();
         points += route.getPoints();
+
+        for (PathBlock pb: route.getPath()) {
+            pb.setOwnerColor(color);
+        }
     }
 
     public void addPathCard(NormalPathCard card){
@@ -67,6 +78,28 @@ public class Player {
             city.buildStation(this);
             stations -= 1;
         }
+    }
+
+    public void resetTrainCardsSelected(){
+        for (String color: trainCardsSelected.keySet()) {
+            trainCardsSelected.put(color, 0);
+        }
+    }
+
+    public void setExtraCardsNeeded(int num){
+        extraCardsNeeded = num;
+    }
+
+    public int getExtraCardsNeeded(){
+        return extraCardsNeeded;
+    }
+
+    public void setLastThreeCards(ArrayList<TrainCard> cards){
+        lastThreeCards = cards;
+    }
+
+    public ArrayList<TrainCard> getLastThreeCards(){
+        return lastThreeCards;
     }
 
     public void setSelected(int s) {

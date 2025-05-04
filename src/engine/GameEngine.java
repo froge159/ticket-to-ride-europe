@@ -310,13 +310,13 @@ public class GameEngine {
             if (!pathBlocks[i].getType().equals("ferry")) {
                 for (String key: trainCards.keySet()) {
                     if ((pathBlocks[i].getColor().equals(Color.GRAY) && key.equals(maxKey) || pathBlocks[i].getColor().equals(ColorEnum.getColor(key))) && trainCards.get(key) > 0) { // if matches color and selected cards > 0
-                        trainCards.put(key, trainCards.get(key) - 1); // decrement selected cards
+                        if (!pathBlocks[0].getType().equals("mountain")) trainCards.put(key, trainCards.get(key) - 1); 
                         claimed = true;
                     }
                 }
             }
             if ((!claimed || pathBlocks[i].getType().equals("ferry")) && trainCards.get("wild") > 0) { // if wild cards available or ferry pathblock
-                trainCards.put("wild", trainCards.get("wild") - 1); // decrement selected cards
+                if (!pathBlocks[0].getType().equals("mountain")) trainCards.put("wild", trainCards.get("wild") - 1); 
                 claimed = true;
             }
         }
@@ -335,7 +335,44 @@ public class GameEngine {
             });
             timer.setRepeats(false);
             timer.start(); 
+            mapPanel.repaint();
         }
+
+        else if (handPanels[currentPlayer].isPostJudgement()) {
+            int needed = p.getExtraCardsNeeded(); 
+            ArrayList<TrainCard> lastThreeCards = p.getLastThreeCards(); // get last three cards drawn
+            for (int i = 0; i < lastThreeCards.size(); i++) {
+                for (String key: selectedMap.keySet()) {
+                    if ((lastThreeCards.get(i).getType().equals(key) || key.equals("wild")) && selectedMap.get(key) > 0) { // if color matches or wild card drawn, decrement needed
+                        needed--;
+                        break;
+                    }
+                }
+            }
+            if (needed > 0) {
+                handPanels[currentPlayer].setHandText("You did not select enough cards to claim the path.");
+            }
+            else {
+                p.claimRoute(p.getSelectedPath()); // claim route
+                p.getSelectedPath().buy(p);
+                p.setSelectedPath(null); // reset selected path
+                p.setSelected(0);
+                p.setExtraCardsNeeded(0);
+                p.setLastThreeCards(null);
+                playerPanel.updatePlayer(currentPlayer); // update player panel
+                handPanels[currentPlayer].updateTrainCardCounts();
+                handPanels[currentPlayer].setHandText("Path claimed!"); 
+                Timer timer = new Timer (1000, e -> {
+                    setUseCardState(false); // disable use card state
+                    nextPlayer(); //
+                });
+                timer.setRepeats(false);
+                timer.start(); 
+                mapPanel.repaint();
+            }
+            
+        }
+
         else {
             ArrayList<TrainCard> deck = drawPanel.getTrainDeck();
             if (deck.size() < 3) {
@@ -346,8 +383,10 @@ public class GameEngine {
                 p.getSelectedPath().buy(p);
                 p.setSelectedPath(null); // reset selected path
                 p.setSelected(0);
+                p.resetTrainCardsSelected();
                 playerPanel.updatePlayer(currentPlayer); // update player panel
                 handPanels[currentPlayer].updateTrainCardCounts();
+                handPanels[currentPlayer].resetSelectedCounts();
                 handPanels[currentPlayer].setHandText("Path claimed. Draw deck was empty"); 
                 Timer timer = new Timer (1000, e -> {
                     setUseCardState(false); // disable use card state
@@ -355,6 +394,7 @@ public class GameEngine {
                 });
                 timer.setRepeats(false);
                 timer.start(); 
+                mapPanel.repaint();
             }
             else {
                 String color = ""; int needed = 0;
@@ -386,33 +426,57 @@ public class GameEngine {
                     differenceMap.put(key, trainCardValue - selectedValue);
                 }
 
+                
+
+                int neededCopy = needed;
                 // if equals color or wild, needed--
                 for (int i = 0; i < lastThreeCards.size(); i++) {
                     for (String key: differenceMap.keySet()) {
-                        if (lastThreeCards.get(i).getType().equals(key) || key.equals("wild")) {
-                            needed--;
+                        if ((lastThreeCards.get(i).getType().equals(key) || key.equals("wild")) && differenceMap.get(key) > 0) { // if color matches or wild card drawn, decrement needed
+                            neededCopy--;
                             break;
                         }
                     }
-                }
-                if (needed > 0) {
+                } 
+                if (neededCopy > 0) {
                     setTunnelState(true);
                     tunnelPanel.setText("You do not have enough cards to claim the path.");
                 }
                 else {
                     setTunnelState(true);
-                    tunnelPanel.setText("You need to pay " + needed + " more " + color + " cards to claim the path.");
+                    tunnelPanel.setText("You need to pay " + Math.max(needed, 0) + " more " + color + " cards to claim the path.");
+                    for (String key: selectedMap.keySet()) {
+                        trainCards.put(key, trainCards.get(key) - selectedMap.get(key)); // decrement selected cards
+                    }
+                    handPanels[currentPlayer].updateTrainCardCounts(); // update jlabel
+                    p.setExtraCardsNeeded(needed);
+                    p.setLastThreeCards(lastThreeCards);
                 }
                 tunnelPanel.updatePanel(lastThreeCards);
                 for (int i = 0; i < lastThreeCards.size(); i++) {
                     drawPanel.getDiscard().add(lastThreeCards.get(i)); // add drawn cards to discard pile
                 }
+
+                p.resetTrainCardsSelected();
+                handPanels[currentPlayer].resetSelectedCounts();
+                p.setSelected(0); 
             }
         }
-        
-        
-        
-        
+    }
+
+    public void tunnelReturnClick() {
+        Player p = handPanels[currentPlayer].getPlayer();
+        if (!tunnelPanel.isAbleToPay()) {
+            setTunnelState(false);
+            setUseCardState(false);
+            p.setSelectedPath(null);
+            nextPlayer();
+        }
+        else {
+            setTunnelState(false);
+            handPanels[currentPlayer].setPostJudgement(true); 
+            handPanels[currentPlayer].setHandText(tunnelPanel.getText());
+        }
     }
 
 
@@ -423,11 +487,17 @@ public class GameEngine {
 
     public void cityClick(City city) {
         if (mapPanel.cityIsDisabled()) return;
+        if (city.hasStation()) { // if city already has a station, do nothing
+            handPanels[currentPlayer].setHandText("City already has a station.");
+            setStationState(false);
+            return;
+        }
         if (handPanels[currentPlayer].getPlayer().getStations() > 0) { // if player has stations left
             //handPanels[currentPlayer].getPlayer().setStationCity(city); // set city for station placement
             handPanels[currentPlayer].setHandText("Built station on " + city.getName() + "!");
             city.buildStation(handPanels[currentPlayer].getPlayer());
             playerPanel.updatePlayer(currentPlayer); // update player panel
+            mapPanel.repaint();
             Timer timer = new Timer(1000, e -> {
                 nextPlayer();
                 setStationState(false); // disable map after placing station
@@ -515,6 +585,7 @@ public class GameEngine {
         buttonPanel.setVisible(!state);
         drawPanel.setVisible(!state);
         handPanels[currentPlayer].setJudgementState(state);
+        handPanels[currentPlayer].showButtons(!state);
     }
 
     public void setTicketState(boolean state) {
@@ -530,7 +601,6 @@ public class GameEngine {
     public void setDrawCardState(boolean state) {
         drawPanel.setTicketButtonEnabled(!state);
         buttonPanel.setEnabled(!state);
-        handPanels[currentPlayer].setEnabled(!state);
         mapPanel.setPathDisabled(state);
         mapPanel.setCityDisabled(state);
     }
@@ -553,7 +623,6 @@ public class GameEngine {
     }
 
     public void setStationState(boolean state) {
-        handPanels[currentPlayer].setEnabled(!state);
         buttonPanel.setEnabled(!state);
         mapPanel.setPathDisabled(!state);
         mapPanel.setCityDisabled(!state);

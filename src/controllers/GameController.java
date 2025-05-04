@@ -79,6 +79,7 @@ public class GameController {
                         ge.cityClick(cities.get(i));
                     }
                 }
+                System.out.println(e.getPoint().getX() + " " + e.getPoint().getY());
             }
         });
 
@@ -179,6 +180,13 @@ public class GameController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ge.stationClick();
+            }
+        });
+
+        tunnelPanel.getReturnButton().addActionListener(new ActionListener() { // tunnel return button clicked
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ge.tunnelReturnClick();
             }
         });
     }

@@ -9,22 +9,22 @@ public enum ImageEnum {
 
     // enum for non-png images
 
-    TITLEBG("assets/titlebg.png"),
-    ENDBG("assets/endBG.png"),
-    GAMEBG("assets/gamebg.png"),
-    RULESBG("assets/rulesbg.png"),
-    MAPBG("assets/mapBG.png");
+    TITLEBG("assets/titlebg.png", 1920, 1080),
+    ENDBG("assets/endBG.png", 1920, 1080),
+    GAMEBG("assets/gamebg.png", 1920, 1080),
+    RULESBG("assets/rulesbg.png", 1920, 1080),
+    MAPBG("assets/mapBG.png", 1350, 872);
     
 
     private final BufferedImage b;
     private int w;
     private int h;
 
-    private ImageEnum(String path) {
+    private ImageEnum(String path, int w, int h) {
         BufferedImage temp = null;
-            this.w = DimensionEnum.valueOf(name()).getWidth();
-            this.h = DimensionEnum.valueOf(name()).getHeight();
-        
+
+        this.w = w;
+        this.h = h;
         
         try {
             temp = ImageIO.read(new File(path));

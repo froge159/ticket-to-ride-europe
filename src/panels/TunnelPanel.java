@@ -22,7 +22,7 @@ public class TunnelPanel extends JPanel {
     private ImageIcon[] images;
     
     public TunnelPanel() {
-        returnButton = new JButton("Return to Game");
+        returnButton = new JButton("Return");
         text = new JLabel();
         images = new ImageIcon[3];
 
@@ -38,12 +38,12 @@ public class TunnelPanel extends JPanel {
 
     public void updatePanel(ArrayList<TrainCard> lastThreeCards) {
         for (int i = 0; i < 3; i++) {
-            images[i] = lastThreeCards.get(i).getScaledFront(200, 150);
+            images[i] = lastThreeCards.get(i).getScaledFront(200, 125);
         }
-        returnButton.setBounds(Rel.X(190), Rel.Y(750), Rel.W(120), Rel.H(50));
-        text.setBounds(Rel.X(100), Rel.Y(100), Rel.W(400), Rel.H(50));
+        returnButton.setBounds(Rel.X(200), Rel.Y(800), Rel.W(100), Rel.H(50));
+        text.setBounds(Rel.X(75), Rel.Y(100), Rel.W(400), Rel.H(50));
         text.setForeground(Color.WHITE);
-        text.setFont(new Font(null, Font.PLAIN, Rel.W(30)));
+        text.setFont(new Font(null, Font.BOLD, Rel.W(15)));
     }
 
     public void setText(String s) {
@@ -60,7 +60,19 @@ public class TunnelPanel extends JPanel {
             if (images[i] != null) {
                 images[i].paintIcon(this, g, Rel.X(150), Rel.Y(y));
             }
-            y += 150;
+            y += 200;
         }
+    }
+    
+    public JButton getReturnButton() {
+        return returnButton;
+    }
+
+    public boolean isAbleToPay() {
+        return !text.getText().equals("You do not have enough cards to claim the path.");
+    }
+
+    public String getText() {
+        return text.getText();
     }
 }

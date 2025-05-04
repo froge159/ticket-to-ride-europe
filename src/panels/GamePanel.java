@@ -52,10 +52,10 @@ public class GamePanel extends JPanel {
         endGame = new JButton();
 
         players = new Player[4]; 
-        players[0] = new Player(0);
-        players[1] = new Player(1);
-        players[2] = new Player(2);
-        players[3] = new Player(3);
+        players[0] = new Player(0, "red");
+        players[1] = new Player(1, "yellow");
+        players[2] = new Player(2, "green");
+        players[3] = new Player(3, "blue");
 
 
         // load train cards

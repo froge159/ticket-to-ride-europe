@@ -56,23 +56,37 @@ public class DrawPanel extends JPanel {
         // TESTING
         refillFaceUpDeck();
         // TESITNG
+        int wildCount = 3;
 
-        int y = 133;
-        for (int i = 0; i < 5; i++) {
-            final int index = i; 
-            if (faceUpDeck[i] == null) {
+        while (wildCount >= 3) {
+            int y = 133;
+            wildCount = 0;
+            for (int i = 0; i < 5; i++) {
+                final int index = i; 
+                if (faceUpDeck[i] == null) {
+                    y += 130;
+                    continue;
+                }
+                JButton btn = new JButton();
+                btn.setBounds(Rel.X(80), Rel.Y(y), Rel.W(200), Rel.H(125));
+                btn.setIcon(faceUpDeck[index].getScaledFront(Rel.W(200), Rel.H(125)));
+                faceUpButtons[index] = btn;
                 y += 130;
-                continue;
+                SwingUtilities.invokeLater(() -> {
+                    add(faceUpButtons[index]);
+                });
+                if (faceUpDeck[index].getType().equals("wild")) {
+                    wildCount++;
+                }
             }
-            JButton btn = new JButton();
-            btn.setBounds(Rel.X(80), Rel.Y(y), Rel.W(200), Rel.H(125));
-            btn.setIcon(faceUpDeck[index].getScaledFront(Rel.W(200), Rel.H(125)));
-            faceUpButtons[index] = btn;
-            y += 130;
-            SwingUtilities.invokeLater(() -> {
-                add(faceUpButtons[index]);
-            });
+
+            if (wildCount >= 3) {
+                for (TrainCard card: faceUpDeck) {
+                    discard.add(card);
+                }
+            }
         }
+        
 
         ticketButton = new JButton();
         ImageIcon ticketPNG = PNGEnum.TICKETBACK.getImage();

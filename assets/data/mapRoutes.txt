@@ -4,7 +4,7 @@ black default 402 280 -116.6
 Amsterdam Essen 3
 yellow default 420 212 74.3
 yellow default 455 206 -13.4
-yellow default 500 234 45.2
+yellow default 500 234 -45.2
 
 Amsterdam Frankfurt 2
 white default 448 281 -44.2
@@ -51,7 +51,7 @@ pink default 904 679 46.9
 
 Barcelona Madrid 2
 yellow default 226 760 177.7
-yellow default 157 757 177.7
+yellow default 177 757 177.7
 
 Barcelona Marseille 4
 gray default 295 731 48
@@ -93,52 +93,52 @@ Berlin Warszawa 4
 yellow default 697 285 19.3
 yellow default 748 273 5
 yellow default 798 270 2.5
-yellow default 847 274  -8.3
+yellow default 847 274 -8.3
 
 Berlin Wien 3
-green default 673 319 73
+green default 673 319 -73
 green default 693 364 -60
 green default 720 408 -51
 
 Brest Dieppe 2
-orange default 179 381 180
-orange default 227 363 147
+orange default 179 381 -147
+orange default 227 363 180
 
 Brest Pamplona 4
-pink default 182 433 23
-pink default 220 466 57
-pink default 240 514 84
-pink default 243 564 90
+pink default 182 433 -23
+pink default 220 466 -57
+pink default 240 514 -84
+pink default 243 564 -90
 
 Brest Paris 3
-black default 186 408 6
-black default 234 416 6
-black default 283 419 6
+black default 186 408 -6
+black default 234 416 -6
+black default 283 419 -6
 
 Brindisi Palermo 3
 ferry default 701 829 -130
-gray default 743 742 -132
-gray default 732 792 -62
+gray default 743 742 -62
+gray default 732 792 -132
 
 Brindisi Roma 2
-white default 708 680 0 
-white default 662 660 -52
+white default 708 680 -52
+white default 662 660 0
 
 Bruxelles Dieppe 2
-green default 348 322 145 
-green default 306 352 145
+green default 348 322 -145 
+green default 306 352 -145
 
 Bruxelles Frankfurt 2
-blue default 419 314 135
-blue default 468 329 -166.1
+blue default 419 314 -166.1
+blue default 468 329 135
 
 Bruxelles Paris 2
-yellow default 367 345 117
-yellow default 343 388 117
+yellow default 367 345 -117
+yellow default 343 388 -117
 
 Bruxelles Paris 2
-red default 383 350 117
-red default 360 397 117
+red default 383 350 -117
+red default 360 397 -117
 
 Bucuresti Budapest 4
 gray mountain 974 556 -25
@@ -168,12 +168,12 @@ gray mountain 994 599 -164
 gray mountain 961 638 -94
 
 Budapest Kyiv 6
-gray mountain 822 441 -3
-gray mountain 864 407 -173
-gray mountain 907 380 -163
-gray mountain 953 361 -151
-gray mountain 998 347 -143
-gray mountain 1049 348 -131
+gray mountain 822 441 -131
+gray mountain 864 407 -143
+gray mountain 907 380 -151
+gray mountain 953 361 -163
+gray mountain 998 347 -173
+gray mountain 1049 348 -3
 
 Budapest Sarajevo 3
 pink default 816 508 -81
@@ -181,23 +181,23 @@ pink default 821 557 -81
 pink default 830 608 -81
 
 Budapest Wien 1
-red default 775 452 -31
+red default 775 456 -31
 
 Budapest Wien 1
 white default 765 472 -31
 
 Budapest Zagreb 2
-orange default 784 503 -135
-orange default 751 542 -124
+orange default 784 503 -124
+orange default 751 542 -135
 
-Cadiz Lisboa 2
-blue default 80 842 -168
-blue default 38 810 -121
+Cadiz Lisbon 2
+blue default 80 842 168
+blue default 38 810 121 //168
 
 Cadiz Madrid 3
-orange default 148 840 40
-orange default 177 816 67
-orange default 146 770 160
+orange default 148 840 -160
+orange default 177 816 -67
+orange default 146 770 -40
 
 Constantinople Sevastopol 4
 gray default 1101 710 -126
@@ -214,7 +214,7 @@ blue default 1047 725 -30
 blue default 1005 697 -30
 blue default 958 675 -30
 
-Danzig Rica 3
+Danzig Riga 3
 black default 828 139 -105
 black default 854 92 -123
 black default 893 62 -163
@@ -224,27 +224,27 @@ white default 846 189 -32
 white default 879 231 -78
 
 Dieppe London 2
-gray default 284 281 -86
-gray ferry 282 329 -86
+gray default 284 281 86
+gray ferry 282 329 86
 
 Dieppe London 2
-gray default 266 274 -86
-gray ferry 263 326 -86
+gray default 266 274 86
+gray ferry 263 326 86
 
 Dieppe Paris 1
-pink default 301 392 43
+pink default 301 392 -43
 
 Edinburgh London 4
-orange default 218 70 68
-orange default 240 118 68
-orange default 257 161 68
-orange default 276 204 68
+orange default 218 70 -68
+orange default 240 118 -68
+orange default 257 161 -68
+orange default 276 204 -68
 
 Edinburgh London 4
-black default 202 77 68
-black default 221 125 68
-black default 235 168 68
-black default 258 213 68
+black default 202 77 -68
+black default 221 125 -68
+black default 240 168 -68
+black default 258 213 -68
 
 Erzurum Sevastopol 4
 gray ferry 1206 624 -30
@@ -258,8 +258,8 @@ red mountain 1309 696 -92
 red mountain 1314 646 -92
 
 Essen Frankfurt 2
-green default 553 288 23.1
-green default 530 320 -68.7
+green default 553 288 -68.7
+green default 530 320 23.1
 
 Essen Kobenhavn 3
 gray ferry 537 220 -124
@@ -276,14 +276,14 @@ pink default 520 392 -74.1
 pink default 546 418 13.2
 
 Frankfurt Paris 3
-white default 474 370 163.6
-white default 428 395 152.2
-white default 388 417 145.2
+white default 474 370 -145.2
+white default 428 400 -152.2
+white default 388 417 -163.6
 
 Frankfurt Paris 3
-orange default 483 386 145.2
-orange default 436 413 152.2
-orange default 390 432 163.6
+orange default 483 386 -145.2
+orange default 436 413 -152.2
+orange default 390 432 -163.6
 
 Kharkov Kyiv 4
 gray default 1234 425 -163
@@ -326,42 +326,42 @@ Kyiv Wilno 2
 gray default 1091 301 -35
 gray default 1066 257 -92
 
-Lisboa Madrid 3
-pink default 19 743 32
+Lisbon Madrid 3
+pink default 24 743 -90
 pink default 35 709 0
-pink default 87 726 90
+pink default 87 726 -32
 
 Madrid Pamplona 3
-black mountain 133 717 146
-black mountain 169 677 135
-black mountain 207 647 128
+black mountain 133 717 -128
+black mountain 169 677 -135
+black mountain 207 647 -146
 
 Madrid Pamplona 3
-white mountain 147 727 146
-white mountain 181 691 135
-white mountain 222 659 128
+white mountain 147 727 -128 //128
+white mountain 181 691 -135
+white mountain 222 659 -146
 
 Marseille Pamplona 4
-red default  413 609 18
-red default 361 598 112
-red default 316 623 0
-red default 290 650 28
+red default  413 609 -28
+red default 361 598 0
+red default 316 623 -112
+red default 290 650 -18
 
 Marseille Paris 4
-gray default 439 595 60
-gray default 400 563 27
-gray default 361 529 56
-gray default 345 480 83
+gray default 439 595 -60
+gray default 400 563 -27
+gray default 361 529 -56
+gray default 345 480 -83
 
 Marseille Roma 4
-gray mountain 490 616 140
-gray mountain 533 587 140
-gray mountain 563 602 52
-gray mountain 595 642 52
+gray mountain 490 616 -140
+gray mountain 533 587 -140
+gray mountain 563 602 -52
+gray mountain 595 642 -52
 
 Marseille Zurich 2
-pink mountain 477 584 105
-pink mountain 490 540 105
+pink mountain 477 584 -105
+pink mountain 490 540 -105
 
 Moskva Petrograd 4
 white default 1289 174 -79
@@ -383,8 +383,8 @@ orange default 655 469 -2
 orange default 706 452 -143
 
 Munchen Zurich 2
-yellow mountain 561 444 135
-yellow mountain 521 479 135
+yellow mountain 561 444 -135
+yellow mountain 521 479 -135
 
 Palermo Roma 4
 gray default 643 685 -29
@@ -401,37 +401,37 @@ gray default 788 844 0
 gray default 737 848 0
 
 Pamplona Paris 4
-blue default 256 598 126
-blue default 283 557 115
-blue default 299 509 106
-blue default 308 458 96
+blue default 256 598 -126
+blue default 283 557 -115
+blue default 299 509 -106
+blue default 308 458 -96
 
 Pamplona Paris 4
-green default 273 610 126
-green default 300 562 115
-green default 316 513 106
-green default 326 465 96
+green default 273 610 -126
+green default 300 562 -115
+green default 316 513 -106
+green default 326 465 -96
 
 Paris Zurich 3
-gray mountain 371 468 60
-gray mountain 405 501 26
+gray mountain 371 468 -60
+gray mountain 405 501 -26
 gray mountain 457 512 179
 
-Petrograd Rica 4
+Petrograd Riga 4
 gray default 1117 51 0
 gray default 1068 52 0
 gray default 1018 52 0
 gray default 967 51 0
 
 Petrograd Stockholm 8
-gray mountain 1124 25 -53
-gray mountain 1078 14 -141
+gray mountain 1124 25 -22
+gray mountain 1078 14 0
 gray mountain 1026 13 0
 gray mountain 976 12 0
 gray mountain 924 13 0
 gray mountain 875 12 0
-gray mountain 828 30 0
-gray mountain 791 41 -22
+gray mountain 828 30 -141
+gray mountain 791 41 -53
 
 Petrograd Wilno 4
 blue default 1145 77 -124
@@ -439,7 +439,7 @@ blue default 1113 118 -124
 blue default 1083 160 -124
 blue default 1056 198 -124
 
-Rica Wilno 4
+Riga Wilno 4
 green default 927 86 -31
 green default 931 137 -3
 green default 966 177 -69

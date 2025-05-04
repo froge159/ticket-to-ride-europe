@@ -6,14 +6,17 @@ import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
+import utils.PNGEnum;
 import utils.Rel;
 
 public class PathBlock {
+
     private Color color;
-    String type;
+    private String type;
     private double deg, x, y;
     private double centerX = x + 48/2.0;
     private double centerY = y + 14/2.0;
+    private String ownerColor;
 
     public PathBlock(Color col, String ty, int x, int y, double d){
         color = col;
@@ -21,6 +24,7 @@ public class PathBlock {
         deg = d;
         centerX = x;
         centerY = y;
+        ownerColor = null;
         this.x = Rel.X((int) (centerX - 48/2.0));
         this.y = Rel.Y((int) (centerY - 14/2.0));
     }
@@ -45,9 +49,15 @@ public class PathBlock {
         g2d.rotate(Math.toRadians(-deg), x + 48/2.0, y + 14/2.0);
         g2d.setColor(color);
         g2d.fillRect((int)x, (int)y, Rel.W(48), Rel.H(14));
+        if (ownerColor != null) {
+            g2d.drawImage(PNGEnum.getColoredTrainImage(ownerColor), (int)x, (int)y, Rel.W(48), Rel.H(14), null);
+        }
         g2d.setTransform(oldTransform);
     }
 
+    public void setOwnerColor(String c){
+        ownerColor = c;
+    }
 
     public Color getColor(){return color;}
     public String getType(){return type;}
