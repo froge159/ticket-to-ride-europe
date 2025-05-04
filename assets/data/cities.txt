@@ -5,7 +5,7 @@ Barcelona 267 763
 Berlin 664 280
 Brest 147 406
 Brindisi 738 706
-Bruxelles 338 313
+Bruxelles 386 310
 Bucuresti 1015 570
 Budapest 809 474
 Cadiz 116 850
@@ -31,7 +31,7 @@ Paris 339 428
 Petrograd 1164 43
 Riga 931 51
 Roma 620 672
-Rostov 1231 487
+Rostov 1331 487
 Sarajevo 841 645
 Sevastopol 1202 589
 Smolensk 1177 242

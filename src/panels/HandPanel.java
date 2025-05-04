@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.Stack;
 import java.util.TreeMap;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,13 +23,15 @@ public class HandPanel extends JPanel {
     // panel for whoever is playing rn
 
     private Player p;
-    private String[] temp = { "black", "blue", "brown", "green", "purple", "red", "white", "yellow", "wild" };
+    private String[] temp = { "black", "blue", "orange", "green", "purple", "red", "white", "yellow", "wild" };
     private ArrayList<AnimatedCard> animatedPathCards;
     private JButton okButton, cancelButton;
     private JButton[] playerTrainButtons;
     private TreeMap<String, JLabel> trainCardCounts;
     private TreeMap<String, JLabel> selectedCounts;
     private JLabel text;
+    private boolean judgementState = false;
+    private boolean postJudgement = false;
 
     public HandPanel(Player p) {
         this.p = p; 
@@ -111,6 +114,9 @@ public class HandPanel extends JPanel {
             revalidate();
             repaint();
         });
+        okButton.setVisible(false);
+        cancelButton.setVisible(false);
+        showSelectedCounts(false);
     }
 
     public void updatePathCards() {
@@ -136,9 +142,60 @@ public class HandPanel extends JPanel {
         }
     }
 
+    /* 
+    public boolean isPreJudgement() {
+        return preJudgement;
+    }
+    public void setPreJudgement(boolean preJudgement) {
+        this.preJudgement = preJudgement;
+    }
+    public boolean isPostJudgement() {
+        return postJudgement;
+    }
+    public void setPostJudgement(boolean postJudgement) {
+        this.postJudgement = postJudgement;
+    }
+    */
+
+
+    public boolean isPostJudgement() {
+        return postJudgement;
+    }
+
+    public void setPostJudgement(boolean postJudgement) {
+        this.postJudgement = postJudgement;
+    }
+
+    public void setJudgementState(boolean state) {
+        judgementState = state;
+    }
+    public boolean getJudgementState() {
+        return judgementState;
+    }
+
+    public void showSelectedCounts(boolean state) {
+        for (String i: temp) {
+            selectedCounts.get(i).setVisible(state);
+        }
+    }   
+
+    public String getColor(int i) {
+        return temp[i];
+    }
+
     public void updateTrainCardCounts() {
         for (String i: temp) {
             trainCardCounts.get(i).setText(String.valueOf(p.getTrainCards().get(i)));
+        }
+    }
+
+    public void updateSelectedCounts(String i) {
+        selectedCounts.get(i).setText(String.valueOf(p.getTrainCardsSelected().get(i)));
+    }
+
+    public void resetSelectedCounts() {
+        for (String i: temp) {
+            selectedCounts.get(i).setText("0");
         }
     }
 
@@ -163,9 +220,7 @@ public class HandPanel extends JPanel {
     public void setEnabled(boolean state) {
         okButton.setEnabled(state);
         cancelButton.setEnabled(state);
-        for (int i = 0; i < playerTrainButtons.length; i++) {
-            playerTrainButtons[i].setEnabled(state);
-        }
+        showButtons(state);
     }
     public JButton[] getPlayerTrainButtons() {
         return playerTrainButtons;
@@ -181,5 +236,10 @@ public class HandPanel extends JPanel {
         String color = drawnCard.getType();
         TreeMap<String, Integer> mp = p.getTrainCards();
         mp.put(color, mp.get(color) + 1);
+    }
+
+    public void showButtons(boolean state) {
+        okButton.setVisible(state);
+        cancelButton.setVisible(state);
     }
 }

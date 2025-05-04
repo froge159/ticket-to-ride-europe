@@ -37,7 +37,7 @@ public class GamePanel extends JPanel {
     private StartEngine se;
 
     public GamePanel() throws IOException, InterruptedException{
-        String[] temp = { "black", "blue", "brown", "green", "purple", "red", "white", "yellow", "wild" };
+        String[] temp = { "black", "blue", "orange", "green", "purple", "red", "white", "yellow", "wild" };
 
         trainCards = new ArrayList<>();
         discard = new ArrayList<>();
@@ -52,10 +52,10 @@ public class GamePanel extends JPanel {
         endGame = new JButton();
 
         players = new Player[4]; 
-        players[0] = new Player(0);
-        players[1] = new Player(1);
-        players[2] = new Player(2);
-        players[3] = new Player(3);
+        players[0] = new Player(0, "red");
+        players[1] = new Player(1, "yellow");
+        players[2] = new Player(2, "green");
+        players[3] = new Player(3, "blue");
 
 
         // load train cards
@@ -111,6 +111,7 @@ public class GamePanel extends JPanel {
         MapPanel mp = new MapPanel();
         SetupPanel sp = new SetupPanel(longCards, pathCards, players[0]);
         TicketPanel tp = new TicketPanel(pathCards);
+        TunnelPanel tup = new TunnelPanel();
 
         for(Player p : players){
             for(int i = 0; i < 4; i++){
@@ -124,8 +125,8 @@ public class GamePanel extends JPanel {
         handPanels[2] = new HandPanel(players[2]);
         handPanels[3] = new HandPanel(players[3]);
 
-        GameEngine ge = new GameEngine(bp, dp, handPanels, mp, pp, sp, this, tp);
-        GameController gc = new GameController(bp, dp, handPanels, mp, pp, sp, this, se, ge, tp);
+        GameEngine ge = new GameEngine(bp, dp, handPanels, mp, pp, sp, this, tp, tup);
+        GameController gc = new GameController(bp, dp, handPanels, mp, pp, sp, this, se, ge, tp, tup);
         ge.setGameController(gc);
 
         pp.setBounds(Rel.X(1730), Rel.Y(20), pp.getWidth(), pp.getHeight());
@@ -134,6 +135,7 @@ public class GamePanel extends JPanel {
         dp.setBounds(Rel.X(1380), Rel.Y(0), dp.getWidth(), dp.getHeight());
         sp.setBounds(Rel.X(1420), Rel.Y(0), sp.getWidth(), sp.getHeight());
         tp.setBounds(Rel.X(1420), Rel.Y(0), tp.getWidth(), tp.getHeight());
+        tup.setBounds(Rel.X(1420), Rel.Y(0), tup.getWidth(), tup.getHeight());
         for (int i = 0; i < 4; i++) {
             handPanels[i].setBounds(Rel.X(10), Rel.Y(10), handPanels[i].getWidth(), handPanels[i].getHeight());
         }
@@ -147,8 +149,10 @@ public class GamePanel extends JPanel {
             add(bp);
             add(dp);
             add(tp);
+            add(tup);
             dp.setVisible(false);
             tp.setVisible(false);
+            tup.setVisible(false);
             setComponentZOrder(handPanels[0], 1);
             revalidate();
             repaint();

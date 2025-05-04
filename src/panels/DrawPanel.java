@@ -56,23 +56,37 @@ public class DrawPanel extends JPanel {
         // TESTING
         refillFaceUpDeck();
         // TESITNG
+        int wildCount = 3;
 
-        int y = 133;
-        for (int i = 0; i < 5; i++) {
-            final int index = i; 
-            if (faceUpDeck[i] == null) {
+        while (wildCount >= 3) {
+            int y = 133;
+            wildCount = 0;
+            for (int i = 0; i < 5; i++) {
+                final int index = i; 
+                if (faceUpDeck[i] == null) {
+                    y += 130;
+                    continue;
+                }
+                JButton btn = new JButton();
+                btn.setBounds(Rel.X(80), Rel.Y(y), Rel.W(200), Rel.H(125));
+                btn.setIcon(faceUpDeck[index].getScaledFront(Rel.W(200), Rel.H(125)));
+                faceUpButtons[index] = btn;
                 y += 130;
-                continue;
+                SwingUtilities.invokeLater(() -> {
+                    add(faceUpButtons[index]);
+                });
+                if (faceUpDeck[index].getType().equals("wild")) {
+                    wildCount++;
+                }
             }
-            JButton btn = new JButton();
-            btn.setBounds(Rel.X(80), Rel.Y(y), Rel.W(200), Rel.H(125));
-            btn.setIcon(faceUpDeck[index].getScaledFront(Rel.W(200), Rel.H(125)));
-            faceUpButtons[index] = btn;
-            y += 130;
-            SwingUtilities.invokeLater(() -> {
-                add(faceUpButtons[index]);
-            });
+
+            if (wildCount >= 3) {
+                for (TrainCard card: faceUpDeck) {
+                    discard.add(card);
+                }
+            }
         }
+        
 
         ticketButton = new JButton();
         ImageIcon ticketPNG = PNGEnum.TICKETBACK.getImage();
@@ -111,18 +125,14 @@ public class DrawPanel extends JPanel {
             }
         }
     }
-    
-    public void setDeckDisabled(boolean disabled){
-        System.out.println("entered");
-        ImageIcon deckPNG = PNGEnum.TRAINBACK.getImage();
-        ImageIcon deckPNGBW = PNGEnum.TRAINBACKBW.getImage();
-        deckButton = new JButton();
-        deckButton.setIcon(disabled ? deckPNGBW : deckPNG);
-        if (disabled) {
-            System.out.println("disabled");
-            deckButton.setEnabled(false);
-        }
+
+    public void setAllEnabled(boolean enabled) {
+        setTicketButtonEnabled(enabled);
+        setDrawTrainCardsEnabled(enabled);
+        deckButton.setEnabled(enabled);
     }
+    
+    
 
 
     public void showDrawnCard(ImageIcon icon) {
@@ -166,6 +176,16 @@ public class DrawPanel extends JPanel {
 
     public void setTrainDeck(ArrayList<TrainCard> x) {
         this.trainDeck = x;
+    }
+
+    public void setDisabled(boolean disabled) {
+        deckButton.setEnabled(!disabled);
+        ticketButton.setEnabled(!disabled);
+        for (int i = 0; i < faceUpButtons.length; i++) {
+            if (faceUpButtons[i] != null) {
+                faceUpButtons[i].setEnabled(!disabled);
+            }
+        }
     }
 
 }

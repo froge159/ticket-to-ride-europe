@@ -5,9 +5,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import models.City;
 import models.PathBlock;
 import models.TTRMap;
 import utils.ImageEnum;
@@ -38,7 +40,7 @@ public class MapPanel extends JPanel{
                 block.draw(g2d);
             }
         });
-        map.getCities().forEach(city -> city.draw(g2d));
+        map.getCities().forEach(city -> city.draw(g));
     }
 
     public BufferedImage getMapBG(){

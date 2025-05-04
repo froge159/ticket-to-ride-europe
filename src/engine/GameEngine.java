@@ -8,7 +8,9 @@ import javax.swing.border.LineBorder;
 import controllers.GameController;
 import models.City;
 import models.Path;
+import models.PathBlock;
 import models.Player;
+import models.TTRMap;
 import models.TrainCard;
 
 import java.awt.Color;
@@ -20,6 +22,9 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 import panels.ButtonPanel;
 import panels.DrawPanel;
@@ -29,6 +34,8 @@ import panels.MapPanel;
 import panels.PlayerPanel;
 import panels.SetupPanel;
 import panels.TicketPanel;
+import panels.TunnelPanel;
+import utils.ColorEnum;
 import utils.Rel;
 import panels.AnimatedCard;
 
@@ -48,8 +55,9 @@ public class GameEngine {
     private TicketPanel ticketPanel;
     private int currentPlayer = 0;
     private GameController gc;
+    private TunnelPanel tunnelPanel;
 
-    public GameEngine(ButtonPanel b, DrawPanel d, HandPanel[] h, MapPanel m, PlayerPanel p, SetupPanel s, GamePanel gp, TicketPanel tp) {
+    public GameEngine(ButtonPanel b, DrawPanel d, HandPanel[] h, MapPanel m, PlayerPanel p, SetupPanel s, GamePanel gp, TicketPanel tp, TunnelPanel tup) {
         buttonPanel = b;
         drawPanel = d;
         handPanels = h;
@@ -58,6 +66,7 @@ public class GameEngine {
         gamePanel = gp;
         setupPanel  = s;
         ticketPanel = tp;
+        tunnelPanel = tup;
     }
 
     
@@ -197,9 +206,279 @@ public class GameEngine {
         ticketPanel.getTicketButtons()[ind].setBorder(clickedArray[ind] ? new LineBorder(Color.YELLOW, Rel.W(3), true) : null); // set border if necessary
     }
 
-    public void pathClick(Path path ) {
-        if (mapPanel.pathIsDisabled()) return; // if map is disabled, do nothing)
+    public void pathClick(Path path) {
+        if (mapPanel.pathIsDisabled()) return; // if map is disabled, do nothing
+        if (path.isBought()) { // if path is already bought, do nothing
+            handPanels[currentPlayer].setHandText("Path already bought.");
+            return;
+        }
+        TTRMap map = mapPanel.getMap(); 
+        Player p = handPanels[currentPlayer].getPlayer();
+        if (map.getParallelPath(path) != null && map.getParallelPath(path).getBuyer()!= null && map.getParallelPath(path).getBuyer().equals(p)) { // if path is parallel to another path that is already bought, do nothing
+            handPanels[currentPlayer].setHandText("Cannot buy both parallel paths.");
+            return;
+        }
+        if (p.getTrains() < path.getLength()) { // if player does not have enough trains, do nothing
+            handPanels[currentPlayer].setHandText("Not enough trains to claim path.");
+            return;
+        }
+
+        Map<String, Integer> trainCards = new HashMap<>(handPanels[currentPlayer].getPlayer().getTrainCards()); // check if player can claim path
+        PathBlock[] pathBlocks = path.getPath(); 
+        String maxKey = null;
+        if (pathBlocks[0].getColor().equals(Color.GRAY)) { // if path is gray, find the color with the most cards
+            int maxValue = 0;
+            for (Map.Entry<String, Integer> entry : trainCards.entrySet()) {
+                if (!entry.getKey().equals("wild") && entry.getValue() > maxValue) {
+                    maxKey = entry.getKey();
+                    maxValue = entry.getValue();
+                }
+            }
+        }
+        for (int i = 0; i < pathBlocks.length; i++) {
+            boolean claimed = false;
+            if (!pathBlocks[i].getType().equals("ferry")) {
+                for (String key: trainCards.keySet()) {
+                    if ((pathBlocks[i].getColor().equals(Color.GRAY) && key.equals(maxKey) || pathBlocks[i].getColor().equals(ColorEnum.getColor(key)))&& trainCards.get(key) > 0) { // if matches color and selected cards > 0
+                        trainCards.put(key, trainCards.get(key) - 1); // decrement selected cards
+                        claimed = true;
+                    }
+                }
+            }
+            if ((!claimed || pathBlocks[i].getType().equals("ferry")) && trainCards.get("wild") > 0) { // if wild cards available or ferry pathblock
+                trainCards.put("wild", trainCards.get("wild") - 1); // decrement selected cards
+                claimed = true;
+            }
+            if (!claimed) { // if no cards claimed, break
+                handPanels[currentPlayer].setHandText("Not enough cards to claim path.");
+                return;
+            }
+        }
+    
+
+        setUseCardState(true); // if all conditions met, set use card state to true
+        p.setSelectedPath(path); // set selected path for player
+        if (p.getSelectedPath().getType().equals("default") || p.getSelectedPath().getType().equals("ferry")) { //
+            handPanels[currentPlayer].setHandText("Click on the train cards you want to use");
+        }
+        else handPanels[currentPlayer].setHandText("Click on the train cards you want to use before possible extra cards"); // if path is a tunnel or ferry, ask for wild cards
     }
+
+    public void trainCardClick(String color){
+        if (!mapPanel.pathIsDisabled() || handPanels[currentPlayer].getJudgementState()) return; // if not in use card state, do nothing
+        Player p = handPanels[currentPlayer].getPlayer();
+        TreeMap<String, Integer> mp = p.getTrainCardsSelected();
+        if (mp.get(color) >= p.getTrainCards().get(color) || p.getSelected() == p.getSelectedPath().getLength()) return; // if count exceeds available cards or click too much, do nothing
+        mp.put(color, mp.get(color) + 1); // increment selected card count
+        handPanels[currentPlayer].updateSelectedCounts(color); // update jlabel
+        p.setSelected(p.getSelected() + 1); // increment selected count
+    }
+
+    public void cancelClick() {
+        Player p = handPanels[currentPlayer].getPlayer();
+        for (String key : p.getTrainCardsSelected().keySet()) {
+            p.getTrainCardsSelected().put(key, 0); // reset the count for each selected card
+            handPanels[currentPlayer].updateSelectedCounts(key); // update the UI to reflect the reset
+        }
+        p.setSelected(0); // reset selected count
+        handPanels[currentPlayer].setHandText("Selection canceled.");
+    }
+
+    public void okClick() {
+        Player p = handPanels[currentPlayer].getPlayer();
+        TreeMap<String, Integer> selectedMap = p.getTrainCardsSelected();
+        if (selectedMap.entrySet().stream().filter(entry -> !entry.getKey().equals("wild") && entry.getValue() > 0).count() > 1 &&  // disallow multiple card counts for gray routes
+            p.getSelectedPath().getPath()[0].getColor().equals(Color.GRAY)) {
+            handPanels[currentPlayer].setHandText("You cannot select more than one card of the same color.");
+            return;
+        }
+
+        TreeMap<String, Integer> trainCards = p.getTrainCards();
+        PathBlock[] pathBlocks = p.getSelectedPath().getPath();
+        String maxKey = null;
+        if (pathBlocks[0].getColor().equals(Color.GRAY)) { // if path is gray, find the color with the most cards
+            int maxValue = 0;
+            for (Map.Entry<String, Integer> entry : trainCards.entrySet()) {
+                if (!entry.getKey().equals("wild") && entry.getValue() > maxValue) {
+                    maxKey = entry.getKey();
+                    maxValue = entry.getValue();
+                }
+            }
+        }
+        for (int i = 0; i < pathBlocks.length; i++) {
+            boolean claimed = false;
+            if (!pathBlocks[i].getType().equals("ferry")) {
+                for (String key: trainCards.keySet()) {
+                    if ((pathBlocks[i].getColor().equals(Color.GRAY) && key.equals(maxKey) || pathBlocks[i].getColor().equals(ColorEnum.getColor(key))) && trainCards.get(key) > 0) { // if matches color and selected cards > 0
+                        if (!pathBlocks[0].getType().equals("mountain")) trainCards.put(key, trainCards.get(key) - 1); 
+                        claimed = true;
+                    }
+                }
+            }
+            if ((!claimed || pathBlocks[i].getType().equals("ferry")) && trainCards.get("wild") > 0) { // if wild cards available or ferry pathblock
+                if (!pathBlocks[0].getType().equals("mountain")) trainCards.put("wild", trainCards.get("wild") - 1); 
+                claimed = true;
+            }
+        }
+
+        if (!pathBlocks[0].getType().equals("mountain")) {
+            p.claimRoute(p.getSelectedPath()); // claim route
+            p.getSelectedPath().buy(p);
+            p.setSelectedPath(null); // reset selected path
+            p.setSelected(0);
+            playerPanel.updatePlayer(currentPlayer); // update player panel
+            handPanels[currentPlayer].updateTrainCardCounts();
+            handPanels[currentPlayer].setHandText("Path claimed!"); 
+            Timer timer = new Timer (1000, e -> {
+                setUseCardState(false); // disable use card state
+                nextPlayer(); //
+            });
+            timer.setRepeats(false);
+            timer.start(); 
+            mapPanel.repaint();
+        }
+
+        else if (handPanels[currentPlayer].isPostJudgement()) {
+            int needed = p.getExtraCardsNeeded(); 
+            ArrayList<TrainCard> lastThreeCards = p.getLastThreeCards(); // get last three cards drawn
+            for (int i = 0; i < lastThreeCards.size(); i++) {
+                for (String key: selectedMap.keySet()) {
+                    if ((lastThreeCards.get(i).getType().equals(key) || key.equals("wild")) && selectedMap.get(key) > 0) { // if color matches or wild card drawn, decrement needed
+                        needed--;
+                        break;
+                    }
+                }
+            }
+            if (needed > 0) {
+                handPanels[currentPlayer].setHandText("You did not select enough cards to claim the path.");
+            }
+            else {
+                p.claimRoute(p.getSelectedPath()); // claim route
+                p.getSelectedPath().buy(p);
+                p.setSelectedPath(null); // reset selected path
+                p.setSelected(0);
+                p.setExtraCardsNeeded(0);
+                p.setLastThreeCards(null);
+                playerPanel.updatePlayer(currentPlayer); // update player panel
+                handPanels[currentPlayer].updateTrainCardCounts();
+                handPanels[currentPlayer].setHandText("Path claimed!"); 
+                Timer timer = new Timer (1000, e -> {
+                    setUseCardState(false); // disable use card state
+                    nextPlayer(); //
+                });
+                timer.setRepeats(false);
+                timer.start(); 
+                mapPanel.repaint();
+            }
+            
+        }
+
+        else {
+            ArrayList<TrainCard> deck = drawPanel.getTrainDeck();
+            if (deck.size() < 3) {
+                refillDrawDeck(deck, handPanels[currentPlayer]);
+            }
+            if (deck.size() == 0) { // if deck is empty, do nothing
+                p.claimRoute(p.getSelectedPath()); // claim route
+                p.getSelectedPath().buy(p);
+                p.setSelectedPath(null); // reset selected path
+                p.setSelected(0);
+                p.resetTrainCardsSelected();
+                playerPanel.updatePlayer(currentPlayer); // update player panel
+                handPanels[currentPlayer].updateTrainCardCounts();
+                handPanels[currentPlayer].resetSelectedCounts();
+                handPanels[currentPlayer].setHandText("Path claimed. Draw deck was empty"); 
+                Timer timer = new Timer (1000, e -> {
+                    setUseCardState(false); // disable use card state
+                    nextPlayer(); //
+                });
+                timer.setRepeats(false);
+                timer.start(); 
+                mapPanel.repaint();
+            }
+            else {
+                String color = ""; int needed = 0;
+                int maxValue = 0;
+                for (Map.Entry<String, Integer> entry : selectedMap.entrySet()) { // calculate color
+                    if (entry.getValue() > maxValue) {
+                        color = entry.getKey();
+                        maxValue = entry.getValue();
+                    }
+                }
+                ArrayList<TrainCard> lastThreeCards = new ArrayList<>(); // calculate needed cards
+                int cardsToTake = Math.min(3, deck.size());
+                for (int i = 0; i < cardsToTake; i++) {
+                    lastThreeCards.add(deck.remove(deck.size() - 1));
+                }
+                for (int i = 0; i < lastThreeCards.size(); i++) {
+                    if (color.equals("wild") && lastThreeCards.get(i).getType().equals("wild")) { // if wild card drawn, do nothing
+                        needed++;
+                    }
+                    else if (!color.equals("wild") && (lastThreeCards.get(i).getType().equals(color) || lastThreeCards.get(i).getType().equals("wild"))) { // if color matches or wild card drawn, do nothing
+                        needed++;
+                    }
+                }
+                TreeMap<String, Integer> differenceMap = new TreeMap<>();
+                for (Map.Entry<String, Integer> entry : selectedMap.entrySet()) {
+                    String key = entry.getKey();
+                    int selectedValue = entry.getValue();
+                    int trainCardValue = trainCards.get(key);
+                    differenceMap.put(key, trainCardValue - selectedValue);
+                }
+
+                
+
+                int neededCopy = needed;
+                // if equals color or wild, needed--
+                for (int i = 0; i < lastThreeCards.size(); i++) {
+                    for (String key: differenceMap.keySet()) {
+                        if ((lastThreeCards.get(i).getType().equals(key) || key.equals("wild")) && differenceMap.get(key) > 0) { // if color matches or wild card drawn, decrement needed
+                            neededCopy--;
+                            break;
+                        }
+                    }
+                } 
+                if (neededCopy > 0) {
+                    setTunnelState(true);
+                    tunnelPanel.setText("You do not have enough cards to claim the path.");
+                }
+                else {
+                    setTunnelState(true);
+                    tunnelPanel.setText("You need to pay " + Math.max(needed, 0) + " more " + color + " cards to claim the path.");
+                    for (String key: selectedMap.keySet()) {
+                        trainCards.put(key, trainCards.get(key) - selectedMap.get(key)); // decrement selected cards
+                    }
+                    handPanels[currentPlayer].updateTrainCardCounts(); // update jlabel
+                    p.setExtraCardsNeeded(needed);
+                    p.setLastThreeCards(lastThreeCards);
+                }
+                tunnelPanel.updatePanel(lastThreeCards);
+                for (int i = 0; i < lastThreeCards.size(); i++) {
+                    drawPanel.getDiscard().add(lastThreeCards.get(i)); // add drawn cards to discard pile
+                }
+
+                p.resetTrainCardsSelected();
+                handPanels[currentPlayer].resetSelectedCounts();
+                p.setSelected(0); 
+            }
+        }
+    }
+
+    public void tunnelReturnClick() {
+        Player p = handPanels[currentPlayer].getPlayer();
+        if (!tunnelPanel.isAbleToPay()) {
+            setTunnelState(false);
+            setUseCardState(false);
+            p.setSelectedPath(null);
+            nextPlayer();
+        }
+        else {
+            setTunnelState(false);
+            handPanels[currentPlayer].setPostJudgement(true); 
+            handPanels[currentPlayer].setHandText(tunnelPanel.getText());
+        }
+    }
+
 
     public void stationClick(){
         setStationState(true);
@@ -208,9 +487,17 @@ public class GameEngine {
 
     public void cityClick(City city) {
         if (mapPanel.cityIsDisabled()) return;
+        if (city.hasStation()) { // if city already has a station, do nothing
+            handPanels[currentPlayer].setHandText("City already has a station.");
+            setStationState(false);
+            return;
+        }
         if (handPanels[currentPlayer].getPlayer().getStations() > 0) { // if player has stations left
             //handPanels[currentPlayer].getPlayer().setStationCity(city); // set city for station placement
             handPanels[currentPlayer].setHandText("Built station on " + city.getName() + "!");
+            city.buildStation(handPanels[currentPlayer].getPlayer());
+            playerPanel.updatePlayer(currentPlayer); // update player panel
+            mapPanel.repaint();
             Timer timer = new Timer(1000, e -> {
                 nextPlayer();
                 setStationState(false); // disable map after placing station
@@ -283,9 +570,27 @@ public class GameEngine {
         timer.start();
     }
 
+    public void setUseCardState(boolean state) {
+        mapPanel.setPathDisabled(state);
+        mapPanel.setCityDisabled(state);
+        buttonPanel.setEnabled(!state);
+        handPanels[currentPlayer].setEnabled(state);
+        handPanels[currentPlayer].showSelectedCounts(state);
+        drawPanel.setAllEnabled(!state);
+    }
+
+    public void setTunnelState(boolean state) {
+        tunnelPanel.setVisible(state);
+        playerPanel.setVisible(!state);
+        buttonPanel.setVisible(!state);
+        drawPanel.setVisible(!state);
+        handPanels[currentPlayer].setJudgementState(state);
+        handPanels[currentPlayer].showButtons(!state);
+    }
+
     public void setTicketState(boolean state) {
-        //mapPanel.setPathDisabled(state);
-        //mapPanel.setCityDisabled(state);
+        mapPanel.setPathDisabled(state);
+        mapPanel.setCityDisabled(state);
         playerPanel.setVisible(!state);
         buttonPanel.setVisible(!state);
         drawPanel.setVisible(!state);
@@ -294,8 +599,8 @@ public class GameEngine {
     }
 
     public void setDrawCardState(boolean state) {
+        drawPanel.setTicketButtonEnabled(!state);
         buttonPanel.setEnabled(!state);
-        handPanels[currentPlayer].setEnabled(!state);
         mapPanel.setPathDisabled(state);
         mapPanel.setCityDisabled(state);
     }
@@ -318,10 +623,10 @@ public class GameEngine {
     }
 
     public void setStationState(boolean state) {
-        handPanels[currentPlayer].setEnabled(!state);
         buttonPanel.setEnabled(!state);
         mapPanel.setPathDisabled(!state);
         mapPanel.setCityDisabled(!state);
+        drawPanel.setDisabled(state);
     }
 
     public void ticketClick() { // ticket button clicked

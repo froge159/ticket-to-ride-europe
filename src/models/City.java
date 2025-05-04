@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.*;
 
+import utils.PNGEnum;
 import utils.Rel;
 
 public class City {
@@ -24,6 +25,7 @@ public class City {
     public void buildStation(Player player){
         hasStation = true;
         stationOwner = player;
+        player.setStationCount(player.getStations() - 1);
     }
 
     public String getName(){return name;}
@@ -36,8 +38,11 @@ public class City {
     public ArrayList<City> getNeighbors(){return neighbors;}
 
     public void draw(Graphics g) {
-        g.setColor(Color.RED);
-        g.fillOval(Rel.X(x - 10), Rel.Y(y - 10), Rel.W(20), Rel.H(20));
+        //g.setColor(Color.RED);
+        //g.fillOval(Rel.X(x - 10), Rel.Y(y - 10), Rel.W(20), Rel.H(20));
+        if (hasStation && stationOwner != null && stationOwner.getColor() != null) {
+            g.drawImage(PNGEnum.getColoredStationImage(stationOwner.getColor()), Rel.X(x - 15), Rel.Y(y -20), Rel.W(30), Rel.H(30), null);
+        }
     }
 
     public boolean contains(Point p) {
@@ -45,5 +50,13 @@ public class City {
             return true;
         }
         return false;
+    }
+
+    public boolean hasStation(){
+        return hasStation;
+    }
+
+    public String toString(){
+        return name + " " + x + " " + y;
     }
 }

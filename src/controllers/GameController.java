@@ -20,6 +20,7 @@ import panels.MapPanel;
 import panels.PlayerPanel;
 import panels.SetupPanel;
 import panels.TicketPanel;
+import panels.TunnelPanel;
 
 public class GameController {
     private ButtonPanel buttonPanel;
@@ -32,8 +33,9 @@ public class GameController {
     private GameEngine ge;
     private SetupPanel setupPanel;
     private TicketPanel ticketPanel;
+    private TunnelPanel tunnelPanel;
 
-    public GameController(ButtonPanel b, DrawPanel d, HandPanel[] h, MapPanel m, PlayerPanel p, SetupPanel s, GamePanel gp, StartEngine se, GameEngine ge, TicketPanel tp) {
+    public GameController(ButtonPanel b, DrawPanel d, HandPanel[] h, MapPanel m, PlayerPanel p, SetupPanel s, GamePanel gp, StartEngine se, GameEngine ge, TicketPanel tp, TunnelPanel tup) {
         buttonPanel = b;
         drawPanel = d;
         handPanels = h;
@@ -44,6 +46,7 @@ public class GameController {
         setupPanel = s;
         ticketPanel = tp;
         this.ge = ge;
+        tunnelPanel = tup;
         initListeners();
     }
 
@@ -64,7 +67,7 @@ public class GameController {
                     Path path = x.get(i);
                     for (int j = 0; j < path.getPath().length; j++) {
                         if (path.getPath()[j].contains(e.getPoint())) {
-                            System.out.println("clicked a path block");
+                            System.out.println(path);
                             ge.pathClick(path);
                         }
                     }
@@ -76,8 +79,35 @@ public class GameController {
                         ge.cityClick(cities.get(i));
                     }
                 }
+                System.out.println(e.getPoint().getX() + " " + e.getPoint().getY());
             }
         });
+
+        for(int i = 0; i < handPanels.length; i++) {
+            final int ind1 = i;
+            for (int j = 0; j < handPanels[ind1].getPlayerTrainButtons().length; j++) { // train card clicked
+                final int ind2 = j;
+                handPanels[i].getPlayerTrainButtons()[ind2].addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        ge.trainCardClick(handPanels[ind1].getColor(ind2));
+                    }
+                });
+            }
+            handPanels[i].getCancelButton().addActionListener(new ActionListener() { // cancel button clicked
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    ge.cancelClick();
+                }
+            });
+            handPanels[i].getOkButton().addActionListener(new ActionListener () {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    ge.okClick();
+                }
+            });
+        }
+
 
 
         drawPanel.getDeckButton().addActionListener(new ActionListener() {  // deck button clicked
@@ -150,6 +180,13 @@ public class GameController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ge.stationClick();
+            }
+        });
+
+        tunnelPanel.getReturnButton().addActionListener(new ActionListener() { // tunnel return button clicked
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ge.tunnelReturnClick();
             }
         });
     }

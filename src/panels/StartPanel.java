@@ -6,12 +6,10 @@ import java.awt.image.BufferedImage;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 import utils.Rel;
 import utils.ImageEnum;
 import utils.PNGEnum;
-import utils.DimensionEnum;
 
 public class StartPanel extends JPanel {
 
@@ -47,7 +45,7 @@ public class StartPanel extends JPanel {
 
     public void initComponents() {
         startButton = new JButton("Start Game"); 
-        startButton.setBounds(Rel.X(840), Rel.Y(860), DimensionEnum.STARTBUTTON.getWidth(), DimensionEnum.STARTBUTTON.getHeight());
+        startButton.setBounds(Rel.X(840), Rel.Y(860), Rel.W(200), Rel.H(40));
         
         startBG = ImageEnum.TITLEBG.getImage();
 
@@ -56,7 +54,7 @@ public class StartPanel extends JPanel {
         
         infoButton = new JButton();
         infoButton.setIcon(PNGEnum.INFOICON.getImage());
-        infoButton.setBounds(Rel.X(1750), Rel.Y(900), PNGEnum.INFOICON.getWidth(), PNGEnum.INFOICON.getHeight());
+        infoButton.setBounds(Rel.X(1750), Rel.Y(900), Rel.W(50), Rel.H(50));
         infoButton.setOpaque(false);
         infoButton.setContentAreaFilled(false);
         infoButton.setBorderPainted(false);

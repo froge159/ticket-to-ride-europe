@@ -15,6 +15,7 @@ import utils.Rel;
 public class PlayerPanel extends JPanel  {
 
 	private Player[] playerArray;
+	private JLabel[][] playerLabels;
 	private JLabel bgImage;
 	private int rectangleY;
 
@@ -30,6 +31,7 @@ public class PlayerPanel extends JPanel  {
 						PNGEnum.PLAYERPANELIMG.getWidth(),
 						PNGEnum.PLAYERPANELIMG.getHeight()));
 		
+		playerLabels = new JLabel[playerArray.length][3];
 		setOpaque(false);
 		setLayout(null);
 		updatePanel();
@@ -62,6 +64,10 @@ public class PlayerPanel extends JPanel  {
 			pointsLabel.setBounds(Rel.X(15), Rel.Y(index * 97 + 73), Rel.W(100), Rel.H(20));
 			pointsLabel.setFont(font);
 
+			playerLabels[index][0] = trainLabel;
+			playerLabels[index][1] = stationsLabel;	
+			playerLabels[index][2] = pointsLabel;
+
 			SwingUtilities.invokeLater(() -> {
 				add(trainLabel);
 				add(stationsLabel);
@@ -75,6 +81,18 @@ public class PlayerPanel extends JPanel  {
 			setComponentZOrder(bgImage, 12);
 			revalidate();
 			repaint();
+		});
+	}
+
+	public void updatePlayer(int index) {
+		SwingUtilities.invokeLater(() -> {
+			JLabel trainLabel = playerLabels[index][0];
+			JLabel stationsLabel = playerLabels[index][1];
+			JLabel pointsLabel = playerLabels[index][2];
+
+			trainLabel.setText(String.valueOf(playerArray[index].getTrains()));
+			stationsLabel.setText(String.valueOf(playerArray[index].getStations()));
+			pointsLabel.setText(String.valueOf(playerArray[index].getPoints()));
 		});
 	}
 
