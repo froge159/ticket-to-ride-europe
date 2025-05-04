@@ -34,7 +34,6 @@ public class TicketPanel extends JPanel {
         setLayout(null);
         setSize(Rel.W(500), Rel.H(1080));
         //setBorder(new javax.swing.border.LineBorder(Color.YELLOW, Rel.W(3), true));
-        setBackground(Color.YELLOW);
         setOpaque(true);
         setupPanel();
     }

@@ -194,23 +194,28 @@ public class GameController {
     public void initPathCardListeners() {
         for (int i = 0; i < handPanels.length; i++) {
             final int index = i;
-            if (handPanels[index].getPlayer().getPathCards().size() > 0) {
+            if (handPanels[index].getPlayer().getPathCards().size() > 0 ) {
+                if (handPanels[index].getAnimatedPathCards().get(0).getMouseListeners().length > 0) {
+                    handPanels[index].getAnimatedPathCards().get(0).removeMouseListener(handPanels[index].getAnimatedPathCards().get(0).getMouseListeners()[0]); // Ensure no existing listeners
+                }
                 handPanels[index].getAnimatedPathCards().get(0).addMouseListener(new MouseAdapter() { // hover event for animated path cards
                     @Override
                     public void mouseEntered(MouseEvent e) {
                         ge.animatePathCardsEnter(handPanels[index]);
-                        System.out.println("mouse entered");
+                        //System.out.println("mouse entered");
                     }
                     @Override
                     public void mouseExited(MouseEvent e) {
                         ge.animatePathCardsLeave(handPanels[index]);
-                        System.out.println("mouse exited");
+                        //System.out.println("mouse exited");
                     }
                 });
             }
             
         }
     }
+
+    
 
     
 

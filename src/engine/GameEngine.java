@@ -98,6 +98,7 @@ public class GameEngine {
                 });
             }
         }
+        System.out.println("mouse entered");
     }
 
     public void animatePathCardsLeave(HandPanel hp) {
@@ -118,6 +119,7 @@ public class GameEngine {
             animatedPathCards.get(1).repaint();
             hp.repaint(); hp.revalidate();
         });
+        System.out.println("mouse left");
     }
 
     public void deckClick()  { // deck button clicked
@@ -359,6 +361,7 @@ public class GameEngine {
                 p.setSelected(0);
                 p.setExtraCardsNeeded(0);
                 p.setLastThreeCards(null);
+                handPanels[currentPlayer].setPostJudgement(false);
                 playerPanel.updatePlayer(currentPlayer); // update player panel
                 handPanels[currentPlayer].updateTrainCardCounts();
                 handPanels[currentPlayer].setHandText("Path claimed!"); 
@@ -526,7 +529,7 @@ public class GameEngine {
                     else setupPanel.getPlayer().setLongPathCard(setupPanel.getLongTicket()); 
                 }
             }
-            handPanels[setupPanel.getPlayer().getNumber()].updatePathCards(); // update path cards in hand panel and add listeners
+            handPanels[setupPanel.getPlayer().getNumber()].updatePathCards(gamePanel); // update path cards in hand panel and add listeners
         }
         else return;
 
@@ -641,7 +644,7 @@ public class GameEngine {
                     ticketPanel.getPlayer().addPathCard(ticketPanel.getTicketArray()[i]);
                 }
             }
-            handPanels[ticketPanel.getPlayer().getNumber()].updatePathCards(); // update path cards in hand panel and add listeners
+            handPanels[ticketPanel.getPlayer().getNumber()].updatePathCards(gamePanel); // update path cards in hand panel and add listeners
         }
         else return;
 
@@ -654,8 +657,8 @@ public class GameEngine {
             gamePanel.revalidate();
             gamePanel.repaint();
         });
-        gc.initPathCardListeners();
         nextPlayer();
+        gc.initPathCardListeners();
     }
 
     public void nextPlayer() {

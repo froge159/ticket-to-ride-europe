@@ -119,7 +119,15 @@ public class HandPanel extends JPanel {
         showSelectedCounts(false);
     }
 
-    public void updatePathCards() {
+    public void updatePathCards(GamePanel gp) {
+        for (AnimatedCard animatedCard : animatedPathCards) {
+            SwingUtilities.invokeLater(() -> {
+                gp.remove(animatedCard);
+                gp.revalidate();
+                gp.repaint();
+            });
+        }
+        animatedPathCards.clear();
         Stack<PathCard> pc = p.getPathCards();
         final int[] y = { 925 };
         int x = 0;
