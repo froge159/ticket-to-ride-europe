@@ -112,7 +112,7 @@ public class DrawPanel extends JPanel {
             faceUpButtons[index].setVisible(false);
         }
         else {
-            faceUpButtons[index].setIcon(faceUpDeck[index].getScaledFront(200, 125));
+            faceUpButtons[index].setIcon(faceUpDeck[index].getScaledFront(Rel.W(200), Rel.H(125)));
             faceUpButtons[index].setVisible(true);
         }
     }
