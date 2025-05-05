@@ -127,6 +127,10 @@ public class GamePanel extends JPanel {
             for(int i = 0; i < 4; i++){
                 p.addTrainCard(trainCards.remove(trainCards.size() - 1));
             }
+            //p.addTrainCard(new TrainCard("white", false, CardImages.addImage("white" + "-train",
+             //           ImageIO.read(new File("assets/traincards/" + "white" + "card.png")), 125, 200)));
+            //p.addTrainCard(new TrainCard("wild", false,
+            //CardImages.addImage("wild-train", ImageIO.read(new File("assets/traincards/wildcard.png")), 125, 200)));
         }
         
         handPanels = new HandPanel[4];

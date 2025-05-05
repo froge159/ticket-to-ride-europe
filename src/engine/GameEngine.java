@@ -393,6 +393,7 @@ public class GameEngine {
         else if (handPanels[currentPlayer].isPostJudgement()) {
             int needed = p.getExtraCardsNeeded(); 
             ArrayList<TrainCard> lastThreeCards = p.getLastThreeCards(); // get last three cards drawn
+            System.out.println("Needed: " + needed + " Needed cards " + lastThreeCards);
             for (int i = 0; i < lastThreeCards.size(); i++) {
                 for (String key: selectedMap.keySet()) {
                     if ((lastThreeCards.get(i).getType().equals(key) || key.equals("wild")) && selectedMap.get(key) > 0) { // if color matches or wild card drawn, decrement needed
@@ -453,11 +454,18 @@ public class GameEngine {
                 String color = ""; int needed = 0;
                 int maxValue = 0;
                 for (Map.Entry<String, Integer> entry : selectedMap.entrySet()) { // calculate color
+                    if (entry.getKey().equals("wild")) continue;
                     if (entry.getValue() > maxValue) {
                         color = entry.getKey();
                         maxValue = entry.getValue();
                     }
                 }
+
+                if (!color.equals("wild") && selectedMap.get("wild") > selectedMap.get(color)) {
+                    color = "wild";
+                    maxValue = selectedMap.get("wild");
+                }
+                
                 ArrayList<TrainCard> lastThreeCards = new ArrayList<>(); // calculate needed cards
                 ArrayList<TrainCard> neededCards = new ArrayList<>();
                 int cardsToTake = Math.min(3, deck.size());
@@ -483,17 +491,19 @@ public class GameEngine {
                 }
 
                 
-
+                System.out.println(differenceMap);
                 int neededCopy = needed;
                 // if equals color or wild, needed--
                 for (int i = 0; i < neededCards.size(); i++) {
                     for (String key: differenceMap.keySet()) {
-                        if ((neededCards.get(i).getType().equals(key) || key.equals("wild")) && differenceMap.get(key) > 0) { // if color matches or wild card drawn, decrement needed
+                        if ((neededCards.get(i).getType().equals("wild") || neededCards.get(i).getType().equals(color)) && (neededCards.get(i).getType().equals(key) || key.equals("wild")) && differenceMap.get(key) > 0) { // if color matches or wild card drawn, decrement needed
                             neededCopy--;
+                            differenceMap.put(key, differenceMap.get(key) - 1);
                             break;
                         }
                     }
                 } 
+                System.out.println(differenceMap);
                 if (neededCopy > 0) {
                     setTunnelState(true);
                     tunnelPanel.setText("You do not have enough cards to claim the path.");
@@ -507,7 +517,7 @@ public class GameEngine {
                     }
                     handPanels[currentPlayer].updateTrainCardCounts(); // update jlabel
                     p.setExtraCardsNeeded(needed);
-                    p.setLastThreeCards(lastThreeCards);
+                    p.setLastThreeCards(neededCards);
                 }
                 tunnelPanel.updatePanel(lastThreeCards);
                 for (int i = 0; i < lastThreeCards.size(); i++) {
@@ -836,7 +846,7 @@ public class GameEngine {
             mapPanel.setCityDisabled(true);
             drawPanel.setDisabled(true);
             buttonPanel.setEnabled(false);
-            
+
 
             setGamePanelVisible(false);
         }
