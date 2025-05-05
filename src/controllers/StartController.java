@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.SwingUtilities;
 
-import engine.StartEngine;
+import controllers.engine.StartEngine;
 import panels.EndPanel;
 import panels.GamePanel;
 import panels.RulesPanel;

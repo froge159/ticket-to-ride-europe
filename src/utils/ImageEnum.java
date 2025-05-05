@@ -27,7 +27,7 @@ public enum ImageEnum {
         this.h = Rel.H(h);
         
         try {
-            temp = ImageIO.read(new File(path));
+            temp = ImageIO.read(getClass().getResourceAsStream(path));
             temp = scale(temp, Rel.W(w), Rel.H(h));
         }
         catch(Exception e) {

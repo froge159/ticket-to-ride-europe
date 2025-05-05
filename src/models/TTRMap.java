@@ -3,6 +3,8 @@ import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import utils.ColorEnum;
@@ -19,7 +21,7 @@ public class TTRMap {
         paths = new LinkedList<>();
         cities = new ArrayList<>();
 
-        BufferedReader br = new BufferedReader(new FileReader("assets/data/cities.txt"));
+        BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("assets/data/cities.txt"), StandardCharsets.UTF_8));
         String line;
         while ((line = br.readLine()) != null) {
             StringTokenizer st = new StringTokenizer(line);
@@ -32,7 +34,7 @@ public class TTRMap {
         }
 
 
-        br = new BufferedReader(new FileReader("assets/data/pathBlocks.txt"));
+        br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("assets/data/pathBlocks.txt"), StandardCharsets.UTF_8));
         while ((line = br.readLine()) != null) {
             StringTokenizer st = new StringTokenizer(line);
             String city1 = st.nextToken();

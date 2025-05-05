@@ -10,8 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import controllers.GameController;
-import engine.GameEngine;
-import engine.StartEngine;
+import controllers.engine.GameEngine;
+import controllers.engine.StartEngine;
 import models.City;
 import models.LongPathCard;
 import models.NormalPathCard;
@@ -44,9 +44,9 @@ public class GamePanel extends JPanel {
     private JButton endPanelButton;
     private JButton nextEndPlayer;
 
-    public GamePanel() throws IOException, InterruptedException{
+    public GamePanel() throws IOException, InterruptedException {
         String[] temp = { "black", "blue", "orange", "green", "purple", "red", "white", "yellow", "wild" };
-
+    
         trainCards = new ArrayList<>();
         discard = new ArrayList<>();
         pathCards = new ArrayList<>();
@@ -58,50 +58,54 @@ public class GamePanel extends JPanel {
         cancel = new JButton();
         station = new JButton();
         endGame = new JButton();
-
-        players = new Player[4]; 
+    
+        players = new Player[4];
         players[0] = new Player(0, "red");
         players[1] = new Player(1, "yellow");
         players[2] = new Player(2, "green");
         players[3] = new Player(3, "blue");
-
+    
         finalTurnCount = 0;
-        // load train cards
+    
+        // Load train cards
         for (String i : temp) {
-            for (int j = 0; j < 12; j++)
+            for (int j = 0; j < 12; j++) {
                 trainCards.add(new TrainCard(i, false, CardImages.addImage(i + "-train",
-                        ImageIO.read(new File("assets/traincards/" + i + "card.png")), 125, 200)));
+                        ImageIO.read(getClass().getResourceAsStream("/assets/traincards/" + i + "card.png")), 125, 200)));
+            }
         }
         trainCards.add(new TrainCard("wild", false,
-                CardImages.addImage("wild-train", ImageIO.read(new File("assets/traincards/wildcard.png")), 125, 200)));
+                CardImages.addImage("wild-train", ImageIO.read(getClass().getResourceAsStream("/assets/traincards/wildcard.png")), 125, 200)));
         trainCards.add(new TrainCard("wild", false,
-                CardImages.addImage("wild-train", ImageIO.read(new File("assets/traincards/wildcard.png")), 125, 200)));
-
-        BufferedReader br = new BufferedReader(new FileReader("assets/data/routeCards.txt"));
-
-        // load long paths
-        String line;
-        while (!(line = br.readLine()).equals("")) {
-            StringTokenizer st2 = new StringTokenizer(line);
-            String city1 = st2.nextToken().toLowerCase();
-            String city2 = st2.nextToken().toLowerCase();
-            int points = Integer.parseInt(st2.nextToken());
-            longCards.add(new LongPathCard(city1, city2, points, CardImages.addImage(city1 + "-" + city2 + "-long-path",
-                    ImageIO.read(new File("assets/longroutes/" + city1 + "-" + city2 + ".png")), 200, 125)));
-        }
-
-        br.readLine(); // Skip the first line   
-
-        // load normal paths
-        while ((line = br.readLine()) != null) {
-            StringTokenizer st2 = new StringTokenizer(line);
-            String city1 = st2.nextToken().toLowerCase();
-            String city2 = st2.nextToken().toLowerCase();
-            int points = Integer.parseInt(st2.nextToken());
+                CardImages.addImage("wild-train", ImageIO.read(getClass().getResourceAsStream("/assets/traincards/wildcard.png")), 125, 200)));
+    
+        // Load long paths
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/assets/data/routeCards.txt")))) {
+            String line;
+    
+            // Load long paths
+            while (!(line = br.readLine()).equals("")) {
+                StringTokenizer st2 = new StringTokenizer(line);
+                String city1 = st2.nextToken().toLowerCase();
+                String city2 = st2.nextToken().toLowerCase();
+                int points = Integer.parseInt(st2.nextToken());
+                longCards.add(new LongPathCard(city1, city2, points, CardImages.addImage(city1 + "-" + city2 + "-long-path",
+                        ImageIO.read(getClass().getResourceAsStream("/assets/longroutes/" + city1 + "-" + city2 + ".png")), 200, 125)));
+            }
+    
+            br.readLine(); // Skip the first line
+    
+            // Load normal paths
+            while ((line = br.readLine()) != null) {
+                StringTokenizer st2 = new StringTokenizer(line);
+                String city1 = st2.nextToken().toLowerCase();
+                String city2 = st2.nextToken().toLowerCase();
+                int points = Integer.parseInt(st2.nextToken());
                 pathCards.add(new NormalPathCard(city1, city2, points, CardImages.addImage(city1 + "-" + city2 + "-path",
-                        ImageIO.read(new File("assets/routes/" + city1 + "-" + city2 + ".png")), 200, 125)));            
+                        ImageIO.read(getClass().getResourceAsStream("/assets/routes/" + city1 + "-" + city2 + ".png")), 200, 125)));
+            }
         }
-
+    
         Collections.shuffle(trainCards);
         Collections.shuffle(pathCards);
         Collections.shuffle(longCards);
@@ -127,10 +131,7 @@ public class GamePanel extends JPanel {
             for(int i = 0; i < 4; i++){
                 p.addTrainCard(trainCards.remove(trainCards.size() - 1));
             }
-            //p.addTrainCard(new TrainCard("white", false, CardImages.addImage("white" + "-train",
-             //           ImageIO.read(new File("assets/traincards/" + "white" + "card.png")), 125, 200)));
-            //p.addTrainCard(new TrainCard("wild", false,
-            //CardImages.addImage("wild-train", ImageIO.read(new File("assets/traincards/wildcard.png")), 125, 200)));
+            
         }
         
         handPanels = new HandPanel[4];

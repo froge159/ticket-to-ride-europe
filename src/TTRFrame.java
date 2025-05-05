@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import controllers.StartController;
-import engine.StartEngine;
+import controllers.engine.StartEngine;
 import utils.Dimensions;
 
 public class TTRFrame extends JFrame {

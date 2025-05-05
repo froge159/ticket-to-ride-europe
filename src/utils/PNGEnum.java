@@ -1,6 +1,9 @@
 package utils;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.InputStream;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 public enum PNGEnum {
@@ -38,8 +41,11 @@ public enum PNGEnum {
 
         ImageIcon temp = null;
         try {
-            Image img = new ImageIcon(path).getImage().getScaledInstance(this.w, this.h, java.awt.Image.SCALE_SMOOTH);
-            temp = new ImageIcon(img);
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(path);
+            BufferedImage img = ImageIO.read(inputStream);
+            Image scaledImg = img.getScaledInstance(w, h, Image.SCALE_SMOOTH);
+            temp = new ImageIcon(scaledImg);
+            
         }
         catch(Exception e) {
             System.out.println("Failed to find path " + path);
