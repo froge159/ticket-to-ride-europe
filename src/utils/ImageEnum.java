@@ -9,11 +9,11 @@ public enum ImageEnum {
 
     // enum for non-png images
 
-    TITLEBG("assets/titlebg.png", 1920, 1080),
-    ENDBG("assets/endBG.png", 1920, 1080),
-    GAMEBG("assets/gamebg.png", 1920, 1080),
-    RULESBG("assets/rulesbg.png", 1920, 1080),
-    MAPBG("assets/mapBG.png", 1350, 872);
+    TITLEBG("/assets/titlebg.png", 1920, 1080),
+    ENDBG("/assets/endBG.png", 1920, 1080),
+    GAMEBG("/assets/gamebg.png", 1920, 1080),
+    RULESBG("/assets/rulesbg.png", 1920, 1080),
+    MAPBG("/assets/mapBG.png", 1350, 872);
     
 
     private final BufferedImage b;
@@ -27,11 +27,11 @@ public enum ImageEnum {
         this.h = Rel.H(h);
         
         try {
-            temp = ImageIO.read(getClass().getResourceAsStream(path));
+            temp = ImageIO.read(ImageEnum.class.getResource(path));
             temp = scale(temp, Rel.W(w), Rel.H(h));
         }
         catch(Exception e) {
-            System.out.println("Failed to find path " + path);
+            e.printStackTrace();
         }
         b = temp;
     }

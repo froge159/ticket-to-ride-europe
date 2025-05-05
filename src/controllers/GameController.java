@@ -8,8 +8,8 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import controllers.engine.GameEngine;
-import controllers.engine.StartEngine;
+import engine.GameEngine;
+import engine.StartEngine;
 import models.City;
 import models.Path;
 import panels.ButtonPanel;

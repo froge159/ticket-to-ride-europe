@@ -21,7 +21,7 @@ public class TTRMap {
         paths = new LinkedList<>();
         cities = new ArrayList<>();
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("assets/data/cities.txt"), StandardCharsets.UTF_8));
+        BufferedReader br = new BufferedReader(new InputStreamReader(TTRMap.class.getResourceAsStream("/assets/data/cities.txt"), StandardCharsets.UTF_8));
         String line;
         while ((line = br.readLine()) != null) {
             StringTokenizer st = new StringTokenizer(line);
@@ -34,7 +34,7 @@ public class TTRMap {
         }
 
 
-        br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("assets/data/pathBlocks.txt"), StandardCharsets.UTF_8));
+        br = new BufferedReader(new InputStreamReader(TTRMap.class.getResourceAsStream("/assets/data/pathBlocks.txt"), StandardCharsets.UTF_8));
         while ((line = br.readLine()) != null) {
             StringTokenizer st = new StringTokenizer(line);
             String city1 = st.nextToken();

@@ -10,8 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import controllers.GameController;
-import controllers.engine.GameEngine;
-import controllers.engine.StartEngine;
+import engine.GameEngine;
+import engine.StartEngine;
 import models.City;
 import models.LongPathCard;
 import models.NormalPathCard;
@@ -71,16 +71,16 @@ public class GamePanel extends JPanel {
         for (String i : temp) {
             for (int j = 0; j < 12; j++) {
                 trainCards.add(new TrainCard(i, false, CardImages.addImage(i + "-train",
-                        ImageIO.read(getClass().getResourceAsStream("/assets/traincards/" + i + "card.png")), 125, 200)));
+                        ImageIO.read(GamePanel.class.getResource("/assets/traincards/" + i + "card.png")), 125, 200)));
             }
         }
         trainCards.add(new TrainCard("wild", false,
-                CardImages.addImage("wild-train", ImageIO.read(getClass().getResourceAsStream("/assets/traincards/wildcard.png")), 125, 200)));
+                CardImages.addImage("wild-train", ImageIO.read(GamePanel.class.getResource("/assets/traincards/wildcard.png")), 125, 200)));
         trainCards.add(new TrainCard("wild", false,
-                CardImages.addImage("wild-train", ImageIO.read(getClass().getResourceAsStream("/assets/traincards/wildcard.png")), 125, 200)));
+                CardImages.addImage("wild-train", ImageIO.read(GamePanel.class.getResource("/assets/traincards/wildcard.png")), 125, 200)));
     
         // Load long paths
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/assets/data/routeCards.txt")))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(GamePanel.class.getResourceAsStream("/assets/data/routeCards.txt")))) {
             String line;
     
             // Load long paths
@@ -90,7 +90,7 @@ public class GamePanel extends JPanel {
                 String city2 = st2.nextToken().toLowerCase();
                 int points = Integer.parseInt(st2.nextToken());
                 longCards.add(new LongPathCard(city1, city2, points, CardImages.addImage(city1 + "-" + city2 + "-long-path",
-                        ImageIO.read(getClass().getResourceAsStream("/assets/longroutes/" + city1 + "-" + city2 + ".png")), 200, 125)));
+                        ImageIO.read(GamePanel.class.getResource("/assets/longroutes/" + city1 + "-" + city2 + ".png")), 200, 125)));
             }
     
             br.readLine(); // Skip the first line
@@ -102,7 +102,7 @@ public class GamePanel extends JPanel {
                 String city2 = st2.nextToken().toLowerCase();
                 int points = Integer.parseInt(st2.nextToken());
                 pathCards.add(new NormalPathCard(city1, city2, points, CardImages.addImage(city1 + "-" + city2 + "-path",
-                        ImageIO.read(getClass().getResourceAsStream("/assets/routes/" + city1 + "-" + city2 + ".png")), 200, 125)));
+                        ImageIO.read(GamePanel.class.getResource("/assets/routes/" + city1 + "-" + city2 + ".png")), 200, 125)));
             }
         }
     

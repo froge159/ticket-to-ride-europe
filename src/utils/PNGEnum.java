@@ -1,7 +1,6 @@
 package utils;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -10,27 +9,23 @@ public enum PNGEnum {
 
     // enum for png images
 
-    INFOICON("assets/infoicon.png"),
-    TITLETEXT("assets/titletext.png"),
-    //REDPFP("assets/avatars/redcircleavatar.png"),
-    //BLUEPFP("assets/avatars/bluecircleavatar.png"),
-    //YELLOWPFP("assets/avatars/yellowcircleavatar.png"),
-    //GREENPFP("assets/avatars/greencircleavatar.png"),
-    PLAYERPANELIMG("assets/playerPanelImage.png"),
-    STATIONBUTTON("assets/stationButton.png"),
-    TRAINBACK("assets/trainCardBack.png"),
-    TRAINBACKBW("assets/trainCardBackBW.png"),
-    PATHBACK("assets/destinationticketback.png"),
-    TICKETBACK("assets/ticketBack.png"),
-    TICKETBACKBW("assets/ticketBackBW.png"),
-    REDTRAINICON("assets/red-train-icon.png"),
-    BLUETRAINICON("assets/blue-train-icon.png"),
-    YELLOWTRAINICON("assets/yellow-train-icon.png"),
-    GREENTRAINICON("assets/green-train-icon.png"),
-    REDSTATION("assets/red-station.png"),
-    BLUESTATION("assets/blue-station.png"),
-    YELLOWSTATION("assets/yellow-station.png"),
-    GREENSTATION("assets/green-station.png");
+    INFOICON("/assets/infoicon.png"),
+    TITLETEXT("/assets/titletext.png"),
+    PLAYERPANELIMG("/assets/playerPanelImage.png"),
+    STATIONBUTTON("/assets/stationButton.png"),
+    TRAINBACK("/assets/trainCardBack.png"),
+    TRAINBACKBW("/assets/trainCardBackBW.png"),
+    //PATHBACK("/assets/destinationticketback.png"),
+    TICKETBACK("/assets/ticketBack.png"),
+    TICKETBACKBW("/assets/ticketBackBW.png"),
+    REDTRAINICON("/assets/red-train-icon.png"),
+    BLUETRAINICON("/assets/blue-train-icon.png"),
+    YELLOWTRAINICON("/assets/yellow-train-icon.png"),
+    GREENTRAINICON("/assets/green-train-icon.png"),
+    REDSTATION("/assets/red-station.png"),
+    BLUESTATION("/assets/blue-station.png"),
+    YELLOWSTATION("/assets/yellow-station.png"),
+    GREENSTATION("/assets/green-station.png");
 
     private final ImageIcon b;
     private final int w, h;
@@ -41,14 +36,12 @@ public enum PNGEnum {
 
         ImageIcon temp = null;
         try {
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(path);
-            BufferedImage img = ImageIO.read(inputStream);
+            BufferedImage img = ImageIO.read(PNGEnum.class.getResource(path));
             Image scaledImg = img.getScaledInstance(w, h, Image.SCALE_SMOOTH);
             temp = new ImageIcon(scaledImg);
-            
         }
         catch(Exception e) {
-            System.out.println("Failed to find path " + path);
+            System.out.println("\n" + path);
         }
         b = temp;
     }
