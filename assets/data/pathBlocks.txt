@@ -45,9 +45,9 @@ gray ferry 939 809 0
 gray default 986 822 -23.1
 
 Athina Sofia 3
-purple default 893 779 117.7
-purple default 882 727 84.1
-purple default 904 679 46.9
+pink default 893 779 117.7
+pink default 882 727 84.1
+pink default 904 679 46.9
 
 Barcelona Madrid 2
 yellow default 226 760 177.7
@@ -84,10 +84,10 @@ red default 589 333 -156.1
 red default 542 353 -156.1
 
 Berlin Warszawa 4
-purple default 693 265 19.3
-purple default 747 254 5
-purple default 799 251 2.5
-purple default 845 254 -8.3
+pink default 693 265 19.3
+pink default 747 254 5
+pink default 799 251 2.5
+pink default 845 254 -8.3
 
 Berlin Warszawa 4
 yellow default 697 285 19.3
@@ -105,10 +105,10 @@ orange default 179 381 -147
 orange default 227 363 180
 
 Brest Pamplona 4
-purple default 182 433 -23
-purple default 220 466 -57
-purple default 240 514 -84
-purple default 243 564 -90
+pink default 182 433 -23
+pink default 220 466 -57
+pink default 240 514 -84
+pink default 243 564 -90
 
 Brest Paris 3
 black default 186 408 -6
@@ -116,7 +116,7 @@ black default 234 416 -6
 black default 283 419 -6
 
 Brindisi Palermo 3
-ferry default 701 829 -130
+gray ferry 701 829 -130
 gray default 743 742 -62
 gray default 732 792 -132
 
@@ -158,27 +158,27 @@ gray default 1048 435 -110
 gray default 1063 386 -110
 
 Bucuresti Sevastopol 4
-white default 1039 546 -55
-white default 1085 521 -23
-white default 1138 527 -167
-white default 1179 557 -136
+white default 1039 546 -136
+white default 1085 521 -167
+white default 1138 527 -23
+white default 1179 557 -55
 
 Bucuresti Sofia 2
-gray mountain 994 599 -164
-gray mountain 961 638 -94
+gray mountain 994 599 -94
+gray mountain 961 638 -164
 
 Budapest Kyiv 6
 gray mountain 822 441 -131
 gray mountain 864 407 -143
 gray mountain 907 380 -151
 gray mountain 953 361 -163
-gray mountain 998 347 -173
+gray mountain 1000 347 -175
 gray mountain 1049 348 -3
 
 Budapest Sarajevo 3
-purple default 816 508 -81
-purple default 821 557 -81
-purple default 830 608 -81
+pink default 816 508 -81
+pink default 821 557 -81
+pink default 830 608 -81
 
 Budapest Wien 1
 red default 775 456 -31
@@ -192,7 +192,7 @@ orange default 751 542 -135
 
 Cadiz Lisbon 2
 blue default 80 842 168
-blue default 38 810 121 //168
+blue default 38 810 121
 
 Cadiz Madrid 3
 orange default 148 840 -160
@@ -232,7 +232,7 @@ gray default 266 274 86
 gray ferry 263 326 86
 
 Dieppe Paris 1
-purple default 301 392 -43
+pink default 301 392 -43
 
 Edinburgh London 4
 orange default 218 70 -68
@@ -247,13 +247,13 @@ black default 240 168 -68
 black default 258 213 -68
 
 Erzurum Sevastopol 4
-gray ferry 1206 624 -30
-gray ferry 1203 673 -53
-gray default 1225 723 -81
-gray default 1261 759 -90
+gray ferry 1206 624 -90
+gray ferry 1210 673 -81
+gray default 1225 723 -53
+gray default 1261 759 -30
 
 Erzurum Sochi 3
-red mountain 1298 745 -92
+red mountain 1300 745 -92
 red mountain 1309 696 -92
 red mountain 1314 646 -92
 
@@ -272,8 +272,8 @@ gray default 577 195 -124
 gray default 608 149 -124
 
 Frankfurt Munchen 2
-purple default 520 392 -74.1
-purple default 546 418 13.2
+pink default 520 392 -74.1
+pink default 546 418 13.2
 
 Frankfurt Paris 3
 white default 474 370 -145.2
@@ -292,14 +292,14 @@ gray default 1135 417 -27
 gray default 1101 378 -69
 
 Kharkov Moskva 4
-gray default 1298 386 -70
-gray default 1321 341 -77
-gray default 1324 287 -107
-gray default 1308 240 -137
+gray default 1298 386 -137
+gray default 1321 341 -107
+gray default 1324 287 -77
+gray default 1308 240 -70
 
 Kharkov Rostov 2
-green default 1313 414 -88
-green default 1329 449 0
+green default 1313 414 0
+green default 1329 449 -88
 
 Kobenhavn Stockholm 3
 yellow default 644 84 -133
@@ -309,12 +309,12 @@ yellow default 721 19 -151
 Kobenhavn Stockholm 3
 white default 657 98 -133
 white default 692 63 -140
-white default 731 31 -151
+white default 731 36 -151
 
 Kyiv Smolensk 3
 red default 1125 346 0
 red default 1175 326 -133
-red default 1183 274 -73
+red default 1187 278 -73
 
 Kyiv Warszawa 4
 gray default 1051 332 -6
@@ -323,13 +323,13 @@ gray default 949 321 -24
 gray default 908 293 -45
 
 Kyiv Wilno 2
-gray default 1091 301 -35
-gray default 1066 257 -92
+gray default 1091 301 -92
+gray default 1066 257 -35
 
 Lisbon Madrid 3
-purple default 24 743 -90
-purple default 35 709 0
-purple default 87 726 -32
+pink default 24 743 -90
+pink default 35 709 0
+pink default 87 726 -32
 
 Madrid Pamplona 3
 black mountain 133 717 -128
@@ -360,18 +360,18 @@ gray mountain 563 602 -52
 gray mountain 595 642 -52
 
 Marseille Zurich 2
-purple mountain 477 584 -105
-purple mountain 490 540 -105
+pink mountain 477 584 -105
+pink mountain 490 540 -105
 
 Moskva Petrograd 4
 white default 1289 174 -79
 white default 1273 120 -65
 white default 1242 83 -43
-white default 1197 57 -31
+white default 1197 57 -27
 
 Moskva Smolensk 2
-orange default 1264 229 -5
-orange default 1212 243 -141
+orange default 1264 229 -141
+orange default 1212 243 -5
 
 Munchen Venezia 2
 blue mountain 589 462 -79
@@ -440,28 +440,28 @@ blue default 1083 160 -124
 blue default 1056 198 -124
 
 Riga Wilno 4
-green default 927 86 -31
-green default 931 137 -3
-green default 966 177 -69
-green default 1009 201 -101
+green default 927 86 -101
+green default 931 137 -69
+green default 966 177 -31
+green default 1009 201 -31
 
 Roma Venezia 2
 black default 623 636 -77
 black default 612 586 -77
 
 Rostov Sevastopol 4
-gray default 1290 480 -100
-gray default 1240 472 -100
-gray default 1218 504 -9
-gray default 1212 552 -9
+gray default 1290 480 -9
+gray default 1240 472 -9
+gray default 1218 504 -100
+gray default 1212 552 -100
 
 Rostov Sochi 2
 gray default 1328 521 -95
 gray default 1324 573 -95
 
 Sarajevo Sofia 2
-gray mountain 873 625 -62
-gray mountain 911 628 -157
+gray mountain 873 625 -157
+gray mountain 911 628 -62
 
 Sarajevo Zagreb 3
 red default 802 653 -161

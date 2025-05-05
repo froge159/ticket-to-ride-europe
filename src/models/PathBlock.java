@@ -47,8 +47,8 @@ public class PathBlock {
     public void draw(Graphics2D g2d) {
         AffineTransform oldTransform = g2d.getTransform();
         g2d.rotate(Math.toRadians(-deg), x + 48/2.0, y + 14/2.0);
-        g2d.setColor(color);
-        g2d.fillRect((int)x, (int)y, Rel.W(48), Rel.H(14));
+        //g2d.setColor(color);
+        //g2d.fillRect((int)x, (int)y, Rel.W(48), Rel.H(14));
         if (ownerColor != null) {
             g2d.drawImage(PNGEnum.getColoredTrainImage(ownerColor), (int)x, (int)y, Rel.W(48), Rel.H(14), null);
         }

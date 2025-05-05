@@ -68,6 +68,92 @@ public class Player {
         }
     }
 
+    public void calculateScore(ArrayList<City> allCities) {
+        int finalPoints = points;
+        for (PathCard card: pathCards) {
+            String c1 = card.getCities()[0];
+            String c2 = card.getCities()[1];
+            City city1 = null;
+            City city2 = null;
+
+            for (City city: allCities) {
+                if (city.getName().toLowerCase().equals(c1.toLowerCase())) {
+                    city1 = city;
+                } else if (city.getName().toLowerCase().equals(c2.toLowerCase())) {
+                    city2 = city;
+                }
+            }
+
+            try {
+                if (hasConnection(city1, city2)) {
+                    finalPoints += card.getPoints();
+                }
+            }
+            catch (Exception e) {
+                System.out.println(city1 + " " + city2);
+            }
+        }
+
+        points = finalPoints + 4 * stations;
+    }
+
+    public int getLongestPathLength() {
+        Set<City> visited = new HashSet<>();
+        int longestPath = 0;
+    
+        // Start DFS from each city in the player's graph
+        for (City city : cities) {
+            longestPath = Math.max(longestPath, dfs(city, visited, 0));
+        }
+    
+        return longestPath;
+    }
+    
+    private int dfs(City current, Set<City> visited, int currentLength) {
+        visited.add(current);
+        int maxLength = currentLength;
+    
+        for (Path path : paths) {
+            // Check if the path is owned by the player and connects to the current city
+            if (path.getBuyer() == this && (path.getCity1().equals(current) || path.getCity2().equals(current))) {
+                City neighbor = path.getCity1().equals(current) ? path.getCity2() : path.getCity1();
+    
+                if (!visited.contains(neighbor)) {
+                    // Recurse to the neighbor and update the maximum length
+                    maxLength = Math.max(maxLength, dfs(neighbor, visited, currentLength + path.getLength()));
+                }
+            }
+        }
+    
+        visited.remove(current); // Backtrack
+        return maxLength;
+    }
+
+    public boolean hasConnection(City city1, City city2) {
+        Set<City> visited = new HashSet<>();
+        Queue<City> queue = new LinkedList<>();
+    
+        queue.add(city1);
+        visited.add(city1);
+    
+        while (!queue.isEmpty()) {
+            City current = queue.poll();
+    
+            if (current.equals(city2)) {
+                return true; // Found the target city
+            }
+    
+            for (City neighbor : current.getNeighbors()) {
+                if (!visited.contains(neighbor)) {
+                    visited.add(neighbor);
+                    queue.add(neighbor);
+                }
+            }
+        }
+    
+        return false; // No path found
+    }
+
     public void setPendingCity(City city){
         pendingCity = city;
     }
@@ -125,10 +211,7 @@ public class Player {
         stations = c;
     }
 
-    public boolean connected(PathCard card){
-        //if two cities are connected by the player's owned routes
-        return false;
-    }
+    
 
     public int longestPath(){
         return 0;
@@ -155,4 +238,9 @@ public class Player {
     public Path getSelectedPath() { return selectedPath; }
 
     public LinkedList<City> getCities() { return cities; }
+
+
+    public void setPoints(int points) {
+        this.points = points;
+    }   
 }

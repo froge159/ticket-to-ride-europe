@@ -41,6 +41,7 @@ public class GamePanel extends JPanel {
     private boolean isStationChoose = false;
     private int stationR = 0;
     private City currentCity = null;
+    private JButton endPanelButton;
 
     public GamePanel() throws IOException, InterruptedException{
         String[] temp = { "black", "blue", "orange", "green", "purple", "red", "white", "yellow", "wild" };
@@ -118,6 +119,7 @@ public class GamePanel extends JPanel {
         SetupPanel sp = new SetupPanel(longCards, pathCards, players[0]);
         TicketPanel tp = new TicketPanel(pathCards);
         TunnelPanel tup = new TunnelPanel();
+        endPanelButton = new JButton("See Scores");
 
         for(Player p : players){
             for(int i = 0; i < 4; i++){
@@ -131,8 +133,10 @@ public class GamePanel extends JPanel {
         handPanels[2] = new HandPanel(players[2]);
         handPanels[3] = new HandPanel(players[3]);
 
+        EndPanel ep = new EndPanel(handPanels);
+
         GameEngine ge = new GameEngine(bp, dp, handPanels, mp, pp, sp, this, tp, tup);
-        GameController gc = new GameController(bp, dp, handPanels, mp, pp, sp, this, se, ge, tp, tup);
+        GameController gc = new GameController(bp, dp, handPanels, mp, pp, sp, this, se, ge, tp, tup, ep);
         ge.setGameController(gc);
 
         pp.setBounds(Rel.X(1730), Rel.Y(20), pp.getWidth(), pp.getHeight());
@@ -142,6 +146,8 @@ public class GamePanel extends JPanel {
         sp.setBounds(Rel.X(1420), Rel.Y(0), sp.getWidth(), sp.getHeight());
         tp.setBounds(Rel.X(1420), Rel.Y(0), tp.getWidth(), tp.getHeight());
         tup.setBounds(Rel.X(1420), Rel.Y(0), tup.getWidth(), tup.getHeight());
+        ep.setBounds(Rel.X(0), Rel.Y(0), ep.getWidth(), ep.getHeight());
+        endPanelButton.setBounds(Rel.X(1730), Rel.Y(800), Rel.W(150), Rel.H(50));
         for (int i = 0; i < 4; i++) {
             handPanels[i].setBounds(Rel.X(10), Rel.Y(10), handPanels[i].getWidth(), handPanels[i].getHeight());
         }
@@ -156,10 +162,15 @@ public class GamePanel extends JPanel {
             add(dp);
             add(tp);
             add(tup);
+            add(ep);
+            add(endPanelButton);
             dp.setVisible(false);
             tp.setVisible(false);
             tup.setVisible(false);
+            ep.setVisible(false);
+            endPanelButton.setVisible(false);
             setComponentZOrder(handPanels[0], 1);
+            setComponentZOrder(ep, 0);
             revalidate();
             repaint();
         });
@@ -181,6 +192,9 @@ public class GamePanel extends JPanel {
         this.se = se;
     }
 
+    public EndPanel getEndPanel() {
+        return (EndPanel) SwingUtilities.getAncestorOfClass(EndPanel.class, this);
+    }
 
     @Override
     public void paintComponent(Graphics g) {
@@ -190,7 +204,9 @@ public class GamePanel extends JPanel {
         }
     }
 
-    
+    public JButton getEndPanelButton() {
+        return endPanelButton;
+    }
 
     public int getFinalTurnCount() {
         return finalTurnCount;

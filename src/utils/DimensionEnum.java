@@ -26,7 +26,7 @@ public enum DimensionEnum {
     BLUESTATION(50, 50),
     YELLOWSTATION(50, 50),
     GREENSTATION(50, 50),
-    INFOICON(50, 50);
+    INFOICON(70, 70);
 
     private final int w, h;
 

@@ -54,7 +54,7 @@ public class StartPanel extends JPanel {
         
         infoButton = new JButton();
         infoButton.setIcon(PNGEnum.INFOICON.getImage());
-        infoButton.setBounds(Rel.X(1750), Rel.Y(900), Rel.W(50), Rel.H(50));
+        infoButton.setBounds(Rel.X(1750), Rel.Y(900), Rel.W(70), Rel.H(70));
         infoButton.setOpaque(false);
         infoButton.setContentAreaFilled(false);
         infoButton.setBorderPainted(false);

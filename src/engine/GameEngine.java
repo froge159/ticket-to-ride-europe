@@ -28,6 +28,7 @@ import java.util.TreeMap;
 
 import panels.ButtonPanel;
 import panels.DrawPanel;
+import panels.EndPanel;
 import panels.GamePanel;
 import panels.HandPanel;
 import panels.MapPanel;
@@ -519,7 +520,7 @@ public class GameEngine {
 
     public void tunnelReturnClick() {
         Player p = handPanels[currentPlayer].getPlayer();
-        if (!tunnelPanel.isAbleToPay()) {
+        if (!tunnelPanel.isAbleToPay() || p.getExtraCardsNeeded() < 1) {
             setTunnelState(false);
             setUseCardState(false);
             p.setSelectedPath(null);
@@ -774,24 +775,43 @@ public class GameEngine {
         City city = null;
         int r = gamePanel.getStationR();
         boolean selected = false;
+        System.out.println(r);
         for (int i = r; i < mapPanel.getCities().size(); i++) {
             if (mapPanel.getCities().get(i).getOwner() != null && !mapPanel.getCities().get(i).getPaths().stream().noneMatch(path -> path.getBuyer() != null)) {
                 // calculate score) {
                 city = mapPanel.getCities().get(i);
                 selected = true;
+                gamePanel.setStationR(i + 1);
                 break;
             }
         }
 
         if (!selected) {
-            // calculate score
-            System.out.println("no occupied cities found");
+            handPanels[currentPlayer].setHandText("Calculating Scores...");
+            int maxLength = 0;
+            Player p = null;
+            for (int i = 0; i < 4; i++) {
+                if (handPanels[i].getPlayer().getTrains() > maxLength) {
+                    maxLength = handPanels[i].getPlayer().getLongestPathLength();
+                    p = handPanels[i].getPlayer();
+                }
+                handPanels[i].getPlayer().calculateScore(mapPanel.getCities());
+            }
+            p.setPoints(p.getPoints() + 10);
+
+            gc.getEndPanel().updatePanel();
+            gc.getEndPanel().setVisible(true);
+            
+            mapPanel.setPathDisabled(true);
+            mapPanel.setCityDisabled(true);
+            drawPanel.setDisabled(true);
+            buttonPanel.setEnabled(false);
         }
         else {
             handPanels[currentPlayer].setHandText("Player " + (city.getOwner().getNumber() + 1) + ", choose a path from your station at " + city.getName() + ".");
             gamePanel.setCurrentCity(city);
         }
-        gamePanel.setStationR(r + 1);
+        
     }
 
     public void setGameController(GameController gc) {

@@ -2,7 +2,7 @@ Palermo Moskva 20
 Brest Petrograd 20
 Kobenhavn Erzurum 21
 Cadiz Stockholm 21
-Lisboa Danzig 20
+Lisbon Danzig 20
 Edinburgh Athina 21
 
 Amsterdam Pamplona 7

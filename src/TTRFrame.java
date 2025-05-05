@@ -30,7 +30,6 @@ public class TTRFrame extends JFrame {
         startPanel = new StartPanel();
         rulesPanel = new RulesPanel();
         gamePanel = new GamePanel();
-        endPanel = new EndPanel();
 
         SwingUtilities.invokeLater(() -> {
             add(startPanel);

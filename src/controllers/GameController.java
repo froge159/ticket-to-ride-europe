@@ -14,6 +14,7 @@ import models.City;
 import models.Path;
 import panels.ButtonPanel;
 import panels.DrawPanel;
+import panels.EndPanel;
 import panels.GamePanel;
 import panels.HandPanel;
 import panels.MapPanel;
@@ -34,8 +35,9 @@ public class GameController {
     private SetupPanel setupPanel;
     private TicketPanel ticketPanel;
     private TunnelPanel tunnelPanel;
+    private EndPanel endPanel;
 
-    public GameController(ButtonPanel b, DrawPanel d, HandPanel[] h, MapPanel m, PlayerPanel p, SetupPanel s, GamePanel gp, StartEngine se, GameEngine ge, TicketPanel tp, TunnelPanel tup) {
+    public GameController(ButtonPanel b, DrawPanel d, HandPanel[] h, MapPanel m, PlayerPanel p, SetupPanel s, GamePanel gp, StartEngine se, GameEngine ge, TicketPanel tp, TunnelPanel tup, EndPanel ep) {
         buttonPanel = b;
         drawPanel = d;
         handPanels = h;
@@ -47,6 +49,7 @@ public class GameController {
         ticketPanel = tp;
         this.ge = ge;
         tunnelPanel = tup;
+        endPanel = ep;
         initListeners();
     }
 
@@ -121,6 +124,22 @@ public class GameController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ge.ticketDeckClick();
+            }
+        });
+
+        endPanel.getButton().addActionListener(new ActionListener() { // replay button clicked
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                endPanel.setVisible(false);
+                gamePanel.getEndGameButton().setEnabled(true);
+            }
+        });
+
+        gamePanel.getEndPanelButton().addActionListener(new ActionListener() { // end game button clicked
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                endPanel.setVisible(true);
+                gamePanel.getEndGameButton().setEnabled(false);
             }
         });
 
@@ -215,6 +234,9 @@ public class GameController {
         }
     }
 
+    public EndPanel getEndPanel() {
+        return endPanel;
+    }
     
 
     

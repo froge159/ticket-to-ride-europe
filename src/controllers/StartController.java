@@ -56,18 +56,6 @@ public class StartController {
             }
         });
 
-        //delete this later
-        JButton tempButton = new JButton("End"); 
-        SwingUtilities.invokeLater(() -> {
-            startPanel.add(tempButton);// Placeholder for replay button
-            tempButton.setBounds(0, 0, 200, 40);
-        });
-        tempButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Placeholder for end button action
-                startEngine.transitionToPanel(startPanel, endPanel);
-            }
-        });
+        
     }
 }

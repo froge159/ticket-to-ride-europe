@@ -21,28 +21,22 @@ public class EndPanel extends JPanel {
     private BufferedImage endBG;
     private JLabel[] playersText;
     private JLabel[] scoreText;
+    private HandPanel[] handPanels;
     //private JLabel greenText, redText, yellowText, blueText;
    // private Player[] players;
 
-    public EndPanel() {
+    public EndPanel(HandPanel[] handPanels) {
+        this.handPanels = handPanels;
+        setSize(Rel.W(1920), Rel.H(1080));
         setLayout(null);
         initComponents();
-        SwingUtilities.invokeLater(() ->{
-            setLayout(null);
-            add(replay);
-            for (JLabel label : scoreText) {
-                add(label);
-            }
-            for (JLabel label : playersText){
-                add(label);
-            }
-        });
+        setVisible(true);
     }
 
     public void initComponents(){
         
 
-        replay = new JButton("Press to return"); // Placeholder for replay button
+        replay = new JButton("Return to Game"); // Placeholder for replay button
         replay.setFont(new Font("Arial", Font.PLAIN, (int)(Rel.H(20))));
         replay.setForeground(Color.WHITE);
         replay.setBounds(Rel.X(840), Rel.Y(860), 200, 40);
@@ -52,11 +46,11 @@ public class EndPanel extends JPanel {
         playersText = new JLabel[4];
         scoreText = new JLabel[4];
         for (int i = 0; i < 4; i++) {
-            playersText[i] = new JLabel("yahoo!");
+            playersText[i] = new JLabel("Player " + String.valueOf((i + 1)));
             playersText[i].setBounds(Rel.X(350) + (i*385), Rel.Y(672), Rel.W(204), Rel.H(53));
             playersText[i].setForeground(Color.WHITE);
             //scoreText[i] = new JLabel("Player " + (i + 1) + ": " + (i * 10)); // Placeholder for scores
-            scoreText[i] = new JLabel("" + i*10 + " points");
+            scoreText[i] = new JLabel(handPanels[i].getPlayer().getPoints() + " points");
             scoreText[i].setBounds(Rel.X(350) + (i*385), Rel.Y(697), Rel.W(204), Rel.H(53)); // Placeholder for score text
             scoreText[i].setForeground(Color.WHITE);
             scoreText[i].setFont(new Font("Arial", Font.PLAIN, (int)(Rel.H(20))));
@@ -70,6 +64,25 @@ public class EndPanel extends JPanel {
         replay.setContentAreaFilled(false);
         replay.setBorderPainted(false);
         replay.setFocusPainted(false);
+
+
+
+        SwingUtilities.invokeLater(() ->{
+            add(replay);
+            for (JLabel label : scoreText) {
+                add(label);
+            }
+            for (JLabel label : playersText){
+                add(label);
+            }
+        });
+    }
+
+    public void updatePanel() {
+        for (int i = 0; i < 4; i++) {
+            scoreText[i].setText(handPanels[i].getPlayer().getPoints() + " points");
+        }
+        repaint();
     }
 
     @Override
