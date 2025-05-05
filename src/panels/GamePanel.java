@@ -42,6 +42,7 @@ public class GamePanel extends JPanel {
     private int stationR = 0;
     private City currentCity = null;
     private JButton endPanelButton;
+    private JButton nextEndPlayer;
 
     public GamePanel() throws IOException, InterruptedException{
         String[] temp = { "black", "blue", "orange", "green", "purple", "red", "white", "yellow", "wild" };
@@ -120,6 +121,7 @@ public class GamePanel extends JPanel {
         TicketPanel tp = new TicketPanel(pathCards);
         TunnelPanel tup = new TunnelPanel();
         endPanelButton = new JButton("See Scores");
+        nextEndPlayer = new JButton("Next Player");
 
         for(Player p : players){
             for(int i = 0; i < 4; i++){
@@ -147,7 +149,8 @@ public class GamePanel extends JPanel {
         tp.setBounds(Rel.X(1420), Rel.Y(0), tp.getWidth(), tp.getHeight());
         tup.setBounds(Rel.X(1420), Rel.Y(0), tup.getWidth(), tup.getHeight());
         ep.setBounds(Rel.X(0), Rel.Y(0), ep.getWidth(), ep.getHeight());
-        endPanelButton.setBounds(Rel.X(1730), Rel.Y(800), Rel.W(150), Rel.H(50));
+        endPanelButton.setBounds(Rel.X(1730), Rel.Y(700), Rel.W(150), Rel.H(50));
+        nextEndPlayer.setBounds(Rel.X(1730), Rel.Y(755), Rel.W(150), Rel.H(50));
         for (int i = 0; i < 4; i++) {
             handPanels[i].setBounds(Rel.X(10), Rel.Y(10), handPanels[i].getWidth(), handPanels[i].getHeight());
         }
@@ -164,11 +167,13 @@ public class GamePanel extends JPanel {
             add(tup);
             add(ep);
             add(endPanelButton);
+            add(nextEndPlayer);
             dp.setVisible(false);
             tp.setVisible(false);
             tup.setVisible(false);
             ep.setVisible(false);
             endPanelButton.setVisible(false);
+            nextEndPlayer.setVisible(false);
             setComponentZOrder(handPanels[0], 1);
             setComponentZOrder(ep, 0);
             revalidate();
@@ -177,6 +182,9 @@ public class GamePanel extends JPanel {
         ge.setSetupState(true);
     }
 
+    public JButton getNextEndPlayer() {
+        return nextEndPlayer;
+    }
 
     public void setEndingGame(boolean isEndingGame) {
         this.isEndingGame = isEndingGame;

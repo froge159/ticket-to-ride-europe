@@ -91,30 +91,6 @@ public class EndPanel extends JPanel {
         if (endBG != null) {
             g.drawImage(endBG, 0, 0, this);
         }
-    /* 
-        // Cast Graphics to Graphics2D to enable advanced features
-    Graphics2D g2d = (Graphics2D) g;
-
-    // Set transparency using AlphaComposite
-    float transparency = 0.5f; // 0.0f is fully transparent, 1.0f is fully opaque
-    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, transparency));
-
-    // Set the color for the rectangle
-    g2d.setColor(Color.BLACK);
-
-    // Draw the semi-transparent rectangle
-    g2d.fillRect(Rel.X(170), Rel.Y(120), Rel.W(1580), Rel.H(840));
-
-    // Reset the composite to default (fully opaque) for subsequent drawings
-    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
-
-    g.setFont(new Font("Arial", Font.PLAIN, (int)(150*Dimensions.HEIGHT/(double)1080)));
-    g.setColor(Color.WHITE);
-    g.drawString("GAME OVER", Rel.X(500), Rel.Y(250));
-    */
-    g.setColor(Color.WHITE);
-    g.setFont(new Font("Arial", Font.PLAIN, (int)(50*Dimensions.HEIGHT/(double)1080)));
-    g.drawString("Winner: Player 1", Rel.X(770), Rel.Y(840));
     }
 
     public JButton getButton() {

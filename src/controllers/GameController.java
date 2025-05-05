@@ -131,15 +131,30 @@ public class GameController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 endPanel.setVisible(false);
-                gamePanel.getEndGameButton().setEnabled(true);
+                gamePanel.getEndPanelButton().setVisible(true);
+                gamePanel.getNextEndPlayer().setVisible(true);
+                ge.setGamePanelVisible(true);
             }
         });
 
         gamePanel.getEndPanelButton().addActionListener(new ActionListener() { // end game button clicked
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (gamePanel.getEndPanelButton().getText().equals("Skip Turn")) {
+                    ge.nextPlayer();
+                    return;
+                }
                 endPanel.setVisible(true);
-                gamePanel.getEndGameButton().setEnabled(false);
+                gamePanel.getEndPanelButton().setVisible(false);
+                gamePanel.getNextEndPlayer().setVisible(false);
+                ge.setGamePanelVisible(false);
+            }
+        });
+
+        gamePanel.getNextEndPlayer().addActionListener(new ActionListener() { // next end player button clicked
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ge.nextEndPlayerClick();
             }
         });
 

@@ -70,9 +70,9 @@ public class HandPanel extends JPanel {
             trainCardCounts.put(color, count);
 
             JLabel clickCount = new JLabel (String.valueOf(mpSelected.get(color)));
-            clickCount.setFont(new Font("Arial", Font.BOLD, Rel.W(15)));
+            clickCount.setFont(new Font("Arial", Font.BOLD, Rel.W(30)));
             clickCount.setForeground(Color.RED);
-            clickCount.setBounds(Rel.X(jlabelX + 5), Rel.Y(980), Rel.W(25), Rel.H(25));
+            clickCount.setBounds(Rel.X(jlabelX), Rel.Y(1000), Rel.W(25), Rel.H(25));
             selectedCounts.put(color, clickCount);
 
             JButton card = new JButton(CardImages.getImg(color + "-train")); // 125 /200
