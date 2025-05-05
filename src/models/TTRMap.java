@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.*;
 
 import utils.ColorEnum;
+import utils.Rel;
 
 public class TTRMap {
     //graph class implementation
@@ -45,8 +46,8 @@ public class TTRMap {
                 pathBlocks[i] = new PathBlock(
                     ColorEnum.getColor(st.nextToken()),
                     st.nextToken(),
-                    Integer.parseInt(st.nextToken()),
-                    Integer.parseInt(st.nextToken()),
+                    Rel.X(Integer.parseInt(st.nextToken())),
+                    Rel.Y(Integer.parseInt(st.nextToken())),
                     Double.parseDouble(st.nextToken())
                 );
             }

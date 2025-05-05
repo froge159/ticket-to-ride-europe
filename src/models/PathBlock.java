@@ -25,8 +25,8 @@ public class PathBlock {
         centerX = x;
         centerY = y;
         ownerColor = null;
-        this.x = Rel.X((int) (centerX - 48/2.0));
-        this.y = Rel.Y((int) (centerY - 14/2.0));
+        this.x = (centerX - 48/2.0);
+        this.y = (centerY - 14/2.0);
     }
 
     public boolean contains(Point p) {

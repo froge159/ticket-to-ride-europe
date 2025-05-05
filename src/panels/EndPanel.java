@@ -47,11 +47,11 @@ public class EndPanel extends JPanel {
         scoreText = new JLabel[4];
         for (int i = 0; i < 4; i++) {
             playersText[i] = new JLabel("Player " + String.valueOf((i + 1)));
-            playersText[i].setBounds(Rel.X(350) + (i*385), Rel.Y(672), Rel.W(204), Rel.H(53));
+            playersText[i].setBounds(Rel.X(350 + i*385), Rel.Y(672), Rel.W(204), Rel.H(53));
             playersText[i].setForeground(Color.WHITE);
             //scoreText[i] = new JLabel("Player " + (i + 1) + ": " + (i * 10)); // Placeholder for scores
             scoreText[i] = new JLabel(handPanels[i].getPlayer().getPoints() + " points");
-            scoreText[i].setBounds(Rel.X(350) + (i*385), Rel.Y(697), Rel.W(204), Rel.H(53)); // Placeholder for score text
+            scoreText[i].setBounds(Rel.X(350 + i*385), Rel.Y(697), Rel.W(204), Rel.H(53)); // Placeholder for score text
             scoreText[i].setForeground(Color.WHITE);
             scoreText[i].setFont(new Font("Arial", Font.PLAIN, (int)(Rel.H(20))));
             playersText[i].setFont(new Font("Arial", Font.PLAIN, (int)(Rel.H(20))));

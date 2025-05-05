@@ -805,9 +805,10 @@ public class GameEngine {
         int r = gamePanel.getStationR();
         boolean selected = false;
         System.out.println(r);
-        for (int i = r; i < mapPanel.getCities().size(); i++) {
-            if (mapPanel.getCities().get(i).getOwner() != null && !mapPanel.getCities().get(i).getPaths().stream().noneMatch(path -> path.getBuyer() != null)) {
-                // calculate score) {
+        for (int ind = r; ind < mapPanel.getCities().size(); ind++) {
+            final int i = ind;
+            if (mapPanel.getCities().get(i).getOwner() != null 
+                && mapPanel.getCities().get(i).getPaths().stream().anyMatch(path -> path.getBuyer() != null && !path.getBuyer().equals(mapPanel.getCities().get(i).getOwner()))) {
                 city = mapPanel.getCities().get(i);
                 selected = true;
                 gamePanel.setStationR(i + 1);
@@ -835,6 +836,7 @@ public class GameEngine {
             mapPanel.setCityDisabled(true);
             drawPanel.setDisabled(true);
             buttonPanel.setEnabled(false);
+            
 
             setGamePanelVisible(false);
         }

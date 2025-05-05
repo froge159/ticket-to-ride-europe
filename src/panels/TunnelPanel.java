@@ -38,7 +38,7 @@ public class TunnelPanel extends JPanel {
 
     public void updatePanel(ArrayList<TrainCard> lastThreeCards) {
         for (int i = 0; i < 3; i++) {
-            images[i] = lastThreeCards.get(i).getScaledFront(200, 125);
+            images[i] = lastThreeCards.get(i).getScaledFront(Rel.W(200), Rel.H(125));
         }
         returnButton.setBounds(Rel.X(200), Rel.Y(800), Rel.W(100), Rel.H(50));
         text.setBounds(Rel.X(75), Rel.Y(100), Rel.W(400), Rel.H(50));

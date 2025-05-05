@@ -23,12 +23,12 @@ public enum ImageEnum {
     private ImageEnum(String path, int w, int h) {
         BufferedImage temp = null;
 
-        this.w = w;
-        this.h = h;
+        this.w = Rel.W(w);
+        this.h = Rel.H(h);
         
         try {
             temp = ImageIO.read(new File(path));
-            temp = scale(temp, w, h);
+            temp = scale(temp, Rel.W(w), Rel.H(h));
         }
         catch(Exception e) {
             System.out.println("Failed to find path " + path);
