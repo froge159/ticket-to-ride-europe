@@ -384,7 +384,7 @@ public class GameEngine {
                     }
                 }
             }
-            if ((!claimed || pathBlocks[i].getType().equals("ferry")) && trainCards.get("wild") > 0) { // if wild cards available or ferry pathblock
+            if ((!claimed || pathBlocks[i].getType().equals("ferry")) && selectedMap.get("wild") > 0) { // if wild cards available or ferry pathblock
                 if (!pathBlocks[0].getType().equals("mountain")) trainCards.put("wild", trainCards.get("wild") - 1); 
                 claimed = true;
             }
