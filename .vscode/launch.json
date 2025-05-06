@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "ticket-to-ride-europe_328b02c1"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
@@ -17,6 +24,5 @@
             "mainClass": "Main",
             "projectName": "ticket-to-ride-europe_dcd38ce6"
         }
-        
     ]
 }

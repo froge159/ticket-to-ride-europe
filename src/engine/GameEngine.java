@@ -684,6 +684,7 @@ public class GameEngine {
         else {
             p.getPlayer().setDrawn(true);
             p.setHandText(p.getHandText() + " Please draw again.");
+
         }
     }
 
@@ -724,7 +725,7 @@ public class GameEngine {
 
     public void setTicketState(boolean state) {
         mapPanel.setPathDisabled(state);
-        mapPanel.setCityDisabled(state);
+        mapPanel.setCityDisabled(true);
         playerPanel.setVisible(!state);
         buttonPanel.setVisible(!state);
         drawPanel.setVisible(!state);
@@ -738,8 +739,7 @@ public class GameEngine {
         }
         drawPanel.setTicketButtonEnabled(!state);
         buttonPanel.setEnabled(!state);
-        mapPanel.setPathDisabled(state);
-        mapPanel.setCityDisabled(state);
+        mapPanel.setCityDisabled(true);
     }
 
     public void setSetupState(boolean state) {
@@ -794,8 +794,8 @@ public class GameEngine {
         }
         else return;
 
-        mapPanel.setCityDisabled(false);
-        mapPanel.setPathDisabled(false);
+        mapPanel.setCityDisabled(true);
+        mapPanel.setPathDisabled(true);
         playerPanel.setVisible(true);
         buttonPanel.setVisible(true);
         drawPanel.setVisible(true);
@@ -842,6 +842,9 @@ public class GameEngine {
         if (gamePanel.isEndingGame()) {
             gamePanel.setFinalTurnCount(gamePanel.getFinalTurnCount() + 1);
         }
+
+
+
     }
 
     public void nextCity() {
