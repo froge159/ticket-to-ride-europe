@@ -45,9 +45,9 @@ gray ferry 939 809 0
 gray default 986 822 -23.1
 
 Athina Sofia 3
-pink default 893 779 117.7
-pink default 882 727 84.1
-pink default 904 679 46.9
+purple default 893 779 117.7
+purple default 882 727 84.1
+purple default 904 679 46.9
 
 Barcelona Madrid 2
 yellow default 226 760 177.7
@@ -84,10 +84,10 @@ red default 589 333 -156.1
 red default 542 353 -156.1
 
 Berlin Warszawa 4
-pink default 693 265 19.3
-pink default 747 254 5
-pink default 799 251 2.5
-pink default 845 254 -8.3
+purple default 693 265 19.3
+purple default 747 254 5
+purple default 799 251 2.5
+purple default 845 254 -8.3
 
 Berlin Warszawa 4
 yellow default 697 285 19.3
@@ -105,10 +105,10 @@ orange default 179 381 -147
 orange default 227 363 180
 
 Brest Pamplona 4
-pink default 182 433 -23
-pink default 220 466 -57
-pink default 240 514 -84
-pink default 243 564 -90
+purple default 182 433 -23
+purple default 220 466 -57
+purple default 240 514 -84
+purple default 243 564 -90
 
 Brest Paris 3
 black default 186 408 -6
@@ -176,9 +176,9 @@ gray mountain 1000 347 -175
 gray mountain 1049 348 -3
 
 Budapest Sarajevo 3
-pink default 816 508 -81
-pink default 821 557 -81
-pink default 830 608 -81
+purple default 816 508 -81
+purple default 821 557 -81
+purple default 830 608 -81
 
 Budapest Wien 1
 red default 775 456 -31
@@ -232,7 +232,7 @@ gray default 266 274 86
 gray ferry 263 326 86
 
 Dieppe Paris 1
-pink default 301 392 -43
+purple default 301 392 -43
 
 Edinburgh London 4
 orange default 218 70 -68
@@ -272,8 +272,8 @@ gray default 577 195 -124
 gray default 608 149 -124
 
 Frankfurt Munchen 2
-pink default 520 392 -74.1
-pink default 546 418 13.2
+purple default 520 392 -74.1
+purple default 546 418 13.2
 
 Frankfurt Paris 3
 white default 474 370 -145.2
@@ -327,9 +327,9 @@ gray default 1091 301 -92
 gray default 1066 257 -35
 
 Lisbon Madrid 3
-pink default 24 743 -90
-pink default 35 709 0
-pink default 87 726 -32
+purple default 24 743 -90
+purple default 35 709 0
+purple default 87 726 -32
 
 Madrid Pamplona 3
 black mountain 133 717 -128
@@ -360,8 +360,8 @@ gray mountain 563 602 -52
 gray mountain 595 642 -52
 
 Marseille Zurich 2
-pink mountain 477 584 -105
-pink mountain 490 540 -105
+purple mountain 477 584 -105
+purple mountain 490 540 -105
 
 Moskva Petrograd 4
 white default 1289 174 -79
@@ -482,8 +482,8 @@ gray default 640 535 -163
 gray default 689 544 -24
 
 Venezia Zurich 2
-green default 570 544 -23
-green default 526 520 -23
+green mountain 570 544 -23
+green mountain 526 520 -23
 
 Warszawa Wien 4
 blue default 870 304 -124

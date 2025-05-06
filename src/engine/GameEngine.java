@@ -340,37 +340,64 @@ public class GameEngine {
     public void okClick() {
         Player p = handPanels[currentPlayer].getPlayer();
         TreeMap<String, Integer> selectedMap = p.getTrainCardsSelected();
-        if (selectedMap.entrySet().stream().filter(entry -> !entry.getKey().equals("wild") && entry.getValue() > 0).count() > 1 &&  // disallow multiple card counts for gray routes
-            p.getSelectedPath().getPath()[0].getColor().equals(Color.GRAY)) {
+
+        if (p.getSelected() < p.getSelectedPath().getPath().length) { handPanels[currentPlayer].setHandText("Please more cards"); return; }
+        
+        if (selectedMap.entrySet().stream().filter(entry -> !entry.getKey().equals("wild") && entry.getValue() > 0).count() > 1 ) {
             handPanels[currentPlayer].setHandText("You cannot select more than one card of the same color.");
+            for (String key : p.getTrainCardsSelected().keySet()) {
+                p.getTrainCardsSelected().put(key, 0); // reset the count for each selected card
+                handPanels[currentPlayer].updateSelectedCounts(key); // update the UI to reflect the reset
+            }
+            p.setSelected(0); // reset selected count
             return;
         }
 
         TreeMap<String, Integer> trainCards = p.getTrainCards();
         PathBlock[] pathBlocks = p.getSelectedPath().getPath();
         String maxKey = null;
-        if (pathBlocks[0].getColor().equals(Color.GRAY)) { // if path is gray, find the color with the most cards
-            int maxValue = 0;
-            for (Map.Entry<String, Integer> entry : trainCards.entrySet()) {
-                if (!entry.getKey().equals("wild") && entry.getValue() > maxValue) {
-                    maxKey = entry.getKey();
-                    maxValue = entry.getValue();
+        for (int i = 0; i < pathBlocks.length; i++) {
+            if (pathBlocks[i].getColor().equals(Color.GRAY)) { // if path is gray, find the color with the most cards
+                int maxValue = 0;
+                for (Map.Entry<String, Integer> entry : selectedMap.entrySet()) {
+                    if (!entry.getKey().equals("wild") && entry.getValue() > maxValue) {
+                        maxKey = entry.getKey();
+                        maxValue = entry.getValue();
+                    }
                 }
+                break;
             }
         }
+
+        if (maxKey == null) maxKey = "wild";
+        
+
+        System.out.println(selectedMap);
         for (int i = 0; i < pathBlocks.length; i++) {
             boolean claimed = false;
             if (!pathBlocks[i].getType().equals("ferry")) {
-                for (String key: trainCards.keySet()) {
-                    if ((pathBlocks[i].getColor().equals(Color.GRAY) && key.equals(maxKey) || pathBlocks[i].getColor().equals(ColorEnum.getColor(key))) && trainCards.get(key) > 0) { // if matches color and selected cards > 0
-                        if (!pathBlocks[0].getType().equals("mountain")) trainCards.put(key, trainCards.get(key) - 1); 
+                for (String key: selectedMap.keySet()) {
+                    if ((pathBlocks[i].getColor().equals(Color.GRAY) && key.equals(maxKey) || pathBlocks[i].getColor().equals(ColorEnum.getColor(key))) && selectedMap.get(key) > 0) { // if matches color and selected cards > 0
+                        if (!pathBlocks[0].getType().equals("mountain")) selectedMap.put(key, selectedMap.get(key) - 1); 
                         claimed = true;
+                        break;
                     }
                 }
             }
             if ((!claimed || pathBlocks[i].getType().equals("ferry")) && trainCards.get("wild") > 0) { // if wild cards available or ferry pathblock
                 if (!pathBlocks[0].getType().equals("mountain")) trainCards.put("wild", trainCards.get("wild") - 1); 
                 claimed = true;
+            }
+            else if (!claimed) {
+                handPanels[currentPlayer].setHandText("Invalid Card Selection");
+
+                for (String key : p.getTrainCardsSelected().keySet()) {
+                    p.getTrainCardsSelected().put(key, 0); // reset the count for each selected card
+                    handPanels[currentPlayer].updateSelectedCounts(key); // update the UI to reflect the reset
+                }
+                p.setSelected(0); // reset selected count
+                
+                return;
             }
         }
 
@@ -452,7 +479,7 @@ public class GameEngine {
                 mapPanel.repaint();
             }
             else {
-                String color = null; int needed = 0;
+                String color = ""; int needed = 0;
                 int maxValue = 0;
                 for (Map.Entry<String, Integer> entry : selectedMap.entrySet()) { // calculate color
                     if (entry.getKey().equals("wild")) continue;
@@ -462,12 +489,8 @@ public class GameEngine {
                     }
                 }
 
-                if (color == null && selectedMap.get("wild") > 0) { // only wild cards selected 
+                if (!color.equals("wild") && selectedMap.get("wild") > selectedMap.get(color)) {
                     color = "wild";
-                    maxValue = selectedMap.get("wild");
-                }
-
-                else if (!color.equals("wild") && selectedMap.get("wild") > selectedMap.get(color)) { 
                     maxValue = selectedMap.get("wild");
                 }
                 
@@ -731,7 +754,6 @@ public class GameEngine {
     }
 
     public void setStationState(boolean state) {
-        System.out.println("set station state");
         buttonPanel.setEnabled(!state);
         mapPanel.setPathDisabled(state);
         mapPanel.setCityDisabled(!state);
@@ -767,7 +789,7 @@ public class GameEngine {
         }
         else return;
 
-        mapPanel.setEnabled(true);
+        mapPanel.setCityDisabled(false);
         mapPanel.setPathDisabled(false);
         playerPanel.setVisible(true);
         buttonPanel.setVisible(true);

@@ -8,4 +8,5 @@
         "java": true
     },
     "java.search.scope": "all",
+    "java.debug.settings.forceBuildBeforeLaunch": true,
 }
