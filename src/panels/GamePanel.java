@@ -79,9 +79,7 @@ public class GamePanel extends JPanel {
         trainCards.add(new TrainCard("wild", false,
                 CardImages.addImage("wild-train", ImageIO.read(GamePanel.class.getResource("/assets/traincards/wildcard.png")), 125, 200)));
 
-        for (String i: temp) {
-            
-        }
+        
                 
         // Load long paths
         try (BufferedReader br = new BufferedReader(new InputStreamReader(GamePanel.class.getResourceAsStream("/assets/data/routeCards.txt")))) {

@@ -341,7 +341,7 @@ public class GameEngine {
         Player p = handPanels[currentPlayer].getPlayer();
         TreeMap<String, Integer> selectedMap = p.getTrainCardsSelected();
 
-        if (p.getSelected() < p.getSelectedPath().getPath().length) { handPanels[currentPlayer].setHandText("Please more cards"); return; }
+        if (p.getSelected() < p.getSelectedPath().getPath().length) { handPanels[currentPlayer].setHandText("Please choose more cards"); return; }
         
         if (selectedMap.entrySet().stream().filter(entry -> !entry.getKey().equals("wild") && entry.getValue() > 0).count() > 1 ) {
             handPanels[currentPlayer].setHandText("You cannot select more than one card of the same color.");
@@ -356,9 +356,9 @@ public class GameEngine {
         TreeMap<String, Integer> trainCards = p.getTrainCards();
         PathBlock[] pathBlocks = p.getSelectedPath().getPath();
         String maxKey = null;
+        int maxValue = 0;
         for (int i = 0; i < pathBlocks.length; i++) {
             if (pathBlocks[i].getColor().equals(Color.GRAY)) { // if path is gray, find the color with the most cards
-                int maxValue = 0;
                 for (Map.Entry<String, Integer> entry : selectedMap.entrySet()) {
                     if (!entry.getKey().equals("wild") && entry.getValue() > maxValue) {
                         maxKey = entry.getKey();
@@ -480,7 +480,7 @@ public class GameEngine {
             }
             else {
                 String color = ""; int needed = 0;
-                int maxValue = 0;
+                maxValue = 0;
                 for (Map.Entry<String, Integer> entry : selectedMap.entrySet()) { // calculate color
                     if (entry.getKey().equals("wild")) continue;
                     if (entry.getValue() > maxValue) {
@@ -489,7 +489,12 @@ public class GameEngine {
                     }
                 }
 
-                if (!color.equals("wild") && selectedMap.get("wild") > selectedMap.get(color)) {
+                if (color.equals("") && selectedMap.get("wild") > 0) {
+                    color = "wild";
+                    maxValue = selectedMap.get("wild");
+                }
+
+                else if (!color.equals("wild") && selectedMap.get("wild") > selectedMap.get(color)) {
                     color = "wild";
                     maxValue = selectedMap.get("wild");
                 }

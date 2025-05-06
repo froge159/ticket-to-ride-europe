@@ -2,11 +2,14 @@ package panels;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Stack;
 import java.util.TreeMap;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -73,25 +76,33 @@ public class HandPanel extends JPanel {
             clickCount.setFont(new Font("Arial", Font.BOLD, Rel.W(30)));
             clickCount.setForeground(Color.RED);
             clickCount.setBounds(Rel.X(jlabelX), Rel.Y(1000), Rel.W(25), Rel.H(25));
-            selectedCounts.put(color, clickCount);
+            selectedCounts.put(color, clickCount);  
 
-            JButton card = new JButton(CardImages.getImg(color + "-train")); // 125 /200
-            card.setBounds(Rel.X(cardX), Rel.Y(880), Rel.W(125), Rel.H(200));
-            card.setOpaque(false);
-            card.setContentAreaFilled(false);
-            card.setBorderPainted(false);
-            playerTrainButtons[i] = card;
+            BufferedImage b;
+            try {
+                b = ImageIO.read(HandPanel.class.getResource("/assets/traincards/"+color+"rotatedcard.png"));
+                JButton card = new JButton(new ImageIcon(b.getScaledInstance(Rel.W(130), Rel.H(200), java.awt.Image.SCALE_SMOOTH))); // 125 /200
+                card.setBounds(Rel.X(cardX), Rel.Y(880), Rel.W(125), Rel.H(200));
+                card.setOpaque(false);
+                card.setContentAreaFilled(false);
+                card.setBorderPainted(false);
+                playerTrainButtons[i] = card;
+                
+                jlabelX += 140;
+                cardX += 140; 
+                SwingUtilities.invokeLater(() -> { 
+                    add(count);
+                    add(clickCount);
+                    add(card);
+                    setComponentZOrder(count, 0);
+                    setComponentZOrder(clickCount, 1);
+                    setComponentZOrder(card, 2);
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             
-            jlabelX += 140;
-            cardX += 140; 
-            SwingUtilities.invokeLater(() -> { 
-                add(count);
-                add(clickCount);
-                add(card);
-                setComponentZOrder(count, 0);
-                setComponentZOrder(clickCount, 1);
-                setComponentZOrder(card, 2);
-            });
         }
 
         text = new JLabel();
