@@ -724,7 +724,7 @@ public class GameEngine {
     }
 
     public void setTicketState(boolean state) {
-        mapPanel.setPathDisabled(state);
+        mapPanel.setPathDisabled(false);
         mapPanel.setCityDisabled(true);
         playerPanel.setVisible(!state);
         buttonPanel.setVisible(!state);
@@ -809,6 +809,7 @@ public class GameEngine {
     }
 
     public void nextPlayer() {
+        mapPanel.setPathDisabled(false);
         if (handPanels[currentPlayer].getPlayer().getTrains() <= 2 && !gamePanel.isEndingGame()) {
             Timer timer = new Timer(1000, e -> {
                 handPanels[currentPlayer].setHandText("Every player has one final turn.");
